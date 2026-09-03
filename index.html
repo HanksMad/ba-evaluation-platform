@@ -6,6 +6,8 @@
     <title>منصة تقييم الكفاءات وإدارة الفرق | أكاديمية تحليل الأعمال</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- مكتبة تحويل التقرير إلى PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
@@ -45,7 +47,6 @@
         .user-bar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; }
         .user-bar .user-name { font-weight: 700; color: var(--primary); font-size: 1.1em; }
         .user-bar .logout { color: var(--danger); cursor: pointer; font-weight: 700; font-size: 0.9em; }
-        .user-bar .reset { color: var(--accent); cursor: pointer; font-weight: 700; font-size: 0.9em; margin-left: 15px; }
 
         .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .assessment-card { border: 1px solid var(--border-color); border-radius: 8px; padding: 25px; text-align: right; cursor: pointer; transition: all 0.2s; background: var(--bg-surface); display: flex; flex-direction: column; justify-content: center; position: relative; }
@@ -64,7 +65,6 @@
         .completed .card-icon { background: #D1FAE5; color: var(--success); }
         .tag-completed { color: var(--success); background: #D1FAE5; }
 
-        /* Quiz Layout */
         .section-title { background: #F0FDF4; color: var(--primary); padding: 15px 20px; border-right: 4px solid var(--primary); font-weight: 700; font-size: 1.1em; margin: 40px 0 25px 0; border-radius: 4px 0 0 4px; display: flex; justify-content: space-between; align-items: center;}
         .section-title:first-child { margin-top: 0; }
         .section-badge { background: var(--primary); color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.8em; }
@@ -84,10 +84,9 @@
         .wrong-option .option-text { color: var(--danger) !important; font-weight: 700; }
 
         .result-box { text-align: center; padding: 20px 0; }
-        .result-score { font-size: 4em; font-weight: 800; color: var(--primary); margin-bottom: 5px; }
-        .chart-container { width: 100%; max-width: 600px; margin: 0 auto 30px auto; }
+        .result-score { font-size: 3.5em; font-weight: 800; color: var(--primary); margin-bottom: 5px; }
+        .chart-container { width: 100%; max-width: 500px; margin: 0 auto 20px auto; }
         
-        /* Admin Additions */
         .admin-link { text-align: center; margin-top: 20px; font-size: 0.9em; color: var(--text-secondary); cursor: pointer; text-decoration: underline; }
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
         .stat-card { background: #F8FAFC; border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; text-align: center; }
@@ -105,8 +104,6 @@
         .btn-small:hover { background: #B45309; }
 
         .admin-report-header { background: #F8FAFC; padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;}
-        .admin-report-header h3 { margin: 0 0 5px 0; color: var(--primary); }
-        .admin-report-header p { margin: 0; color: var(--text-secondary); }
         
         .answers-review-container { max-height: 450px; overflow-y: auto; padding: 15px; border: 1px solid var(--border-color); border-radius: 8px; background: #FAFAFA; margin-top: 15px; text-align: right;}
         .ans-q { font-weight: bold; color: var(--primary); margin-bottom: 10px; font-size: 1em;}
@@ -115,33 +112,30 @@
         .ans-wrong { background: #FEF2F2; border-color: var(--danger); color: var(--danger); font-weight: bold;}
         .ans-missed { background: #fff; border-color: var(--success); color: var(--success); border-width: 2px; border-style: dashed;}
 
-        /* Team Builder Styles */
         .teams-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
         .team-card { border: 1px solid var(--border-color); border-radius: 8px; background: #FFFFFF; box-shadow: 0 2px 4px rgba(0,0,0,0.03); overflow: hidden; display: flex; flex-direction: column;}
         .team-card-header { background: #F0FDF4; border-bottom: 1px solid #D1FAE5; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center;}
-        .team-card-header h4 { margin: 0; color: var(--primary); font-size: 1.1em;}
         .team-card-body { padding: 0 15px 15px 15px; flex-grow: 1; }
         
         .team-power-container { background: #F3F4F6; border-radius: 4px; margin: 15px 0; overflow: hidden; position: relative; height: 26px; border: 1px solid #E5E7EB; }
-        .team-power-fill { height: 100%; transition: width 0.5s ease-in-out, background-color 0.5s; }
-        .team-power-text { position: absolute; top: 0; left: 0; right: 0; text-align: center; font-size: 0.85em; font-weight: bold; color: #111827; line-height: 26px; text-shadow: 0px 0px 2px rgba(255,255,255,0.8); }
+        .team-power-fill { height: 100%; transition: width 0.5s ease-in-out; }
+        .team-power-text { position: absolute; top: 0; left: 0; right: 0; text-align: center; font-size: 0.85em; font-weight: bold; color: #111827; line-height: 26px; }
 
         .team-member-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #F3F4F6; gap: 10px;}
-        .team-member-item:last-child { border-bottom: none; }
-        .member-info { display: flex; flex-direction: column; gap: 3px; }
-        .member-name { font-weight: bold; font-size: 0.95em; color: var(--text-main); }
-        .member-skill-tag { font-size: 0.75em; background: #E0E7FF; color: #3730A3; padding: 2px 8px; border-radius: 10px; width: fit-content; font-weight: bold;}
-        
-        .member-reassign-select { padding: 4px 8px; border: 1px solid #D1D5DB; border-radius: 4px; font-family: inherit; font-size: 0.85em; background: #FFF; color: var(--text-main); cursor: pointer;}
+        .member-skill-tag { font-size: 0.75em; background: #E0E7FF; color: #3730A3; padding: 2px 8px; border-radius: 10px; font-weight: bold;}
+        .member-reassign-select { padding: 4px 8px; border: 1px solid #D1D5DB; border-radius: 4px; font-size: 0.85em; background: #FFF; cursor: pointer;}
         .remove-member-btn { color: var(--danger); background: none; border: none; cursor: pointer; font-size: 0.9em; padding: 4px;}
-        .remove-member-btn:hover { opacity: 0.8; }
 
         .unassigned-pool { border: 2px dashed #D1D5DB; border-radius: 8px; padding: 20px; background: #F9FAFB; margin-top: 25px;}
-        .unassigned-pool h4 { margin: 0 0 15px 0; color: var(--accent); }
-        .unassigned-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+        .unassigned-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin-top: 15px;}
         .unassigned-item { background: white; border: 1px solid var(--border-color); padding: 10px 14px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;}
 
-        @media (max-width: 768px) { .cards-grid, .stats-grid, .grid-2, .teams-grid { grid-template-columns: 1fr; } .panel { padding: 20px; } .admin-report-header { flex-direction: column; text-align: center; gap: 10px;} }
+        @media print {
+            body { background: white; padding: 0; }
+            .container { max-width: 100%; margin: 0; }
+            .panel { border: none; box-shadow: none; padding: 0; }
+            .btn-primary, .btn-secondary, .user-bar { display: none !important; }
+        }
     </style>
 </head>
 <body>
@@ -155,7 +149,7 @@
         </div>
     </div>
 
-    <!-- ================= شاشة تسجيل الدخول ================= -->
+    <!-- تسجيل المتدرب -->
     <div id="loginView" class="panel view active">
         <h2 style="margin-top: 0; margin-bottom: 25px;">تسجيل بيانات المتدرب</h2>
         <div class="grid-2">
@@ -177,19 +171,22 @@
             </div>
         </div>
         <button class="btn-primary" onclick="login()">متابعة ودخول <i class="fa-solid fa-arrow-left"></i></button>
-        <div class="admin-link" onclick="showView('adminLoginView')"><i class="fa-solid fa-user-shield"></i> بوابة الإدارة وتشكيل الفرق (Admin)</div>
+        <div class="admin-link" onclick="showView('adminLoginView')"><i class="fa-solid fa-user-shield"></i> بوابة الإدارة والمشرفين (مشفرة آمنة)</div>
     </div>
 
-    <!-- ================= شاشة دخول الإدارة ================= -->
+    <!-- دخول الإدارة الآمن عبر Firebase Auth -->
     <div id="adminLoginView" class="panel view">
-        <h2 style="margin-top: 0; color: var(--accent);">بوابة الإدارة والمشرفين</h2>
-        <label class="form-label">كلمة المرور (للتجربة: admin123)</label>
-        <input type="password" id="adminPass" class="form-control" placeholder="أدخل كلمة المرور">
-        <button class="btn-primary" style="background-color: var(--accent);" onclick="adminLogin()">تسجيل الدخول</button>
+        <h2 style="margin-top: 0; color: var(--accent);"><i class="fa-solid fa-lock"></i> بوابة الإدارة والمشرفين الآمنة</h2>
+        <p style="font-size: 0.9em; color: var(--text-secondary); margin-bottom: 20px;">تسجيل الدخول محمي عبر مصادقة Firebase السحابية المشفرة.</p>
+        <label class="form-label">البريد الإلكتروني للمشرف</label>
+        <input type="email" id="adminEmail" class="form-control" placeholder="admin@ba-academy.com">
+        <label class="form-label">كلمة المرور المشفرة</label>
+        <input type="password" id="adminPass" class="form-control" placeholder="••••••••">
+        <button class="btn-primary" style="background-color: var(--accent);" onclick="adminLogin()">دخول آمن للمشرفين</button>
         <button class="btn-secondary" onclick="showView('loginView')">عودة لصفحة المتدربين</button>
     </div>
 
-    <!-- ================= لوحة تحكم الإدارة (Admin Dashboard) ================= -->
+    <!-- لوحة تحكم الإدارة -->
     <div id="adminDashboardView" class="panel view">
         <div class="user-bar">
             <h2 style="margin: 0; color: var(--primary);"><i class="fa-solid fa-chart-line"></i> مركز قيادة المعسكر التدريبي السحابي</h2>
@@ -204,7 +201,7 @@
 
         <div class="admin-tabs">
             <div class="admin-tab active" id="tabTraineesBtn" onclick="switchAdminTab('trainees')"><i class="fa-solid fa-users"></i> سجل المتدربين والتقارير</div>
-            <div class="admin-tab" id="tabTeamsBtn" onclick="switchAdminTab('teams')"><i class="fa-solid fa-people-group"></i> أداة تشكيل وتعديل الفرق (تتضمن مؤشر القوة)</div>
+            <div class="admin-tab" id="tabTeamsBtn" onclick="switchAdminTab('teams')"><i class="fa-solid fa-people-group"></i> أداة تشكيل وتعديل الفرق (مؤشر القوة القبلي)</div>
         </div>
 
         <div id="adminTraineesSection">
@@ -229,7 +226,7 @@
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px;">
                 <div>
                     <h3 style="margin: 0; color: var(--primary);">إدارة وتشكيل فرق مشاريع التخرج</h3>
-                    <p style="margin: 5px 0 0 0; font-size: 0.9em; color: var(--text-secondary);">مؤشر القوة (Team Power) يعتمد على <strong>التقييم القبلي فقط</strong> وتنوع وتكامل الكفاءات.</p>
+                    <p style="margin: 5px 0 0 0; font-size: 0.9em; color: var(--text-secondary);">مؤشر القوة يعتمد كلياً على التقييم القبلي والتكامل المهاري.</p>
                 </div>
                 <div style="display: flex; gap: 10px;">
                     <button class="btn-accent" onclick="addNewEmptyTeam()"><i class="fa-solid fa-plus"></i> إضافة فريق جديد</button>
@@ -244,7 +241,7 @@
         </div>
     </div>
 
-    <!-- ================= شاشة تقرير المتدرب للمشرف ================= -->
+    <!-- تقرير المتدرب للمشرف -->
     <div id="adminReportView" class="panel view">
         <div class="user-bar">
             <h2 style="margin: 0; color: var(--primary);"><i class="fa-solid fa-file-contract"></i> التقرير التحليلي للمتدرب</h2>
@@ -264,11 +261,9 @@
         </div>
 
         <h3 style="text-align: center; color: var(--primary); margin-top:30px;">الخريطة الرادارية (مقارنة الأداء)</h3>
-        <p style="text-align: center; font-size: 0.9em; color: var(--text-secondary);">البرتقالي: التقييم القبلي | الأخضر: التقييم البعدي</p>
         <div class="chart-container"><canvas id="adminRadarChart"></canvas></div>
 
         <h3 style="border-bottom: 2px solid var(--primary-light); padding-bottom: 10px; margin-top: 40px;">مراجعة الإجابات التفصيلية</h3>
-        
         <div style="display:flex; gap:10px; margin-bottom:10px;">
             <button class="btn-secondary" style="margin:0; padding:10px;" onclick="renderAdminAnswersReview('pre')">عرض إجابات القبلي</button>
             <button class="btn-primary" style="margin:0; padding:10px;" onclick="renderAdminAnswersReview('post')">عرض إجابات البعدي</button>
@@ -279,7 +274,7 @@
         <button class="btn-secondary" onclick="showView('adminDashboardView')" style="margin-top:30px;">إغلاق التقرير</button>
     </div>
 
-    <!-- ================= شاشات المتدرب ================= -->
+    <!-- لوحة المتدرب -->
     <div id="dashboardView" class="panel view">
         <div class="user-bar">
             <div class="user-name">
@@ -313,7 +308,7 @@
                 <div id="postScoreBadge" class="score-badge" style="display:none;"></div>
             </div>
         </div>
-        <button id="traineeFullReportBtn" class="btn-primary" onclick="showView('resultView')" style="display:none; margin-top: 30px;"><i class="fa-solid fa-chart-radar"></i> عرض خريطة التطور الشاملة</button>
+        <button id="traineeFullReportBtn" class="btn-primary" onclick="showView('resultView')" style="display:none; margin-top: 30px;"><i class="fa-solid fa-chart-radar"></i> عرض وتحميل تقرير التطور الشامل (PDF)</button>
     </div>
 
     <!-- شاشة الاختبار -->
@@ -330,25 +325,30 @@
         <button class="btn-secondary" id="backToDashBtn" onclick="showView('dashboardView')" style="display:none;">العودة للوحة الرئيسية</button>
     </div>
 
-    <!-- شاشة النتيجة للمتدرب -->
+    <!-- شاشة النتيجة للمتدرب مع زر تحميل PDF -->
     <div id="resultView" class="panel view">
-        <div class="result-box">
-            <h2 style="margin-top: 0; color: var(--text-main);">الخريطة الرادارية (قياس التطور)</h2>
+        <div class="result-box" id="pdfReportContent">
+            <h2 style="margin-top: 0; color: var(--primary);">تقرير خريطة الكفاءات وتطور الأداء</h2>
+            <p id="pdfTraineeInfo" style="font-weight: bold; color: var(--text-secondary);"></p>
             <div class="result-score" id="finalScoreText"></div>
-            <div style="font-size: 1.2em; color: var(--text-secondary); margin-bottom: 10px; font-weight: 700;" id="resultMessage">مقارنة مستوى الكفاءات بين التقييم القبلي والبعدي</div>
+            <div style="font-size: 1.1em; color: var(--text-secondary); margin-bottom: 10px; font-weight: 700;">مقارنة مستوى الكفاءات بين التقييم القبلي والبعدي</div>
+            
             <div class="chart-container"><canvas id="competencyRadarChart"></canvas></div>
-            <button class="btn-secondary" onclick="showView('dashboardView')">العودة للرئيسية</button>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button class="btn-primary" onclick="downloadPDF()"><i class="fa-solid fa-file-pdf"></i> تحميل التقرير كملف PDF</button>
+            <button class="btn-secondary" style="margin-top: 0;" onclick="showView('dashboardView')">العودة للرئيسية</button>
         </div>
     </div>
 </div>
 
-<!-- ================= ☁️ الكود السحابي: Firebase Integration ================= -->
+<!-- ================= الكود السحابي والمصادقة (Firebase + App Logic) ================= -->
 <script type="module">
-    // 1. استدعاء مكتبات Firebase
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, doc, setDoc, getDoc, collection, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-    // 2. إعدادات قاعدة البيانات الخاصة بك
     const firebaseConfig = {
       apiKey: "AIzaSyC0AdLAyseZyGtu11c-vIZAXq08iX1mBOw",
       authDomain: "ba-bootcamp9.firebaseapp.com",
@@ -359,11 +359,11 @@
       measurementId: "G-EPW7YMZDJN"
     };
 
-    // تهيئة الاتصال
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    const auth = getAuth(app);
 
-    // ================= بنك الأسئلة (23 للقبلي + 23 للبعدي) =================
+    // بنك الأسئلة الشامل
     const preQuestions = [
         { section: "التفكير التحليلي", category: "Technical", q: "ما هو الهدف الرئيسي من استخدام 'التفكير النظمي' (Systems Thinking) في تحليل الأعمال؟", options: ["برمجة الأنظمة التقنية", "فهم كيفية تفاعل أجزاء المؤسسة معاً", "التفكير في الميزانية", "تحديد لغة البرمجة"], answer: 1 },
         { section: "التفكير التحليلي", category: "Technical", q: "أي التقنيات تستخدم للوصول إلى 'السبب الجذري' (Root Cause) لمشكلة بدلاً من أعراضها؟", options: ["تقنية تقصي الأسباب (5 Whys)", "مخطط البيانات (DFD)", "قصص المستخدمين", "مصفوفة RACI"], answer: 0 },
@@ -421,14 +421,17 @@
     let traineesList = []; let currentAdminTrainee = null;
     let teams = []; let unassignedTrainees = [];
 
-    // --- ربط الدوال بالكائن Window لتتصل بالـ HTML ---
     window.showView = function(viewId) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById(viewId).classList.add('active');
         if(viewId === 'dashboardView') updateDashboard();
-        if(viewId === 'resultView') drawRadarChart();
+        if(viewId === 'resultView') {
+            document.getElementById('pdfTraineeInfo').innerText = `المتدرب: ${localStorage.getItem('ba_trainee_name')} | المعرّف: ${localStorage.getItem('ba_trainee_bootcamp')}`;
+            drawRadarChart();
+        }
     };
 
+    // تسجيل المتدرب
     window.login = async function() {
         const name = document.getElementById('traineeName').value;
         const email = document.getElementById('traineeEmail').value;
@@ -436,16 +439,12 @@
         const traineeNum = document.getElementById('bootcampId').value;
         if(!name || !email || !mobile || !traineeNum) { alert("الرجاء تعبئة كافة البيانات"); return; }
         
-        const btn = document.querySelector('#loginView .btn-primary');
-        btn.innerHTML = "جاري الاتصال بالسحابة... <i class='fa-solid fa-spinner fa-spin'></i>";
-        
         const bootcamp = "BAC9-" + traineeNum;
         const traineeRef = doc(db, "trainees", bootcamp);
         
         try {
             const docSnap = await getDoc(traineeRef);
             if(docSnap.exists()) {
-                // جلب بياناته السابقة إن وجدت
                 const data = docSnap.data();
                 if(data.preScore !== undefined) localStorage.setItem('ba_score_pre', data.preScore);
                 if(data.postScore !== undefined) localStorage.setItem('ba_score_post', data.postScore);
@@ -454,14 +453,7 @@
                 if(data.preAnswers) localStorage.setItem('ba_answers_pre', JSON.stringify(data.preAnswers));
                 if(data.postAnswers) localStorage.setItem('ba_answers_post', JSON.stringify(data.postAnswers));
             } else {
-                // تسجيل متدرب جديد في Firestore
-                await setDoc(traineeRef, {
-                    name: name,
-                    email: email,
-                    mobile: mobile,
-                    bootcamp: bootcamp,
-                    createdAt: new Date().toISOString()
-                }, { merge: true });
+                await setDoc(traineeRef, { name, email, mobile, bootcamp, createdAt: new Date().toISOString() }, { merge: true });
             }
             
             localStorage.setItem('ba_trainee_name', name);
@@ -472,13 +464,10 @@
             document.getElementById('displayName').innerText = name;
             document.getElementById('displayMobile').innerText = mobile;
             document.getElementById('displayBootcamp').innerText = bootcamp;
-            
             window.showView('dashboardView');
         } catch(e) {
-            alert("حدث خطأ أثناء الاتصال بقاعدة البيانات. تأكد من إعدادات Firestore.");
-            console.error(e);
+            alert("حدث خطأ أثناء الاتصال بقاعدة البيانات.");
         }
-        btn.innerHTML = "متابعة ودخول <i class='fa-solid fa-arrow-left'></i>";
     };
 
     window.logout = function() { localStorage.clear(); window.showView('loginView'); };
@@ -557,14 +546,13 @@
             item.options.forEach((opt, optIndex) => {
                 let isChecked = (isReadOnly && savedAnswers[index] === optIndex) ? 'checked' : '';
                 let isDisabled = isReadOnly ? 'disabled' : '';
-                let clickStyle = isReadOnly ? 'pointer-events: none;' : '';
                 let resultClass = '';
                 if (isReadOnly) {
                     if (optIndex === item.answer) resultClass = 'correct-option'; 
                     else if (savedAnswers[index] === optIndex && optIndex !== item.answer) resultClass = 'wrong-option'; 
                 }
                 optionsHTML += `
-                    <label class="option-item ${resultClass}" style="${clickStyle}">
+                    <label class="option-item ${resultClass}" style="${isReadOnly ? 'pointer-events: none;' : ''}">
                         <input type="radio" name="q${index}" value="${optIndex}" ${isChecked} ${isDisabled}>
                         <span class="option-text">${opt}</span>
                     </label>
@@ -604,10 +592,6 @@
 
         if (answered < activeQuestions.length) { alert("الرجاء استكمال جميع الأسئلة."); return; }
 
-        const btn = document.getElementById('submitQuizBtn');
-        btn.innerHTML = "جاري الحفظ في السحابة... <i class='fa-solid fa-spinner fa-spin'></i>";
-        btn.disabled = true;
-
         const finalPercentage = Math.round((score / activeQuestions.length) * 100);
         let chartLabels = [], chartData = [];
         let highestRatio = -1, topSkill = "قيد الانتظار";
@@ -621,12 +605,10 @@
         
         const chartObj = { labels: chartLabels, data: chartData };
 
-        // حفظ في LocalStorage
         localStorage.setItem(`ba_score_${currentQuizType}`, finalPercentage);
         localStorage.setItem(`ba_answers_${currentQuizType}`, JSON.stringify(userAnswers));
         localStorage.setItem(`ba_chart_${currentQuizType}`, JSON.stringify(chartObj));
 
-        // رفع البيانات لـ Firebase
         try {
             const bootcamp = localStorage.getItem('ba_trainee_bootcamp');
             const traineeRef = doc(db, "trainees", bootcamp);
@@ -634,23 +616,13 @@
                 [`${currentQuizType}Score`]: finalPercentage,
                 [`${currentQuizType}Answers`]: userAnswers,
                 [`${currentQuizType}Chart`]: chartObj,
-                topSkill: topSkill // تحديث أبرز مهارة
+                topSkill: topSkill
             });
-            
-            if(currentQuizType === 'post') {
-                window.showView('dashboardView');
-                alert("تم تسليم التقييم البعدي وحفظه سحابياً. يمكنك الآن الاطلاع على تقرير التطور.");
-            } else {
-                window.showView('dashboardView');
-            }
+            window.showView('resultView');
             window.scrollTo(0,0);
         } catch(e) {
-            alert("حدث خطأ أثناء حفظ البيانات في السحابة.");
-            console.error(e);
+            alert("حدث خطأ أثناء الحفظ بالسحابة.");
         }
-        
-        btn.innerHTML = "تسليم واعتماد الإجابات <i class='fa-solid fa-check'></i>";
-        btn.disabled = false;
     };
 
     function drawRadarChart() {
@@ -689,76 +661,43 @@
         radarChartInstance = new Chart(ctx, {
             type: 'radar',
             data: { labels: preObj.labels, datasets: datasets },
-            options: { responsive: true, scales: { r: { suggestedMin: 0, suggestedMax: 100, ticks: { stepSize: 20, font:{family:'Tajawal'} }, pointLabels: { font: { family: 'Tajawal', size: 11, weight: 'bold' } } } }, plugins: { legend: { position: 'bottom', labels:{font:{family:'Tajawal', size:14}} } } }
+            options: { 
+                responsive: true, 
+                scales: { r: { suggestedMin: 0, suggestedMax: 100, ticks: { stepSize: 20, font:{family:'Tajawal'} }, pointLabels: { font: { family: 'Tajawal', size: 11, weight: 'bold' } } } }, 
+                plugins: { legend: { position: 'bottom', labels:{font:{family:'Tajawal', size:14}} } } 
+            }
         });
     }
 
-    // ================= الإدارة والتحليلات Firebase =================
+    // زر تحميل PDF للمتدرب
+    window.downloadPDF = function() {
+        const element = document.getElementById('pdfReportContent');
+        const opt = {
+            margin:       10,
+            filename:     `BA_Competency_Report_${localStorage.getItem('ba_trainee_bootcamp')}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        html2pdf().from(element).set(opt).save();
+    };
+
+    // ================= المصادقة الآمنة وإدارة المشرفين (Firebase Auth) =================
     
     window.adminLogin = async function() {
-        if(document.getElementById('adminPass').value === 'admin123') {
-            const btn = document.querySelector('#adminLoginView .btn-primary');
-            btn.innerHTML = "جاري الاتصال بقاعدة البيانات... <i class='fa-solid fa-spinner fa-spin'></i>";
-            
-            try {
-                // جلب جميع المتدربين من السحابة
-                const querySnapshot = await getDocs(collection(db, "trainees"));
-                traineesList = [];
-                let sumPre = 0, sumPost = 0, countPre = 0, countPost = 0;
-                
-                querySnapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    let pre = data.preScore !== undefined ? data.preScore : '-';
-                    let post = data.postScore !== undefined ? data.postScore : '-';
-                    
-                    if(pre !== '-') { sumPre += pre; countPre++; }
-                    if(post !== '-') { sumPost += post; countPost++; }
+        const email = document.getElementById('adminEmail').value;
+        const password = document.getElementById('adminPass').value;
+        if(!email || !password) { alert("الرجاء إدخال البريد وكلمة المرور المشفرة."); return; }
 
-                    traineesList.push({
-                        id: docSnap.id,
-                        name: data.name || 'غير معروف',
-                        email: data.email || '',
-                        mobile: data.mobile || '',
-                        bootcamp: data.bootcamp || docSnap.id,
-                        preScore: pre,
-                        postScore: post,
-                        topSkill: data.topSkill || 'قيد الانتظار',
-                        preChart: data.preChart || null,
-                        postChart: data.postChart || null,
-                        preAnswers: data.preAnswers || [],
-                        postAnswers: data.postAnswers || []
-                    });
-                });
-
-                document.getElementById('totalTraineesCount').innerText = traineesList.length;
-                document.getElementById('avgPreScore').innerText = countPre ? Math.round(sumPre/countPre) + '%' : '0%';
-                document.getElementById('avgPostScore').innerText = countPost ? Math.round(sumPost/countPost) + '%' : '0%';
-
-                const tbody = document.getElementById('traineesTableBody');
-                tbody.innerHTML = '';
-                traineesList.forEach(t => {
-                    tbody.innerHTML += `
-                        <tr>
-                            <td><strong>${t.name}</strong><br><span style="font-size:0.8em; color:gray;">${t.mobile}</span></td>
-                            <td>${t.bootcamp}</td>
-                            <td><strong style="color:var(--accent);">${t.preScore !== '-' ? t.preScore+'%' : '-'}</strong></td>
-                            <td><strong style="color:var(--success);">${t.postScore !== '-' ? t.postScore+'%' : '-'}</strong></td>
-                            <td><span class="member-skill-tag">${t.topSkill}</span></td>
-                            <td><button class="btn-small" onclick="viewTraineeReport('${t.id}')">التقرير والإجابات</button></td>
-                        </tr>
-                    `;
-                });
-
-                unassignedTrainees = [...traineesList];
-                teams = [];
-                renderTeamsAndPool();
-                window.showView('adminDashboardView');
-            } catch(e) {
-                alert("خطأ في جلب بيانات المتدربين من السحابة.");
-                console.error(e);
-            }
-            btn.innerHTML = "تسجيل الدخول";
-        } else { alert('كلمة المرور خاطئة'); }
+        try {
+            // تسجيل الدخول المشفر عبر Firebase Auth
+            await signInWithEmailAndPassword(auth, email, password);
+            initAdminModule();
+            window.showView('adminDashboardView');
+        } catch(error) {
+            alert("فشل تسجيل الدخول. تأكد من صحة البريد أو كلمة المرور المسجلة في Firebase Authentication.");
+            console.error(error);
+        }
     };
 
     window.switchAdminTab = function(tab) {
@@ -768,10 +707,68 @@
         document.getElementById('adminTeamsSection').style.display = tab === 'teams' ? 'block' : 'none';
     };
 
+    async function initAdminModule() {
+        try {
+            const querySnapshot = await getDocs(collection(db, "trainees"));
+            traineesList = [];
+            let sumPre = 0, sumPost = 0, countPre = 0, countPost = 0;
+            
+            querySnapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                let pre = data.preScore !== undefined ? data.preScore : '-';
+                let post = data.postScore !== undefined ? data.postScore : '-';
+                
+                if(pre !== '-') { sumPre += pre; countPre++; }
+                if(post !== '-') { sumPost += post; countPost++; }
+
+                traineesList.push({
+                    id: docSnap.id,
+                    name: data.name || 'غير معروف',
+                    email: data.email || '',
+                    mobile: data.mobile || '',
+                    bootcamp: data.bootcamp || docSnap.id,
+                    preScore: pre,
+                    postScore: post,
+                    topSkill: data.topSkill || 'قيد الانتظار',
+                    preChart: data.preChart || null,
+                    postChart: data.postChart || null,
+                    preAnswers: data.preAnswers || [],
+                    postAnswers: data.postAnswers || []
+                });
+            });
+
+            document.getElementById('totalTraineesCount').innerText = traineesList.length;
+            document.getElementById('avgPreScore').innerText = countPre ? Math.round(sumPre/countPre) + '%' : '0%';
+            document.getElementById('avgPostScore').innerText = countPost ? Math.round(sumPost/countPost) + '%' : '0%';
+
+            const tbody = document.getElementById('traineesTableBody');
+            tbody.innerHTML = '';
+            traineesList.forEach(t => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${t.name}</strong><br><span style="font-size:0.8em; color:gray;">${t.mobile}</span></td>
+                        <td>${t.bootcamp}</td>
+                        <td><strong style="color:var(--accent);">${t.preScore !== '-' ? t.preScore+'%' : '-'}</strong></td>
+                        <td><strong style="color:var(--success);">${t.postScore !== '-' ? t.postScore+'%' : '-'}</strong></td>
+                        <td><span class="member-skill-tag">${t.topSkill}</span></td>
+                        <td><button class="btn-small" onclick="viewTraineeReport('${t.id}')">التقرير والإجابات</button></td>
+                    </tr>
+                `;
+            });
+
+            unassignedTrainees = [...traineesList];
+            teams = [];
+            renderTeamsAndPool();
+        } catch(e) {
+            alert("خطأ في جلب بيانات المتدربين من السحابة.");
+        }
+    }
+
+    // إدارة وتشكيل الفرق بناءً على القبلي
     window.autoGenerateBalancedTeams = function() {
         let teamSize = 4;
         let all = [...traineesList];
-        all.sort(() => Math.random() - 0.5); // خلط عشوائي
+        all.sort(() => Math.random() - 0.5);
 
         teams = [];
         let totalTeams = Math.ceil(all.length / teamSize);
@@ -830,7 +827,7 @@
         teamsContainer.innerHTML = '';
 
         if(teams.length === 0) {
-            teamsContainer.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:30px; color:gray; background:#fff; border-radius:8px; border:1px dashed #ddd;">لم يتم إنشاء أي فريق بعد. اضغط على <strong>تشكيل ذكي متوازن</strong> أو <strong>إضافة فريق جديد</strong>.</div>`;
+            teamsContainer.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:30px; color:gray; background:#fff; border-radius:8px; border:1px dashed #ddd;">لم يتم إنشاء أي فريق بعد. اضغط على <strong>تشكيل ذكي متوازن</strong>.</div>`;
         }
 
         teams.forEach(team => {
@@ -838,7 +835,6 @@
             let powerScore = 0;
             let powerColor = '#E5E7EB';
 
-            // حساب مؤشر القوة بناءً على القبلي
             if(team.members.length > 0) {
                 let totalScores = 0;
                 let uniqueSkills = new Set();
@@ -878,13 +874,13 @@
                                 <select class="member-reassign-select" onchange="if(this.value) window.reassignTrainee('${m.id}', ${team.id}, this.value)">
                                     ${moveOptions}
                                 </select>
-                                <button class="remove-member-btn" title="سحب لقائمة الانتظار" onclick="window.reassignTrainee('${m.id}', ${team.id}, 'unassigned')"><i class="fa-solid fa-user-minus"></i></button>
+                                <button class="remove-member-btn" title="سحب" onclick="window.reassignTrainee('${m.id}', ${team.id}, 'unassigned')"><i class="fa-solid fa-user-minus"></i></button>
                             </div>
                         </div>
                     `;
                 });
             } else {
-                membersHTML = `<p style="color:gray; font-size:0.85em; text-align:center; margin:15px 0;">لا يوجد أعضاء في هذا الفريق بعد</p>`;
+                membersHTML = `<p style="color:gray; font-size:0.85em; text-align:center; margin:15px 0;">لا يوجد أعضاء</p>`;
             }
 
             let powerBarHTML = team.members.length > 0 ? `
@@ -898,7 +894,7 @@
                 <div class="team-card">
                     <div class="team-card-header">
                         <h4>${team.name} (${team.members.length} أعضاء)</h4>
-                        <button class="remove-member-btn" style="color:var(--danger);" title="حذف الفريق" onclick="window.deleteTeam(${team.id})"><i class="fa-solid fa-trash-can"></i></button>
+                        <button class="remove-member-btn" style="color:var(--danger);" onclick="window.deleteTeam(${team.id})"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
                     <div class="team-card-body">
                         ${powerBarHTML}
@@ -913,7 +909,7 @@
         unassignedContainer.innerHTML = '';
 
         if(unassignedTrainees.length === 0) {
-            unassignedContainer.innerHTML = `<p style="color:var(--success); font-size:0.9em; margin:0; grid-column:1/-1;">جميع المتدربين مسكنين في الفرق بنجاح ✔️</p>`;
+            unassignedContainer.innerHTML = `<p style="color:var(--success); font-size:0.9em; margin:0; grid-column:1/-1;">جميع المتدربين مسكنين في الفرق ✔️</p>`;
         } else {
             unassignedTrainees.forEach(m => {
                 let assignOptions = `<option value="">تعيين في فريق...</option>`;
@@ -961,7 +957,7 @@
             options: { responsive: true, scales: { r: { suggestedMin: 0, suggestedMax: 100, ticks: { stepSize: 20, font:{family:'Tajawal'} } } }, plugins: { legend: { position: 'bottom', labels:{font:{family:'Tajawal'}} } } }
         });
 
-        document.getElementById('adminAnswersContainer').innerHTML = '<p style="text-align:center; color:gray;">الرجاء الضغط على أحد الأزرار أعلاه لعرض الإجابات التفصيلية.</p>';
+        document.getElementById('adminAnswersContainer').innerHTML = '<p style="text-align:center; color:gray;">الرجاء الضغط على أحد الأزرار أعلاه لعرض الإجابات.</p>';
         window.showView('adminReportView');
     };
 
@@ -986,7 +982,6 @@
             q.options.forEach((opt, optIndex) => {
                 let optClass = "ans-opt";
                 let icon = "";
-                
                 if (optIndex === q.answer) {
                     optClass += " ans-correct";
                     if(userAnsIndex === optIndex) icon = '<i class="fa-solid fa-check"></i> '; 
