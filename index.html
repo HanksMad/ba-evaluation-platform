@@ -12,29 +12,26 @@
     
     <style>
         :root {
-            --primary: #0F2A2A;         /* أخضر داكن هادئ ومريح جداً */
-            --primary-light: #2C5E5A;   /* تدرج أخضر معتدل وغير مشع */
-            --accent: #92400E;          /* بني ذهبي هادئ */
-            --bg-body: #F4F6F8;         /* رمادي فاتح مطفأ مريح للعين */
-            --bg-surface: #FFFFFF;      /* أبيض نقي */
-            --text-main: #1E293B;       /* رمادي داكن مريح للقراءة */
-            --text-secondary: #64748B;  /* رمادي متوسط للإرشادات */
-            --border-color: #CBD5E1;    /* حدود ناعمة ومحايدة */
+            --primary: #0F2A2A; 
+            --primary-light: #2C5E5A; 
+            --accent: #92400E; 
+            --bg-body: #F4F6F8; 
+            --bg-surface: #FFFFFF; 
+            --text-main: #1E293B; 
+            --text-secondary: #64748B; 
+            --border-color: #CBD5E1; 
             --locked-bg: #F1F5F9;
-            --success: #166534;         /* أخضر هادئ للنجاح */
-            --danger: #9F1239;          /* أحمر داكن هادئ */
+            --success: #166534; 
+            --danger: #9F1239;
         }
 
         body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 20px 15px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; }
         .container { width: 100%; max-width: 960px; margin: 0 auto; }
 
         .auth-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 16px; box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05); overflow: hidden; max-width: 480px; margin: 0 auto; }
-        
-        /* ترويسة هادئة غير مشعة */
         .auth-header { background: var(--primary); color: white; padding: 35px 25px; text-align: center; position: relative; }
         .auth-header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
         
-        /* أيقونة هادئة بدمج لوني ناعم */
         .auth-icon-wrapper { font-size: 1.6em; color: #94A3B8; background: rgba(255, 255, 255, 0.06); width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 12px auto; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.1); }
         
         .auth-header h1 { margin: 0; font-size: 1.35em; font-weight: 700; }
@@ -191,7 +188,7 @@
                     <input type="email" id="traineeEmail" class="form-control" placeholder="name@example.com" required>
                     
                     <label class="form-label">رقم الجوال</label>
-                    <input type="tel" id="traineeMobile" class="form-control" placeholder="05xxxxxxxx - 01xxxxxxxxx" required>
+                    <input type="tel" id="traineeMobile" class="form-control" placeholder="05xxxxxxxx - 01xxxxxxxxx " required>
                     
                     <label class="form-label">رقم المتدرب (أرقام فقط)</label>
                     <input type="number" id="bootcampId" class="form-control" placeholder="مثال: 125" required>
@@ -234,7 +231,7 @@
                 <h2>مركز قيادة المعسكر التدريبي</h2>
                 <p>مراقبة أداء المتدربين، استعراض التقارير، وتشكيل فرق مشاريع التخرج بذكاء.</p>
             </div>
-            <button class="hero-logout" onclick="showView('loginView')"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
+            <button class="hero-logout" onclick="adminLogout()"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
         </div>
 
         <div class="stats-grid">
@@ -418,7 +415,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, doc, setDoc, getDoc, collection, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, browserSessionPersistence, setPersistence, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyC0AdLAyseZyGtu11c-vIZAXq08iX1mBOw",
@@ -433,6 +430,11 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const auth = getAuth(app);
+
+    // تمديد جلسة المشرف وفتحها لفترة كافية (تخزينها في session أو local)
+    setPersistence(auth, browserSessionPersistence).catch((error) => {
+        console.error("Auth persistence error:", error);
+    });
 
     const preQuestions = [
         { section: "التفكير التحليلي", category: "Technical", q: "ما هو الهدف الرئيسي من استخدام 'التفكير النظمي' (Systems Thinking) في تحليل الأعمال؟", options: ["برمجة الأنظمة التقنية", "فهم كيفية تفاعل أجزاء المؤسسة معاً", "التفكير في الميزانية", "تحديد لغة البرمجة"], answer: 1 },
@@ -567,6 +569,14 @@
         window.showView('loginView'); 
     };
 
+    window.adminLogout = function() {
+        signOut(auth).then(() => {
+            window.showView('loginView');
+        }).catch((error) => {
+            console.error("Sign out error", error);
+        });
+    };
+
     function checkQuickLogin() {
         const savedName = localStorage.getItem('ba_trainee_name');
         if(savedName) {
@@ -581,10 +591,20 @@
 
     window.onload = function() {
         checkQuickLogin();
-        if(localStorage.getItem('ba_trainee_name')) {
-            document.getElementById('displayName').innerText = localStorage.getItem('ba_trainee_name');
+        // مراقبة حالة مصادقة المشرف وسحب الجلسة
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // إذا كان المشرف مسجلاً مسبقاً خلال الساعة الأخيرة
+                initAdminModule();
+            }
+        });
+
+        const savedName = localStorage.getItem('ba_trainee_name');
+        if(savedName) {
+            document.getElementById('displayName').innerText = savedName;
             document.getElementById('displayMobile').innerText = localStorage.getItem('ba_trainee_mobile') || '-';
             document.getElementById('displayBootcamp').innerText = localStorage.getItem('ba_trainee_bootcamp') || '-';
+            window.showView('dashboardView');
         }
     };
 
@@ -797,18 +817,18 @@
         });
     };
 
-    // ================= المصادقة الآمنة وإدارة المشرفين =================
+    // ================= المصادقة الآمنة وإدارة المشرفين (جلسة مفتوحة لساعة) =================
     window.adminLogin = async function() {
         const email = document.getElementById('adminEmail').value;
         const password = document.getElementById('adminPass').value;
-        if(!email || !password) { alert("الرجاء إدخال البريد وكلمة المرور المشفرة."); return; }
+        if(!email || !password) { alert("الرجاء إدخال البريد وكلمة المرور."); return; }
 
         try {
             await signInWithEmailAndPassword(auth, email, password);
             initAdminModule();
             window.showView('adminDashboardView');
         } catch(error) {
-            alert("فشل تسجيل الدخول. تأكد من صحة البريد أو كلمة المرور المسجلة في Firebase Authentication.");
+            alert("فشل تسجيل الدخول. تأكد من صحة بيانات المشرف في Firebase Authentication.");
         }
     };
 
