@@ -3,77 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة تقييم الكفاءات | تحليل الأعمال</title>
+    <title>منصة تقييم الكفاءات وإدارة الفرق | معسكر تحليل الأعمال</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
         :root {
-            --primary: #064E3B; 
-            --primary-light: #059669; 
-            --accent: #D97706; 
-            --bg-body: #F3F4F6; 
-            --bg-surface: #FFFFFF; 
-            --text-main: #111827; 
-            --text-secondary: #4B5563; 
-            --border-color: #E5E7EB;
-            --locked-bg: #F9FAFB;
-            --success: #059669;
-            --danger: #DC2626;
+            --primary: #064E3B; --primary-light: #059669; --accent: #D97706; 
+            --bg-body: #F3F4F6; --bg-surface: #FFFFFF; --text-main: #111827; 
+            --text-secondary: #4B5563; --border-color: #E5E7EB; --locked-bg: #F9FAFB;
+            --success: #059669; --danger: #DC2626;
         }
 
         body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 20px 0; display: flex; justify-content: center; min-height: 100vh; }
-        .container { width: 100%; max-width: 850px; margin: 0 15px; }
+        .container { width: 100%; max-width: 960px; margin: 0 15px; }
 
         .brand-header { background-color: var(--bg-surface); border-bottom: 3px solid var(--primary); padding: 20px 30px; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 30px; border-radius: 8px; }
         .brand-icon { font-size: 2em; color: var(--primary); }
         .brand-title h1 { margin: 0; font-size: 1.5em; font-weight: 800; color: var(--primary); }
         .brand-title p { margin: 5px 0 0 0; font-size: 0.9em; color: var(--text-secondary); font-weight: 500; }
 
-        .panel { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 40px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .panel { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 35px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 30px; }
         .view { display: none; }
         .view.active { display: block; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .form-label { display: block; margin-bottom: 8px; font-weight: 700; color: var(--text-main); }
-        .form-control { width: 100%; padding: 14px; border: 1px solid #D1D5DB; border-radius: 6px; font-family: 'Tajawal', sans-serif; font-size: 16px; box-sizing: border-box; margin-bottom: 25px; transition: border-color 0.2s; background-color: #F9FAFB; }
+        .form-control { width: 100%; padding: 14px; border: 1px solid #D1D5DB; border-radius: 6px; font-family: inherit; font-size: 16px; box-sizing: border-box; margin-bottom: 25px; transition: border-color 0.2s; background-color: #F9FAFB; }
         .form-control:focus { border-color: var(--primary); background-color: #FFF; outline: none; box-shadow: 0 0 0 3px rgba(6, 78, 59, 0.1); }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
-        .btn-primary { background-color: var(--primary); color: white; border: none; padding: 15px 25px; border-radius: 6px; font-size: 1.1em; font-weight: 700; font-family: inherit; cursor: pointer; transition: background 0.2s; width: 100%; }
+        .btn-primary { background-color: var(--primary); color: white; border: none; padding: 14px 22px; border-radius: 6px; font-size: 1.05em; font-weight: 700; cursor: pointer; transition: background 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; font-family: inherit;}
         .btn-primary:hover { background-color: var(--primary-light); }
-        .btn-secondary { background-color: white; color: var(--primary); border: 1px solid var(--primary); padding: 15px 25px; border-radius: 6px; font-size: 1.1em; font-weight: 700; font-family: inherit; cursor: pointer; width: 100%; margin-top: 15px; }
+        .btn-secondary { background-color: white; color: var(--primary); border: 1px solid var(--primary); padding: 14px 22px; border-radius: 6px; font-size: 1.05em; font-weight: 700; cursor: pointer; width: 100%; margin-top: 15px; display: flex; justify-content: center; align-items: center; gap: 10px; font-family: inherit;}
         .btn-secondary:hover { background-color: #F3F4F6; }
+        .btn-accent { background-color: var(--accent); color: white; border: none; padding: 10px 18px; border-radius: 6px; font-size: 0.95em; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-family: inherit; }
+        .btn-accent:hover { background-color: #B45309; }
 
         .user-bar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; }
         .user-bar .user-name { font-weight: 700; color: var(--primary); font-size: 1.1em; }
         .user-bar .logout { color: var(--danger); cursor: pointer; font-weight: 700; font-size: 0.9em; }
+        .user-bar .reset { color: var(--accent); cursor: pointer; font-weight: 700; font-size: 0.9em; margin-left: 15px; }
 
         .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        
-        .assessment-card { border: 1px solid var(--border-color); border-radius: 8px; padding: 30px; text-align: right; cursor: pointer; transition: all 0.2s; background: var(--bg-surface); display: flex; flex-direction: column; justify-content: center; position: relative; }
+        .assessment-card { border: 1px solid var(--border-color); border-radius: 8px; padding: 25px; text-align: right; cursor: pointer; transition: all 0.2s; background: var(--bg-surface); display: flex; flex-direction: column; justify-content: center; position: relative; }
         .assessment-card:hover:not(.locked) { border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        
         .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .card-icon { font-size: 1.8em; color: var(--primary); background: #ECFDF5; padding: 15px; border-radius: 8px; transition: all 0.2s;}
-        
-        .assessment-card h3 { margin: 0 0 5px 0; color: var(--text-main); font-size: 1.3em; }
-        .assessment-card p { margin: 0; color: var(--text-secondary); font-size: 0.95em; }
+        .assessment-card h3 { margin: 0 0 5px 0; color: var(--text-main); font-size: 1.25em; }
+        .assessment-card p { margin: 0; color: var(--text-secondary); font-size: 0.9em; }
         .score-badge { display: inline-block; background: #FEF3C7; color: #92400E; padding: 5px 12px; border-radius: 4px; font-weight: 700; margin-top: 20px; font-size: 0.9em; align-self: flex-start; }
 
-        /* حالة القفل */
         .locked { background-color: var(--locked-bg); cursor: not-allowed; }
         .locked .card-icon { background: #E5E7EB; color: #9CA3AF; }
         .status-tag { font-size: 0.85em; font-weight: 700; padding: 4px 8px; border-radius: 4px; }
         .tag-locked { color: var(--danger); background: #FEE2E2; }
-        
-        /* حالة الاكتمال */
         .completed { background-color: #F0FDF4; border-color: var(--success); }
         .completed .card-icon { background: #D1FAE5; color: var(--success); }
         .tag-completed { color: var(--success); background: #D1FAE5; }
 
-        .section-title { background: #F0FDF4; color: var(--primary); padding: 15px 20px; border-right: 4px solid var(--primary); font-weight: 700; font-size: 1.1em; margin: 40px 0 25px 0; border-radius: 4px 0 0 4px; }
+        /* Quiz Layout */
+        .section-title { background: #F0FDF4; color: var(--primary); padding: 15px 20px; border-right: 4px solid var(--primary); font-weight: 700; font-size: 1.1em; margin: 40px 0 25px 0; border-radius: 4px 0 0 4px; display: flex; justify-content: space-between; align-items: center;}
         .section-title:first-child { margin-top: 0; }
+        .section-badge { background: var(--primary); color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.8em; }
         .question-block { margin-bottom: 40px; }
         .question-text { font-size: 1.1em; font-weight: 700; margin-bottom: 20px; color: var(--text-main); line-height: 1.6; }
         .options-list { display: grid; grid-template-columns: 1fr; gap: 10px; }
@@ -81,77 +75,256 @@
         .option-item:hover { background: #F9FAFB; border-color: #D1D5DB; }
         .option-item input[type="radio"] { margin-left: 15px; transform: scale(1.2); accent-color: var(--primary); }
         .option-item .option-text { font-weight: 500; color: var(--text-secondary); }
-        
         .option-item:has(input[type="radio"]:checked) { border-color: var(--primary); background: #F0FDF4; }
         .option-item:has(input[type="radio"]:checked) .option-text { color: var(--primary); font-weight: 700; }
-
-        /* ألوان التظليل لوضع المراجعة (Read-Only) */
+        
         .correct-option { background-color: #ECFDF5 !important; border-color: var(--success) !important; }
         .correct-option .option-text { color: var(--success) !important; font-weight: 700; }
-        
         .wrong-option { background-color: #FEF2F2 !important; border-color: var(--danger) !important; }
         .wrong-option .option-text { color: var(--danger) !important; font-weight: 700; }
 
-        .result-box { text-align: center; padding: 30px 0; }
-        .result-score { font-size: 4em; font-weight: 800; color: var(--primary); margin-bottom: 10px; }
-        .result-msg { font-size: 1.2em; color: var(--text-secondary); margin-bottom: 30px; }
+        .result-box { text-align: center; padding: 20px 0; }
+        .result-score { font-size: 4em; font-weight: 800; color: var(--primary); margin-bottom: 5px; }
+        .chart-container { width: 100%; max-width: 600px; margin: 0 auto 30px auto; }
+        
+        /* Admin Additions */
+        .admin-link { text-align: center; margin-top: 20px; font-size: 0.9em; color: var(--text-secondary); cursor: pointer; text-decoration: underline; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
+        .stat-card { background: #F8FAFC; border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; text-align: center; }
+        .stat-card h3 { margin: 0; font-size: 2em; color: var(--primary); }
+        .stat-card p { margin: 5px 0 0 0; color: var(--text-secondary); font-size: 0.9em; font-weight: 700; }
+        
+        .admin-tabs { display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
+        .admin-tab { padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; color: var(--text-secondary); transition: all 0.2s;}
+        .admin-tab.active { background-color: var(--primary); color: white; }
 
-        @media (max-width: 600px) { .cards-grid { grid-template-columns: 1fr; } .panel { padding: 25px 20px; } }
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9em; }
+        .data-table th, .data-table td { border: 1px solid var(--border-color); padding: 12px; text-align: right; }
+        .data-table th { background-color: #F0FDF4; color: var(--primary); }
+        .btn-small { background: var(--accent); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-family: inherit; font-weight: bold;}
+        .btn-small:hover { background: #B45309; }
+
+        .admin-report-header { background: #F8FAFC; padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;}
+        .admin-report-header h3 { margin: 0 0 5px 0; color: var(--primary); }
+        .admin-report-header p { margin: 0; color: var(--text-secondary); }
+        
+        .answers-review-container { max-height: 450px; overflow-y: auto; padding: 15px; border: 1px solid var(--border-color); border-radius: 8px; background: #FAFAFA; margin-top: 15px; text-align: right;}
+        .ans-q { font-weight: bold; color: var(--primary); margin-bottom: 10px; font-size: 1em;}
+        .ans-opt { padding: 8px 12px; margin-bottom: 5px; border-radius: 4px; font-size: 0.9em; background: #fff; border: 1px solid #ddd;}
+        .ans-correct { background: #ECFDF5; border-color: var(--success); color: var(--success); font-weight: bold;}
+        .ans-wrong { background: #FEF2F2; border-color: var(--danger); color: var(--danger); font-weight: bold;}
+        .ans-missed { background: #fff; border-color: var(--success); color: var(--success); border-width: 2px; border-style: dashed;}
+
+        /* تنسيقات إدارة وتعديل الفرق ومؤشر القوة */
+        .teams-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .team-card { border: 1px solid var(--border-color); border-radius: 8px; background: #FFFFFF; box-shadow: 0 2px 4px rgba(0,0,0,0.03); overflow: hidden; display: flex; flex-direction: column;}
+        .team-card-header { background: #F0FDF4; border-bottom: 1px solid #D1FAE5; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center;}
+        .team-card-header h4 { margin: 0; color: var(--primary); font-size: 1.1em;}
+        .team-card-body { padding: 0 15px 15px 15px; flex-grow: 1; }
+        
+        /* مؤشر قوة الفريق */
+        .team-power-container { background: #F3F4F6; border-radius: 4px; margin: 15px 0; overflow: hidden; position: relative; height: 26px; border: 1px solid #E5E7EB; }
+        .team-power-fill { height: 100%; transition: width 0.5s ease-in-out, background-color 0.5s; }
+        .team-power-text { position: absolute; top: 0; left: 0; right: 0; text-align: center; font-size: 0.85em; font-weight: bold; color: #111827; line-height: 26px; text-shadow: 0px 0px 2px rgba(255,255,255,0.8); }
+
+        .team-member-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #F3F4F6; gap: 10px;}
+        .team-member-item:last-child { border-bottom: none; }
+        .member-info { display: flex; flex-direction: column; gap: 3px; }
+        .member-name { font-weight: bold; font-size: 0.95em; color: var(--text-main); }
+        .member-skill-tag { font-size: 0.75em; background: #E0E7FF; color: #3730A3; padding: 2px 8px; border-radius: 10px; width: fit-content; font-weight: bold;}
+        
+        .member-reassign-select { padding: 4px 8px; border: 1px solid #D1D5DB; border-radius: 4px; font-family: inherit; font-size: 0.85em; background: #FFF; color: var(--text-main); cursor: pointer;}
+        .remove-member-btn { color: var(--danger); background: none; border: none; cursor: pointer; font-size: 0.9em; padding: 4px;}
+        .remove-member-btn:hover { opacity: 0.8; }
+
+        .unassigned-pool { border: 2px dashed #D1D5DB; border-radius: 8px; padding: 20px; background: #F9FAFB; margin-top: 25px;}
+        .unassigned-pool h4 { margin: 0 0 15px 0; color: var(--accent); }
+        .unassigned-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+        .unassigned-item { background: white; border: 1px solid var(--border-color); padding: 10px 14px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;}
+
+        @media (max-width: 768px) { .cards-grid, .stats-grid, .grid-2, .teams-grid { grid-template-columns: 1fr; } .panel { padding: 20px; } .admin-report-header { flex-direction: column; text-align: center; gap: 10px;} }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="brand-header">
-        <div class="brand-icon"><i class="fa-solid fa-layer-group"></i></div>
+        <div class="brand-icon"><i class="fa-solid fa-chart-radar"></i><i class="fa-solid fa-users-gear"></i></div>
         <div class="brand-title">
             <h1>أكاديمية تحليل الأعمال</h1>
-            <p>منصة التقييم والقياس المهني</p>
+            <p>منصة القياس وتطوير الكفاءات وإدارة الفرق</p>
         </div>
     </div>
 
-    <!-- شاشة تسجيل الدخول -->
+    <!-- ================= شاشة تسجيل الدخول والتسجيل ================= -->
     <div id="loginView" class="panel view active">
-        <h2 style="margin-top: 0; margin-bottom: 25px; color: var(--text-main); font-size: 1.4em;">تسجيل دخول المتدرب</h2>
-        <label class="form-label">الاسم الثلاثي</label>
-        <input type="text" id="traineeName" class="form-control" placeholder="أدخل اسمك الكامل" required>
-        <label class="form-label">البريد الإلكتروني</label>
-        <input type="email" id="traineeEmail" class="form-control" placeholder="أدخل البريد الإلكتروني" required>
-        <button class="btn-primary" onclick="login()">متابعة <i class="fa-solid fa-arrow-left" style="margin-right: 8px;"></i></button>
+        <h2 style="margin-top: 0; margin-bottom: 25px;">تسجيل بيانات المتدرب</h2>
+        <div class="grid-2">
+            <div>
+                <label class="form-label">الاسم الثلاثي</label>
+                <input type="text" id="traineeName" class="form-control" placeholder="أدخل اسمك الكامل" required>
+            </div>
+            <div>
+                <label class="form-label">البريد الإلكتروني</label>
+                <input type="email" id="traineeEmail" class="form-control" placeholder="أدخل البريد الإلكتروني" required>
+            </div>
+            <div>
+                <label class="form-label">رقم الجوال</label>
+                <input type="tel" id="traineeMobile" class="form-control" placeholder="05xxxxxxxx" required>
+            </div>
+            <div>
+                <label class="form-label">رقم المتدرب (أرقام فقط)</label>
+                <input type="number" id="bootcampId" class="form-control" placeholder="مثال: 125" required>
+            </div>
+        </div>
+        <button class="btn-primary" onclick="login()">متابعة ودخول <i class="fa-solid fa-arrow-left"></i></button>
+        <div class="admin-link" onclick="showView('adminLoginView')"><i class="fa-solid fa-user-shield"></i> بوابة الإدارة وتشكيل الفرق (Admin)</div>
     </div>
 
-    <!-- لوحة التحكم -->
+    <!-- ================= شاشة دخول الإدارة ================= -->
+    <div id="adminLoginView" class="panel view">
+        <h2 style="margin-top: 0; color: var(--accent);">بوابة الإدارة والمشرفين</h2>
+        <label class="form-label">كلمة المرور (للتجربة: admin123)</label>
+        <input type="password" id="adminPass" class="form-control" placeholder="أدخل كلمة المرور">
+        <button class="btn-primary" style="background-color: var(--accent);" onclick="adminLogin()">تسجيل الدخول</button>
+        <button class="btn-secondary" onclick="showView('loginView')">عودة لصفحة المتدربين</button>
+    </div>
+
+    <!-- ================= لوحة تحكم الإدارة (Admin Dashboard) ================= -->
+    <div id="adminDashboardView" class="panel view">
+        <div class="user-bar">
+            <h2 style="margin: 0; color: var(--primary);"><i class="fa-solid fa-chart-line"></i> مركز قيادة المعسكر التدريبي</h2>
+            <div class="logout" onclick="showView('loginView')">خروج <i class="fa-solid fa-right-from-bracket"></i></div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card"><h3 id="totalTraineesCount">0</h3><p>إجمالي المتدربين المسجلين</p></div>
+            <div class="stat-card"><h3 id="avgPreScore">0%</h3><p>متوسط التقييم القبلي</p></div>
+            <div class="stat-card"><h3 id="avgPostScore">0%</h3><p>متوسط التقييم البعدي</p></div>
+        </div>
+
+        <!-- تبويبات الإدارة -->
+        <div class="admin-tabs">
+            <div class="admin-tab active" id="tabTraineesBtn" onclick="switchAdminTab('trainees')"><i class="fa-solid fa-users"></i> سجل المتدربين والتقارير</div>
+            <div class="admin-tab" id="tabTeamsBtn" onclick="switchAdminTab('teams')"><i class="fa-solid fa-people-group"></i> أداة تشكيل وتعديل الفرق (تتضمن مؤشر القوة)</div>
+        </div>
+
+        <!-- التبويب الأول: جدول المتدربين والتقارير -->
+        <div id="adminTraineesSection">
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>المتدرب / الجوال</th>
+                            <th>معرّف المتدرب</th>
+                            <th>القبلي</th>
+                            <th>البعدي</th>
+                            <th>أبرز كفاءة (القوة)</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="traineesTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- التبويب الثاني: أداة تشكيل وتعديل الفرق التفاعلية مع مؤشر القوة -->
+        <div id="adminTeamsSection" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px;">
+                <div>
+                    <h3 style="margin: 0; color: var(--primary);">إدارة وتشكيل فرق مشاريع التخرج</h3>
+                    <p style="margin: 5px 0 0 0; font-size: 0.9em; color: var(--text-secondary);">مؤشر القوة (Team Power) يعتمد على <strong>درجات التقييم القبلي فقط</strong> (لأن التشكيل يتم قبل المعسكر) وعلى <strong>تنوع وتكامل الكفاءات</strong> في الفريق.</p>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn-accent" onclick="addNewEmptyTeam()"><i class="fa-solid fa-plus"></i> إضافة فريق جديد</button>
+                    <button class="btn-primary" style="width: auto; padding: 10px 18px;" onclick="autoGenerateBalancedTeams()"><i class="fa-solid fa-wand-magic-sparkles"></i> تشكيل ذكي متوازن</button>
+                </div>
+            </div>
+
+            <!-- شبكة بطاقات الفرق -->
+            <div class="teams-grid" id="teamsCardsContainer"></div>
+
+            <!-- قائمة المتدربين غير المعينين في أي فريق -->
+            <div class="unassigned-pool">
+                <h4><i class="fa-solid fa-user-clock"></i> قائمة الانتظار (متدربون غير معينين في فرق): <span id="unassignedCount">0</span></h4>
+                <div class="unassigned-grid" id="unassignedListContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= شاشة تقرير المتدرب للمشرف ================= -->
+    <div id="adminReportView" class="panel view">
+        <div class="user-bar">
+            <h2 style="margin: 0; color: var(--primary);"><i class="fa-solid fa-file-contract"></i> التقرير التحليلي للمتدرب</h2>
+            <div class="logout" onclick="showView('adminDashboardView')">العودة للوحة الإدارة <i class="fa-solid fa-xmark"></i></div>
+        </div>
+        
+        <div class="admin-report-header">
+            <div>
+                <h3 id="adminRepName">اسم المتدرب</h3>
+                <p id="adminRepEmailMobile">البريد الإلكتروني | الجوال</p>
+                <p style="font-size:0.85em; color: var(--accent); margin-top:5px;">المعرّف: <span id="adminRepBootcamp"></span></p>
+            </div>
+            <div style="text-align: left; background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                <p style="margin:0 0 10px 0;">التقييم القبلي: <strong id="adminRepPre" style="color:var(--accent); font-size:1.2em;">0%</strong></p>
+                <p style="margin:0;">التقييم البعدي: <strong id="adminRepPost" style="color:var(--success); font-size:1.2em;">0%</strong></p>
+            </div>
+        </div>
+
+        <h3 style="text-align: center; color: var(--primary); margin-top:30px;">الخريطة الرادارية (مقارنة الأداء وتطور الكفاءات)</h3>
+        <p style="text-align: center; font-size: 0.9em; color: var(--text-secondary);">البرتقالي: التقييم القبلي | الأخضر: التقييم البعدي</p>
+        <div class="chart-container"><canvas id="adminRadarChart"></canvas></div>
+
+        <h3 style="border-bottom: 2px solid var(--primary-light); padding-bottom: 10px; margin-top: 40px;">مراجعة الإجابات التفصيلية</h3>
+        
+        <div style="display:flex; gap:10px; margin-bottom:10px;">
+            <button class="btn-secondary" style="margin:0; padding:10px;" onclick="renderAdminAnswersReview('pre')">عرض إجابات القبلي</button>
+            <button class="btn-primary" style="margin:0; padding:10px;" onclick="renderAdminAnswersReview('post')">عرض إجابات البعدي</button>
+        </div>
+        <div class="answers-review-container" id="adminAnswersContainer">
+            <p style="text-align:center; color:gray;">الرجاء تحديد الاختبار لعرض إجابات المتدرب.</p>
+        </div>
+        
+        <button class="btn-secondary" onclick="showView('adminDashboardView')" style="margin-top:30px;">إغلاق التقرير والعودة</button>
+    </div>
+
+    <!-- ================= شاشات المتدرب (Trainee Views) ================= -->
     <div id="dashboardView" class="panel view">
         <div class="user-bar">
-            <div class="user-name"><i class="fa-regular fa-circle-user"></i> <span id="displayName"></span></div>
-            <div class="logout" onclick="logout()">تسجيل الخروج <i class="fa-solid fa-right-from-bracket"></i></div>
+            <div class="user-name">
+                <i class="fa-regular fa-circle-user"></i> <span id="displayName"></span>
+                <div style="font-size:0.75em; color:var(--text-secondary); font-weight:normal; margin-top:5px;">المعرّف: <span id="displayBootcamp"></span> | الجوال: <span id="displayMobile"></span></div>
+            </div>
+            <div style="display: flex;">
+                <div class="reset" onclick="resetProgress()"><i class="fa-solid fa-rotate-right"></i> إعادة التعيين</div>
+                <div class="logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</div>
+            </div>
         </div>
         
-        <h3 style="margin-top:0; margin-bottom: 20px; font-size: 1.2em;">التقييمات المتاحة:</h3>
-        
+        <h3 style="margin-top:0; margin-bottom: 20px; font-size: 1.2em;">مسار التقييم المتاح:</h3>
         <div class="cards-grid">
-            <!-- التقييم القبلي -->
             <div class="assessment-card" id="preTestCard" onclick="handlePreTestClick()">
                 <div class="card-header">
                     <div class="card-icon" id="preIcon"><i class="fa-solid fa-file-signature"></i></div>
-                    <div class="status-tag tag-completed" id="preTag" style="display:none;">مكتمل (اضغط للمراجعة)</div>
+                    <div class="status-tag tag-completed" id="preTag" style="display:none;">مكتمل (مراجعة)</div>
                 </div>
-                <h3>التقييم القبلي</h3>
-                <p>قياس الأساسيات المعرفية قبل المعسكر</p>
+                <h3>التقييم الشامل القبلي</h3>
+                <p>قياس الأساسيات المعرفية والسمات الشخصية</p>
                 <div id="preScoreBadge" class="score-badge" style="display:none;"></div>
             </div>
             
-            <!-- التقييم البعدي -->
             <div class="assessment-card locked" id="postTestCard" onclick="handlePostTestClick()">
                 <div class="card-header">
                     <div class="card-icon" id="postIcon"><i class="fa-solid fa-lock"></i></div>
                     <div class="status-tag tag-locked" id="postTag">مغلق مؤقتاً</div>
                 </div>
-                <h3>التقييم البعدي</h3>
-                <p>قياس المهارات التطبيقية ودراسات الحالة</p>
+                <h3>التقييم الشامل البعدي</h3>
+                <p>قياس المهارات التطبيقية تحت الضغط</p>
                 <div id="postScoreBadge" class="score-badge" style="display:none;"></div>
             </div>
         </div>
+        
+        <button id="traineeFullReportBtn" class="btn-primary" onclick="showView('resultView')" style="display:none; margin-top: 30px;"><i class="fa-solid fa-chart-radar"></i> عرض خريطة التطور الشاملة</button>
     </div>
 
     <!-- شاشة الاختبار / المراجعة -->
@@ -160,26 +333,22 @@
             <h2 id="quizTitle" style="margin: 0; font-size: 1.3em; color: var(--primary);"></h2>
             <div class="logout" onclick="showView('dashboardView')" style="color: var(--text-secondary);">إغلاق <i class="fa-solid fa-xmark"></i></div>
         </div>
-        
-        <!-- سيظهر هذا التنبيه في وضع المراجعة فقط -->
         <div id="reviewNotice" style="display:none; background:#EFF6FF; color:#1D4ED8; padding:15px; border-radius:6px; margin-bottom:20px; border:1px solid #BFDBFE; font-weight:700;">
-            <i class="fa-solid fa-circle-info"></i> أنت الآن في وضع المراجعة. الإجابات الصحيحة مظللة بالأخضر، وإجاباتك الخاطئة مظللة بالأحمر.
+            <i class="fa-solid fa-circle-info"></i> وضع المراجعة: الإجابات الصحيحة (أخضر)، وإجاباتك الخاطئة (أحمر).
         </div>
-
         <div id="questionsContainer"></div>
-        
-        <!-- أزرار التحكم -->
         <button class="btn-primary" id="submitQuizBtn" onclick="submitQuiz()" style="margin-top: 20px;">تسليم واعتماد الإجابات <i class="fa-solid fa-check"></i></button>
-        <button class="btn-secondary" id="backToDashBtn" onclick="showView('dashboardView')" style="display:none;">العودة للوحة الرئيسية <i class="fa-solid fa-arrow-left"></i></button>
+        <button class="btn-secondary" id="backToDashBtn" onclick="showView('dashboardView')" style="display:none;">العودة للوحة الرئيسية</button>
     </div>
 
-    <!-- شاشة النتيجة -->
+    <!-- شاشة النتيجة للمتدرب -->
     <div id="resultView" class="panel view">
         <div class="result-box">
-            <h2 style="margin-top: 0; color: var(--text-main);">تمت عملية التقييم بنجاح</h2>
-            <div class="result-score" id="finalScoreText">0%</div>
-            <div class="result-msg" id="resultMessage"></div>
-            <button class="btn-primary" onclick="sendResultToTrainer()" id="emailBtn"><i class="fa-regular fa-paper-plane"></i> إرسال التقرير لإدارة التدريب</button>
+            <h2 style="margin-top: 0; color: var(--text-main);">الخريطة الرادارية (قياس التطور)</h2>
+            <div class="result-score" id="finalScoreText"></div>
+            <div style="font-size: 1.2em; color: var(--text-secondary); margin-bottom: 10px; font-weight: 700;" id="resultMessage">مقارنة مستوى الكفاءات بين التقييم القبلي والبعدي</div>
+            <div class="chart-container"><canvas id="competencyRadarChart"></canvas></div>
+            <button class="btn-primary" onclick="sendResultToTrainer()" id="emailBtn">إرسال التقرير للإدارة <i class="fa-regular fa-paper-plane"></i></button>
             <button class="btn-secondary" onclick="showView('dashboardView')">العودة للرئيسية</button>
         </div>
     </div>
@@ -188,82 +357,126 @@
 <script>
     (function(){ emailjs.init("CwOjDhn14h3jS1us4"); })();
 
-    // بنك الأسئلة
+    // ================= بنك الأسئلة الشامل (23 للقبلي + 23 للبعدي) =================
     const preQuestions = [
-        { section: "المحور الأول: أساسيات ومنهجيات تحليل الأعمال", q: "ما هو الدور الأساسي لمحلل الأعمال في مشاريع التحول الرقمي؟", options: ["كتابة الأكواد البرمجية", "سد الفجوة بين احتياجات العمل والحلول التقنية", "إدارة ميزانية المشروع بشكل حصري", "اختبار جودة النظام برمجياً"], answer: 1 },
-        { section: "المحور الأول: أساسيات ومنهجيات تحليل الأعمال", q: "أي المنهجيات التالية تعتمد على تسليم المشروع على شكل دورات متكررة ومرنة (Iterative)؟", options: ["الشلال (Waterfall)", "أجايل (Agile)", "ستة سيجما (Six Sigma)", "هندسة النظم"], answer: 1 },
-        { section: "المحور الأول: أساسيات ومنهجيات تحليل الأعمال", q: "ما هو الاختصار الصحيح لدورة حياة تطوير البرمجيات؟", options: ["BPMN", "SDLC", "SWOT", "UML"], answer: 1 },
-        { section: "المحور الثاني: هندسة المتطلبات", q: "أي من الخيارات التالية يمثل 'متطلباً غير وظيفي' (Non-Functional Requirement)؟", options: ["إرسال رسالة تأكيد للمستخدم", "تحميل الفاتورة بصيغة PDF", "استجابة النظام لطلب الدخول في أقل من ثانيتين", "وجود شاشة لإضافة عملاء"], answer: 2 },
-        { section: "المحور الثاني: هندسة المتطلبات", q: "ما هي الصيغة القياسية الشائعة لكتابة 'قصة المستخدم' (User Story)؟", options: ["بصفتي [مستخدم]، أريد [ميزة]، حتى أتمكن من [هدف]", "يجب على النظام أن يقوم بـ [إجراء] عند [شرط]", "كيف يمكننا توفير [ميزة] للعميل؟", "سنقوم ببرمجة [ميزة] لحل [مشكلة]"], answer: 0 },
-        { section: "المحور الثاني: هندسة المتطلبات", q: "ما هو الغرض الرئيسي من 'معايير القبول' (Acceptance Criteria)؟", options: ["تحديد لغة البرمجة المستخدمة", "توضيح شروط اعتبار قصة المستخدم مكتملة ومقبولة", "تحديد تكلفة المتطلب", "توزيع المهام على المبرمجين"], answer: 1 },
-        { section: "المحور الثالث: نمذجة وإدارة العمليات", q: "في لغة نمذجة العمليات (BPMN)، ماذا يمثل الشكل الهندسي 'المعين' (Diamond)؟", options: ["بداية العملية", "مهمة أو نشاط", "بوابة اتخاذ قرار أو تفرع", "نهاية العملية"], answer: 2 },
-        { section: "المحور الثالث: نمذجة وإدارة العمليات", q: "دراسة وتوثيق سير العمل 'كما هو حالياً' قبل أي تحسينات يُعرف بـ:", options: ["To-Be Process", "As-Is Process", "Process Automation", "Agile Process"], answer: 1 },
-        { section: "المحور الرابع: إدارة أصحاب المصلحة", q: "من هو 'صاحب المصلحة' (Stakeholder) في مشاريع التقنية؟", options: ["العميل النهائي فقط", "المبرمجون فقط", "المستثمرون فقط", "أي شخص يؤثر أو يتأثر بالمشروع"], answer: 3 },
-        { section: "المحور الرابع: إدارة أصحاب المصلحة", q: "كيف يتصرف محلل الأعمال عند تلقي متطلبات متعارضة من إدارتين مختلفتين؟", options: ["ينفذ طلب الإدارة العليا", "يرفض الطلبين", "يعقد اجتماعاً للوصول لتوافق وأولوية مشتركة", "ينفذ الأسهل برمجياً"], answer: 2 }
+        { section: "التفكير التحليلي", category: "Technical", q: "ما هو الهدف الرئيسي من استخدام 'التفكير النظمي' (Systems Thinking) في تحليل الأعمال؟", options: ["برمجة الأنظمة التقنية", "فهم كيفية تفاعل أجزاء المؤسسة معاً", "التفكير في الميزانية", "تحديد لغة البرمجة"], answer: 1 },
+        { section: "التفكير التحليلي", category: "Technical", q: "أي التقنيات تستخدم للوصول إلى 'السبب الجذري' (Root Cause) لمشكلة بدلاً من أعراضها؟", options: ["تقنية تقصي الأسباب (5 Whys)", "مخطط البيانات (DFD)", "قصص المستخدمين", "مصفوفة RACI"], answer: 0 },
+        { section: "التفكير التحليلي", category: "Technical", q: "ما هي الفائدة الأساسية من مهارة 'التفكير البصري' (Visual Thinking) لمحلل الأعمال؟", options: ["جعل المستندات تبدو أجمل", "تبسيط المعلومات المعقدة وتسهيل فهمها للجميع", "استبدال النصوص بالكامل", "تقليل تكلفة الطباعة"], answer: 1 },
+        { section: "الخصائص السلوكية", category: "Technical", q: "كيف يظهر محلل الأعمال 'المسؤولية الشخصية' (Personal Accountability)؟", options: ["بتحميل الأخطاء لفريق البرمجة", "بإنجاز المهام بجودة عالية وتحمل نتيجة القرارات", "بالموافقة على جميع طلبات العميل", "بالعمل الفردي السري"], answer: 1 },
+        { section: "الخصائص السلوكية", category: "Technical", q: "لماذا تعتبر 'الجدارة بالثقة' (Trustworthiness) مهارة حاسمة للمحلل؟", options: ["لبناء علاقات قوية تسهل استنباط المتطلبات الحقيقية", "لجعل المبرمجين يعملون أسرع", "للحصول على ترقية", "لتقليل ميزانية المشروع"], answer: 0 },
+        { section: "الخصائص السلوكية", category: "Technical", q: "ماذا تعني مهارة 'القدرة على التكيف' (Adaptability) في بيئة المشاريع؟", options: ["تغيير العمل كل شهر", "رفض أي تغيير على النطاق المعتمد", "تعديل أسلوب العمل والتقنيات بمرونة للاستجابة لتغير احتياجات بيئة العمل", "الاستسلام عند مواجهة الصعوبات"], answer: 2 },
+        { section: "المعرفة بالأعمال", category: "Technical", q: "ماذا يُقصد بـ 'الفطنة التجارية' (Business Acumen)؟", options: ["برمجة التطبيقات التجارية", "فهم المبادئ الأساسية لكيفية تحقيق المؤسسة للأرباح والقيمة", "مهارة بيع المنتجات", "صياغة العقود القانونية"], answer: 1 },
+        { section: "المعرفة بالأعمال", category: "Technical", q: "لماذا يجب فهم 'معرفة المؤسسة' (Organization Knowledge) هيكلياً وسياسياً؟", options: ["لمعرفة من يمتلك السلطة لتسهيل اعتماد المتطلبات", "لتوزيع الرواتب", "لأداء دور الموارد البشرية", "لتصميم الهوية البصرية"], answer: 0 },
+        { section: "المعرفة بالأعمال", category: "Technical", q: "أهمية 'المعرفة بالصناعة' (Industry Knowledge) لمحلل الأعمال تكمن في:", options: ["معرفة رواتب الموظفين", "فهم التوجهات والمنافسين لضمان تقديم حلول ذات صلة وتنافسية", "تطوير مواقع الويب للصناعة", "لا أهمية لها طالما يفهم البرمجة"], answer: 1 },
+        { section: "مهارات التواصل", category: "Technical", q: "ما المكون الأهم في 'الاستماع الفعال' (Active Listening) أثناء جمع المتطلبات؟", options: ["الكتابة الحرفية لكل كلمة", "تجهيز الرد أثناء حديث العميل", "التركيز التام وطرح أسئلة توضيحية لتأكيد الفهم", "الاستماع دون أي تفاعل"], answer: 2 },
+        { section: "مهارات التواصل", category: "Technical", q: "متى يكون 'التواصل الكتابي' هو الأنسب؟", options: ["لحل النزاعات العاطفية", "لتوثيق المتطلبات للرجوع إليها واعتمادها رسمياً", "للعصف الذهني السريع", "لإيصال الأخبار السيئة"], answer: 1 },
+        { section: "مهارات التواصل", category: "Technical", q: "أي مما يلي يعتبر من عناصر 'التواصل غير اللفظي'؟", options: ["البريد الإلكتروني", "لغة الجسد، التواصل البصري، ونبرة الصوت", "كتابة الأكواد", "التقارير اليومية"], answer: 1 },
+        { section: "مهارات التفاعل", category: "Technical", q: "ما دور محلل الأعمال كـ 'مُيسّر' (Facilitator) في ورش العمل؟", options: ["توجيه النقاش بفعالية وحيادية للوصول لأهداف الورشة", "فرض رأيه الشخصي", "القيام بالبرمجة أثناء الورشة", "تقديم الضيافة فقط"], answer: 0 },
+        { section: "مهارات التفاعل", category: "Technical", q: "أي مهارة تستخدم لحل خلافات أصحاب المصلحة حول أولوية المتطلبات؟", options: ["التدريس", "التفاوض وحل النزاعات", "البرمجة العصبية", "تصميم الجرافيك"], answer: 1 },
+        { section: "مهارات التفاعل", category: "Technical", q: "كيف يمارس محلل الأعمال 'القيادة والتأثير' دون امتلاك سلطة إدارية مباشرة؟", options: ["بالتهديد والوعيد", "ببناء التوافق وتوضيح القيمة الاستراتيجية للحلول", "بتجاهل الإدارة العليا", "بالعمل بمفرده"], answer: 1 },
+        { section: "الأدوات والتكنولوجيا", category: "Technical", q: "أداة شائعة لتتبع وإدارة متطلبات مشاريع الأجايل (Agile)؟", options: ["Photoshop", "MS Word", "Jira / Confluence", "AutoCAD"], answer: 2 },
+        { section: "الأدوات والتكنولوجيا", category: "Technical", q: "ما الفائدة الأساسية من استخدام أدوات نمذجة العمليات (مثل Bizagi أو Visio)؟", options: ["توفير تمثيل بصري للمسارات يسهل فهمه للجميع", "لأنها دائماً مجانية", "تولد كود البرمجة التلقائي", "تسرع الإنترنت"], answer: 0 },
+        { section: "الأدوات والتكنولوجيا", category: "Technical", q: "ما هو أفضل نوع من الأدوات لاستخدامه في 'ورش عمل استنباط المتطلبات عن بُعد'؟", options: ["البريد الإلكتروني العادي", "السبورات البيضاء الافتراضية (Virtual Whiteboards)", "برامج معالجة النصوص", "الآلة الحاسبة"], answer: 1 },
+        { section: "الذكاء الاجتماعي", category: "VIA", q: "[سيناريو] في اجتماع متوتر للمتطلبات، لاحظت أن مدير التسويق صامت وتعبيرات وجهه توحي بعدم الرضا. ماذا تفعل؟", options: ["أتجاهله طالما أنه لم يعترض", "أوجه له سؤالاً مفتوحاً بشكل ودي لإشراكه ومعرفة مخاوفه", "أطلب منه الخروج من الاجتماع", "أنهي الاجتماع فوراً"], answer: 1 },
+        { section: "التفكير النقدي", category: "VIA", q: "[سيناريو] اقترح مطور حلاً تقنياً يختلف تماماً عن فكرتك الأساسية التي تعبت في إعدادها. كيف تتصرف؟", options: ["أرفض الفكرة لأنني المحلل وأنا من يقرر", "أستمع لفكرته بموضوعية وأقارنها بالمتطلبات للوصول للحل الأمثل", "أصمت وأتركه يفعل ما يريد", "أشتكيه لمدير المشروع"], answer: 1 },
+        { section: "المثابرة", category: "VIA", q: "[سيناريو] بعد 3 أسابيع من توثيق العمليات المعقدة، تغيرت استراتيجية الشركة وتم إلغاء عملك بالكامل. ما رد فعلك؟", options: ["أستقيل فوراً لضياع جهدي", "أشعر بالإحباط وأرفض استلام مهام جديدة", "أتقبل التغيير بمرونة وأبدأ في التوثيق الجديد بحماس", "أكتب نفس الوثيقة القديمة بعناوين مختلفة"], answer: 2 },
+        { section: "النزاهة والصدق", category: "VIA", q: "[سيناريو] اكتشفت خطأ فادحاً ارتكبته أنت في وثيقة المتطلبات بعد اعتمادها، وتصحيحه سيؤخر الفريق. ماذا تفعل؟", options: ["أتجاهل الخطأ وأتمنى ألا يلاحظه أحد", "أخبر المبرمج بتعديله سراً", "أعترف بالخطأ فوراً للجميع وأطرح خطة بديلة لتصحيحه", "ألوم العميل لعدم مراجعته جيداً"], answer: 2 },
+        { section: "العمل الجماعي", category: "VIA", q: "[سيناريو] لاحظت أن زميلك المحلل المبتدئ متأخر في تسليم مهامه ويواجه ضغطاً كبيراً. ماذا تفعل؟", options: ["أبلغ مديره عن تقصيره", "أخبره أنه يجب أن يعمل لساعات إضافية", "أعرض عليه المساعدة في جزء من مهامه وتوجيهه", "أتجاهل الأمر فلكل شخص مهامه"], answer: 2 }
     ];
 
     const postQuestions = [
-        { section: "المحور الأول: تحليل السيناريوهات", q: "[سيناريو] طلب عميل بناء نظام متكامل للبنوك مع متطلبات صارمة وثابتة قانونياً لا تقبل التعديل. ما المنهجية الأنسب؟", options: ["أجايل (Agile/Scrum)", "الشلال (Waterfall)", "كانبان (Kanban)", "التفكير التصميمي (Design Thinking)"], answer: 1 },
-        { section: "المحور الأول: تحليل السيناريوهات", q: "أثناء تخطيط (Sprint)، اكتشف الفريق أن متطلباً غير واضح. من المسؤول عن توضيحه؟", options: ["Scrum Master", "مالك المنتج / محلل الأعمال (PO/BA)", "العميل المباشر", "رئيس قسم البرمجة"], answer: 1 },
-        { section: "المحور الثاني: التطبيق العملي", q: "[دراسة حالة] طلب العميل 'إضافة ميزة الدفع السريع'. أي من التالي يعتبر معيار قبول (Acceptance Criteria) سليم؟", options: ["برمجة الزر بلغة React", "أن يتم الدفع بشكل سريع", "عند الضغط، تظهر شاشة تأكيد تحتوي على آخر بطاقة محفوظة", "أن يكون تصميم الزر جذاباً"], answer: 2 },
-        { section: "المحور الثاني: التطبيق العملي", q: "طلب موظف المستودع أن يعمل النظام 'بدون إنترنت أحياناً'. كيف تصنف هذا المتطلب؟", options: ["متطلب أعمال", "متطلب وظيفي", "متطلب غير وظيفي - التواجدية", "قاعدة عمل"], answer: 2 },
-        { section: "المحور الثاني: التطبيق العملي", q: "المطورون برمجوا خاصية إضافية لم يطلبها العميل (Gold Plating). ما الإجراء؟", options: ["إضافتها للفاتورة", "رفضها لأنها تخرج عن نطاق المشروع المعتمد", "إخفاؤها", "اعتمادها كمتطلب غير وظيفي"], answer: 1 },
-        { section: "المحور الثالث: إعادة هندسة العمليات", q: "[حالة عملية] معاملة تتوقف يومين للطباعة والتوقيع اليدوي. ما هو التحسين الأفضل (To-Be)؟", options: ["زيادة الموظفين", "تطبيق توقيع إلكتروني وإلغاء الطباعة", "إلغاء الاعتماد", "تغيير لغة النمذجة"], answer: 1 },
-        { section: "المحور الثالث: إعادة هندسة العمليات", q: "في BPMN، لتوضيح عملية تنقسم لمسارين يحدثان *في نفس الوقت* نستخدم:", options: ["Exclusive Gateway", "Parallel Gateway (AND)", "Event-Based Gateway", "Complex Gateway"], answer: 1 },
-        { section: "المحور الثالث: إعادة هندسة العمليات", q: "ماذا يمثل كل مسار (Lane) في مخططات (Swimlanes)؟", options: ["الوقت المستغرق", "الدور الوظيفي أو النظام (Actor/System)", "قاعدة البيانات", "الأخطاء"], answer: 1 },
-        { section: "المحور الرابع: إدارة التغيير", q: "[سيناريو] بعد اعتماد النطاق، طلب الراعي إضافة ميزة ضخمة عاجلة. ماذا تفعل؟", options: ["إضافتها فوراً", "رفضها تماماً", "إخضاعها لعملية إدارة التغيير (Change Request)", "تنفيذها لاحقاً"], answer: 2 },
-        { section: "المحور الرابع: إدارة التغيير", q: "ما الأداة المستخدمة لتصنيف أصحاب المصلحة بناءً على تأثيرهم واهتمامهم؟", options: ["مصفوفة القوة/الاهتمام", "SWOT", "Fishbone", "Pareto"], answer: 0 }
+        { section: "التفكير التحليلي", category: "Technical", q: "[سيناريو] لاحظت كثرة شكاوى العملاء من بطء التطبيق. بدلاً من طلب زيادة سعة السيرفرات فوراً، حللت رحلة العميل واكتشفت أن المشكلة في تصميم واجهة الدفع. أي مهارة طبقت؟", options: ["التفكير المفاهيمي وحل المشكلات", "أدوات التكنولوجيا", "العمل الجماعي", "مهارات التدريس"], answer: 0 },
+        { section: "التفكير التحليلي", category: "Technical", q: "[سيناريو] أثناء تحليل نظام جديد، وجدت بيانات ضخمة ومتناثرة. كيف تطبق 'التفكير البصري'؟", options: ["كتابتها في مستند نصي طويل", "تحويل البيانات إلى نماذج ومخططات رسومية (Context/Process Models)", "تجاهل البيانات المعقدة", "قراءتها بصوت عالٍ"], answer: 1 },
+        { section: "التفكير التحليلي", category: "Technical", q: "[سيناريو] طلب العميل إضافة ميزة لنظام المبيعات، لكنك أدركت أنها ستؤثر سلباً على تقارير النظام المالي. أي مهارة جعلتك تلاحظ ذلك؟", options: ["التفكير النظمي (Systems Thinking)", "مهارة الكتابة", "إدارة الوقت", "البرمجة الموجهة للكائنات"], answer: 0 },
+        { section: "الخصائص السلوكية", category: "Technical", q: "[سيناريو] طلب منك مديرك تغيير متطلب معتمد دون المرور بإجراءات طلب التغيير (CR). التصرف الذي يعكس 'الأخلاقيات المهنية'؟", options: ["تنفيذ الطلب سراً", "رفض الطلب بلطف وتوضيح مخاطر تجاوز الإجراءات", "الاستقالة", "توجيه اللوم للعميل"], answer: 1 },
+        { section: "الخصائص السلوكية", category: "Technical", q: "[سيناريو] تغيرت استراتيجية المشروع فجأة للانتقال من منهجية Waterfall إلى Agile. كيف تظهر 'القدرة على التكيف'؟", options: ["الاعتراض المستمر", "إيقاف العمل تماماً", "تعديل أسلوب عملك فوراً والبدء في تقسيم المتطلبات لقصص مستخدمين", "نقل مسؤولياتك للآخرين"], answer: 2 },
+        { section: "الخصائص السلوكية", category: "Technical", q: "[سيناريو] نسيت توثيق متطلب هام مما تسبب في خطأ برمجي. كيف تطبق 'المسؤولية الشخصية'؟", options: ["الاعتراف بالخطأ فوراً والعمل مع الفريق لإيجاد حل بأقل الأضرار", "تحميل المبرمج المسؤولية لأنه لم يخمن المتطلب", "تعديل الوثيقة سراً", "تجاهل الخطأ"], answer: 0 },
+        { section: "المعرفة بالأعمال", category: "Technical", q: "[سيناريو] تحلل نظاماً لقطاع طبي ولا تفهم المصطلحات (مثل HIPAA). الإجراء الأفضل الذي يعكس 'المعرفة بالصناعة'؟", options: ["البحث وقراءة أدلة القطاع وعقد جلسات مع خبراء المجال لفهم السياق", "تأليف مصطلحات", "استخدام مصطلحات بنكية بدلاً منها", "إلغاء النظام"], answer: 0 },
+        { section: "المعرفة بالأعمال", category: "Technical", q: "[سيناريو] تقترح حلاً تقنياً لشركة ناشئة. كيف تستخدم 'معرفة الحلول' (Solution Knowledge)؟", options: ["اقتراح أغلى نظام دائماً", "مقارنة الحلول التقنية المتاحة بمتطلبات وقدرات الشركة لتحديد الأنسب", "اقتراح الحل الذي تعرفه أنت فقط", "رفض تقديم اقتراحات"], answer: 1 },
+        { section: "المعرفة بالأعمال", category: "Technical", q: "[سيناريو] توقف المشروع فجأة لأنك نسيت أخذ موافقة إدارة الشؤون القانونية. ما الذي كان ينقصك تحليله؟", options: ["لغة البرمجة", "المعرفة التنظيمية (Organization Knowledge) وخريطة أصحاب المصلحة", "تصميم الواجهات", "الجدول الزمني"], answer: 1 },
+        { section: "مهارات التواصل", category: "Technical", q: "[سيناريو] أثناء عرضك التقديمي، لاحظت أن الحضور ينظرون لهواتفهم. كيف تستخدم 'التواصل غير اللفظي'؟", options: ["تغيير نبرة الصوت والتحرك وطرح أسئلة تفاعلية", "الاستمرار في القراءة الرتيبة", "الصراخ عليهم", "مغادرة القاعة"], answer: 0 },
+        { section: "مهارات التواصل", category: "Technical", q: "[سيناريو] فريق البرمجة لم يفهم وثيقة المتطلبات. ما الخطأ المحتمل في تواصلك المكتوب؟", options: ["استخدام مصطلحات أعمال بحتة دون ترجمتها لمنطق يفهمه المطورون", "الوثيقة لم تكن ملونة", "الخط كان صغيراً", "حفظها بصيغة PDF"], answer: 0 },
+        { section: "مهارات التواصل", category: "Technical", q: "[سيناريو] العميل يتحدث بطريقة غير واضحة حول ما يريده من النظام. كيف تطبق 'الاستماع الفعال'؟", options: ["كتابة ما يقوله حرفياً وتخمين الباقي", "مقاطعته باستمرار", "إعادة صياغة كلامه (Paraphrasing) وطرح أسئلة مفتوحة للتأكد من القصد", "تجاهل حديثه والاعتماد على خبرتك"], answer: 2 },
+        { section: "مهارات التفاعل", category: "Technical", q: "[سيناريو] في ورشة عمل، استحوذ مدير على النقاش ولم يسمح للآخرين بالحديث. كيف تتصرف كـ 'مُيسّر'؟", options: ["تطرده من الاجتماع", "تصمت لنهاية الوقت", "تشكره بلطف وتوجه سؤالاً مباشراً لشخص آخر لإشراك الجميع", "تدخل معه في جدال"], answer: 2 },
+        { section: "مهارات التفاعل", category: "Technical", q: "[سيناريو] يتنازع مدير التسويق والمبيعات على ميزانية خاصية في النظام. كيف تطبق مهارات 'القيادة والتأثير'؟", options: ["الوقوف مع المدير الأعلى منصباً", "تسهيل النقاش للبحث عن أرضية مشتركة والتركيز على القيمة للمؤسسة ككل", "تجاهلهما", "إلغاء الخاصية"], answer: 1 },
+        { section: "مهارات التفاعل", category: "Technical", q: "[سيناريو] فريق التطوير وفريق الجودة يتجادلون حول وضوح معيار القبول. ما هو دورك؟", options: ["تنظيم جلسة مراجعة مشتركة للتوفيق بين الفهم التقني وفهم الأعمال", "الانحياز لفريق الجودة", "تركهم يتجادلون", "إعادة كتابة الكود بنفسك"], answer: 0 },
+        { section: "الأدوات والتكنولوجيا", category: "Technical", q: "[سيناريو] فريقك يعمل عن بُعد وتحتاجون لتصميم رحلة المستخدم (User Journey) معاً. الأداة الأنسب؟", options: ["البريد الإلكتروني", "السبورات الافتراضية (مثل Miro/Mural)", "برنامج Excel", "المكالمات العادية"], answer: 1 },
+        { section: "الأدوات والتكنولوجيا", category: "Technical", q: "[سيناريو] لإدارة التغييرات المتكررة (Requirements Traceability) ومعرفة من غير ماذا. الأداة الأنسب؟", options: ["ورق الملاحظات", "ملف Word شخصي", "أدوات إدارة دورة حياة التطبيقات (مثل Jira / Azure DevOps)", "الذاكرة الشخصية"], answer: 2 },
+        { section: "الأدوات والتكنولوجيا", category: "Technical", q: "[سيناريو] العميل لا يستطيع تخيل شكل الشاشات من خلال النص المكتوب. ما هي الأداة التي تستخدمها لحل هذا؟", options: ["أدوات تصميم النماذج المبدئية (Prototyping/Wireframing tools)", "لغة C++", "برنامج محاسبي", "قواعد البيانات SQL"], answer: 0 },
+        { section: "القيادة", category: "VIA", q: "[سيناريو] نشب خلاف حاد بين المبرمجين وفريق الجودة حول متطلب معقد. كيف تتدخل؟", options: ["أتجاهل الخلاف ليتدبروا أمرهم", "أجمعهم في ورشة عمل لتهدئة الوضع وتوضيح المتطلب تقنياً وحل النزاع بالتوجيه", "أقف مع المبرمجين دائماً", "أبلغ مدير الإدارة لمعاقبتهم"], answer: 1 },
+        { section: "الحكمة", category: "VIA", q: "[سيناريو] طلب العميل حلاً سريعاً جداً (Patch) لحل مشكلة، لكنك تعلم أن هذا سيدمر بنية النظام مستقبلاً. ماذا تفعل؟", options: ["أنفذ ما يريده فوراً دون نقاش", "أرفض طلبه بحدة", "أشرح له التبعات التقنية طويلة المدى وأقترح حلاً وسطياً آمناً", "أنفذ الحل وأستقيل"], answer: 2 },
+        { section: "الشجاعة", category: "VIA", q: "[سيناريو] يصر مدير تنفيذي على إضافة ميزة ستتجاوز الميزانية وتفشل المشروع. أنت الوحيد الذي يملك الأرقام. ماذا تفعل؟", options: ["أخفي الأرقام خوفاً من منصبه", "أوافق على طلبه لتجنب الصدام", "أعرض الأرقام بشجاعة وأدب وأوضح المخاطر الكارثية لطلبه", "أرسل له الأرقام عبر إيميل غامض"], answer: 2 },
+        { section: "التروي", category: "VIA", q: "[سيناريو] هناك ضغط هائل لإطلاق النظام غداً، لكنك لم تقم باختبار الأمان بشكل كامل. ما قرارك؟", options: ["إطلاق النظام والتوكل على الله", "طلب تأجيل الإطلاق رسمياً لضمان الجودة وعدم تعريض بيانات العملاء للخطر", "اختبار الأجزاء السهلة فقط", "تجاهل الأمان فهو مسؤولية المبرمجين"], answer: 1 },
+        { section: "الفضول", category: "VIA", q: "[سيناريو] تم نقلك من تحليل مشاريع البنوك إلى مشروع طبي معقد لا تفهم مصطلحاته إطلاقاً. كيف تستجيب؟", options: ["أرفض المشروع وأطلب العودة", "أحاول استخدام المصطلحات البنكية في المشروع الطبي", "أعتبرها فرصة عظيمة وأبدأ بالقراءة وسؤال الأطباء بفضول لفهم المجال", "أترك التوثيق للمبرمجين"], answer: 2 }
     ];
 
-    let currentQuizType = ''; 
-    let currentScore = 0;
-    let activeQuestions = []; 
+    let currentQuizType = ''; let currentScore = 0; let activeQuestions = []; 
+    let radarChartInstance = null; let adminRadarChartInstance = null;
+    let mockTrainees = []; let currentAdminTrainee = null;
+    let teams = []; let unassignedTrainees = [];
 
+    // --- إدارة الواجهات والتنقل ---
     function showView(viewId) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById(viewId).classList.add('active');
         if(viewId === 'dashboardView') updateDashboard();
+        if(viewId === 'resultView') drawRadarChart();
     }
 
     function login() {
         const name = document.getElementById('traineeName').value;
         const email = document.getElementById('traineeEmail').value;
-        if(!name || !email) { alert("الرجاء تعبئة كافة البيانات"); return; }
+        const mobile = document.getElementById('traineeMobile').value;
+        const traineeNum = document.getElementById('bootcampId').value;
+        if(!name || !email || !mobile || !traineeNum) { alert("الرجاء تعبئة كافة البيانات"); return; }
+        
+        const bootcamp = "BAC9-" + traineeNum;
         localStorage.setItem('ba_trainee_name', name);
         localStorage.setItem('ba_trainee_email', email);
+        localStorage.setItem('ba_trainee_mobile', mobile);
+        localStorage.setItem('ba_trainee_bootcamp', bootcamp);
+        
         document.getElementById('displayName').innerText = name;
+        document.getElementById('displayMobile').innerText = mobile;
+        document.getElementById('displayBootcamp').innerText = bootcamp;
         showView('dashboardView');
     }
 
-    function logout() {
-        localStorage.clear();
-        document.getElementById('traineeName').value = '';
-        document.getElementById('traineeEmail').value = '';
-        showView('loginView');
+    function logout() { localStorage.clear(); showView('loginView'); }
+    
+    function resetProgress() {
+        if(confirm("تحذير: سيتم مسح كافة البيانات والاختبارات لإعادتها من جديد!")) {
+            ['pre','post'].forEach(t => {
+                localStorage.removeItem(`ba_score_${t}`);
+                localStorage.removeItem(`ba_answers_${t}`);
+                localStorage.removeItem(`ba_chart_${t}`);
+            });
+            location.reload();
+        }
     }
 
     window.onload = function() {
         if(localStorage.getItem('ba_trainee_name')) {
             document.getElementById('displayName').innerText = localStorage.getItem('ba_trainee_name');
+            document.getElementById('displayMobile').innerText = localStorage.getItem('ba_trainee_mobile') || '-';
+            document.getElementById('displayBootcamp').innerText = localStorage.getItem('ba_trainee_bootcamp') || '-';
             showView('dashboardView');
         }
     }
 
-    // تحديث اللوحة
     function updateDashboard() {
         const preScore = localStorage.getItem('ba_score_pre');
         const postScore = localStorage.getItem('ba_score_post');
-        
         const preCard = document.getElementById('preTestCard');
         const postCard = document.getElementById('postTestCard');
+        const reportBtn = document.getElementById('traineeFullReportBtn');
 
         if(preScore !== null) {
             preCard.classList.add('completed');
             document.getElementById('preScoreBadge').style.display = 'block';
             document.getElementById('preScoreBadge').innerText = `النتيجة: ${preScore}%`;
-            document.getElementById('preIcon').innerHTML = '<i class="fa-solid fa-eye"></i>'; // أيقونة المراجعة
+            document.getElementById('preIcon').innerHTML = '<i class="fa-solid fa-eye"></i>'; 
             document.getElementById('preTag').style.display = 'block';
-            
             if(postScore === null) {
                 postCard.classList.remove('locked');
                 document.getElementById('postTag').style.display = 'none';
@@ -277,76 +490,52 @@
             document.getElementById('postScoreBadge').style.display = 'block';
             document.getElementById('postScoreBadge').innerText = `النتيجة: ${postScore}%`;
             document.getElementById('postIcon').innerHTML = '<i class="fa-solid fa-eye"></i>';
-            
-            const postTag = document.getElementById('postTag');
-            postTag.className = 'status-tag tag-completed';
-            postTag.innerText = 'مكتمل (اضغط للمراجعة)';
-            postTag.style.display = 'block';
-        }
-    }
-
-    // معالجة ضغطات الأزرار للدخول (طبيعي أو مراجعة)
-    function handlePreTestClick() {
-        if (localStorage.getItem('ba_score_pre') !== null) {
-            startQuiz('pre', true); // فتح في وضع المراجعة
+            document.getElementById('postTag').className = 'status-tag tag-completed';
+            document.getElementById('postTag').innerText = 'مكتمل (مراجعة)';
+            document.getElementById('postTag').style.display = 'block';
+            reportBtn.style.display = 'block';
         } else {
-            startQuiz('pre', false);
+            reportBtn.style.display = 'none';
         }
     }
 
+    // --- تشغيل الاختبارات ---
+    function handlePreTestClick() { startQuiz('pre', localStorage.getItem('ba_score_pre') !== null); }
     function handlePostTestClick() {
-        if(localStorage.getItem('ba_score_pre') === null) {
-            alert("تنبيه: يجب إتمام التقييم القبلي أولاً.");
-            return;
-        }
-        if(localStorage.getItem('ba_score_post') !== null) {
-            startQuiz('post', true); // فتح في وضع المراجعة
-        } else {
-            startQuiz('post', false);
-        }
+        if(localStorage.getItem('ba_score_pre') === null) { alert("يجب إتمام التقييم القبلي أولاً."); return; }
+        startQuiz('post', localStorage.getItem('ba_score_post') !== null);
     }
 
-    // دالة بناء الاختبار (تدعم وضع المراجعة isReadOnly)
     function startQuiz(type, isReadOnly = false) {
         currentQuizType = type;
-        
-        let titleText = type === 'pre' ? 'التقييم القبلي لمحللي الأعمال' : 'التقييم البعدي (التطبيقي)';
-        if(isReadOnly) titleText += ' <span style="color:#D97706; font-size:0.8em;">(مراجعة الإجابات)</span>';
+        let titleText = type === 'pre' ? 'التقييم الشامل القبلي' : 'التقييم الشامل البعدي';
+        if(isReadOnly) titleText += ' <span style="color:var(--accent); font-size:0.8em;">(مراجعة النتائج)</span>';
         document.getElementById('quizTitle').innerHTML = titleText;
         
         activeQuestions = (type === 'pre') ? preQuestions : postQuestions;
         const container = document.getElementById('questionsContainer');
         container.innerHTML = ''; 
 
-        // استرجاع الإجابات المحفوظة إذا كنا في وضع المراجعة
-        let savedAnswers = [];
-        if (isReadOnly) {
-            savedAnswers = JSON.parse(localStorage.getItem(`ba_answers_${type}`)) || [];
-        }
-
+        let savedAnswers = isReadOnly ? (JSON.parse(localStorage.getItem(`ba_answers_${type}`)) || []) : [];
         let currentSection = "";
+        
         activeQuestions.forEach((item, index) => {
             if (item.section !== currentSection) {
                 currentSection = item.section;
-                container.innerHTML += `<div class="section-title">${currentSection}</div>`;
+                let badgeHTML = item.category === 'VIA' ? '<span class="section-badge" style="background:var(--accent);">السمات الشخصية (VIA)</span>' : '<span class="section-badge">كفاءات فنية (BABOK)</span>';
+                container.innerHTML += `<div class="section-title"><span>${currentSection}</span> ${badgeHTML}</div>`;
             }
 
             let optionsHTML = '';
             item.options.forEach((opt, optIndex) => {
                 let isChecked = (isReadOnly && savedAnswers[index] === optIndex) ? 'checked' : '';
                 let isDisabled = isReadOnly ? 'disabled' : '';
-                let clickStyle = isReadOnly ? 'pointer-events: none;' : ''; // منع الضغط تماماً
-                
-                // تلوين الإجابات في وضع المراجعة
+                let clickStyle = isReadOnly ? 'pointer-events: none;' : '';
                 let resultClass = '';
                 if (isReadOnly) {
-                    if (optIndex === item.answer) {
-                        resultClass = 'correct-option'; // تظليل الإجابة الصحيحة
-                    } else if (savedAnswers[index] === optIndex && optIndex !== item.answer) {
-                        resultClass = 'wrong-option'; // تظليل إجابة المتدرب الخاطئة
-                    }
+                    if (optIndex === item.answer) resultClass = 'correct-option'; 
+                    else if (savedAnswers[index] === optIndex && optIndex !== item.answer) resultClass = 'wrong-option'; 
                 }
-
                 optionsHTML += `
                     <label class="option-item ${resultClass}" style="${clickStyle}">
                         <input type="radio" name="q${index}" value="${optIndex}" ${isChecked} ${isDisabled}>
@@ -354,96 +543,444 @@
                     </label>
                 `;
             });
-
-            container.innerHTML += `
-                <div class="question-block">
-                    <div class="question-text">${index + 1}. ${item.q}</div>
-                    <div class="options-list">
-                        ${optionsHTML}
-                    </div>
-                </div>
-            `;
+            container.innerHTML += `<div class="question-block"><div class="question-text">${index + 1}. ${item.q}</div><div class="options-list">${optionsHTML}</div></div>`;
         });
 
-        // التحكم في ظهور الأزرار والإشعارات
         document.getElementById('reviewNotice').style.display = isReadOnly ? 'block' : 'none';
-        document.getElementById('submitQuizBtn').style.display = isReadOnly ? 'none' : 'block';
-        document.getElementById('backToDashBtn').style.display = isReadOnly ? 'block' : 'none';
-
-        showView('quizView');
-        window.scrollTo(0,0);
+        document.getElementById('submitQuizBtn').style.display = isReadOnly ? 'none' : 'flex';
+        document.getElementById('backToDashBtn').style.display = isReadOnly ? 'flex' : 'none';
+        showView('quizView'); window.scrollTo(0,0);
     }
 
-    // تسليم الاختبار وحفظ النتائج والإجابات
     function submitQuiz() {
-        let score = 0;
-        let answered = 0;
-        let userAnswers = []; // مصفوفة لحفظ الاختيارات
+        let score = 0, answered = 0, userAnswers = [], sectionTotals = {}, sectionScores = {};
+
+        activeQuestions.forEach(item => {
+            let key = item.category === 'VIA' ? item.section.split('(')[0].trim() : item.section;
+            if(!sectionTotals[key]) { sectionTotals[key] = 0; sectionScores[key] = 0; }
+            sectionTotals[key]++;
+        });
 
         activeQuestions.forEach((item, index) => {
             const selected = document.querySelector(`input[name="q${index}"]:checked`);
             if (selected) {
                 answered++;
-                let selectedVal = parseInt(selected.value);
-                userAnswers.push(selectedVal);
-                
-                if (selectedVal === item.answer) score++;
+                let val = parseInt(selected.value);
+                userAnswers.push(val);
+                if (val === item.answer) {
+                    score++;
+                    let key = item.category === 'VIA' ? item.section.split('(')[0].trim() : item.section;
+                    sectionScores[key]++; 
+                }
             }
         });
 
-        if (answered < activeQuestions.length) {
-            alert("الرجاء استكمال جميع الأسئلة قبل التسليم.");
+        if (answered < activeQuestions.length) { alert("الرجاء استكمال جميع الأسئلة."); return; }
+
+        const finalPercentage = Math.round((score / activeQuestions.length) * 100);
+        let chartLabels = [], chartData = [];
+        for(let sec in sectionTotals) {
+            chartLabels.push(sec);
+            chartData.push(Math.round((sectionScores[sec] / sectionTotals[sec]) * 100));
+        }
+        
+        localStorage.setItem(`ba_score_${currentQuizType}`, finalPercentage);
+        localStorage.setItem(`ba_answers_${currentQuizType}`, JSON.stringify(userAnswers));
+        localStorage.setItem(`ba_chart_${currentQuizType}`, JSON.stringify({ labels: chartLabels, data: chartData }));
+        
+        if(currentQuizType === 'post') {
+            showView('dashboardView');
+            alert("تم تسليم التقييم البعدي بنجاح. يمكنك الآن الاطلاع على تقرير مقارنة الكفاءات الشامل.");
+        } else {
+            showView('dashboardView');
+        }
+        window.scrollTo(0,0);
+    }
+
+    // --- رسم الرادار المقارن للمتدرب ---
+    function drawRadarChart() {
+        const preStr = localStorage.getItem('ba_chart_pre');
+        const postStr = localStorage.getItem('ba_chart_post');
+        if(!preStr) return;
+        
+        const preObj = JSON.parse(preStr);
+        let datasets = [{
+            label: 'التقييم القبلي',
+            data: preObj.data,
+            backgroundColor: 'rgba(217, 119, 6, 0.2)',
+            borderColor: '#D97706',
+            pointBackgroundColor: '#D97706',
+            borderWidth: 2
+        }];
+
+        if(postStr) {
+            const postObj = JSON.parse(postStr);
+            datasets.push({
+                label: 'التقييم البعدي',
+                data: postObj.data,
+                backgroundColor: 'rgba(6, 78, 59, 0.2)',
+                borderColor: '#064E3B',
+                pointBackgroundColor: '#064E3B',
+                borderWidth: 2
+            });
+            let diff = localStorage.getItem('ba_score_post') - localStorage.getItem('ba_score_pre');
+            document.getElementById('finalScoreText').innerHTML = `<span style="font-size:0.45em; color:gray;">معدل النمو الكلي:</span> <span style="color:${diff>=0?'var(--success)':'var(--danger)'}">${diff >= 0 ? '+'+diff : diff}%</span>`;
+        } else {
+            document.getElementById('finalScoreText').innerText = `${localStorage.getItem('ba_score_pre')}%`;
+        }
+
+        const ctx = document.getElementById('competencyRadarChart').getContext('2d');
+        if(radarChartInstance) radarChartInstance.destroy();
+        radarChartInstance = new Chart(ctx, {
+            type: 'radar',
+            data: { labels: preObj.labels, datasets: datasets },
+            options: { 
+                responsive: true, 
+                scales: { r: { suggestedMin: 0, suggestedMax: 100, ticks: { stepSize: 20, font:{family:'Tajawal'} }, pointLabels: { font: { family: 'Tajawal', size: 11, weight: 'bold' } } } }, 
+                plugins: { legend: { position: 'bottom', labels:{font:{family:'Tajawal', size:14}} } } 
+            }
+        });
+    }
+
+    // ================= الإدارة والتحليلات وإدارة الفرق بـ Team Power Score =================
+    
+    function adminLogin() {
+        if(document.getElementById('adminPass').value === 'admin123') {
+            initAdminModule();
+            showView('adminDashboardView');
+        } else { alert('كلمة المرور خاطئة'); }
+    }
+
+    function switchAdminTab(tab) {
+        document.getElementById('tabTraineesBtn').classList.toggle('active', tab === 'trainees');
+        document.getElementById('tabTeamsBtn').classList.toggle('active', tab === 'teams');
+        document.getElementById('adminTraineesSection').style.display = tab === 'trainees' ? 'block' : 'none';
+        document.getElementById('adminTeamsSection').style.display = tab === 'teams' ? 'block' : 'none';
+    }
+
+    function initAdminModule() {
+        mockTrainees = [];
+        const competencies = ["التفكير التحليلي", "الخصائص السلوكية", "المعرفة بالأعمال", "التواصل", "التفاعل", "الأدوات", "القيادة (VIA)", "الشجاعة (VIA)"];
+        let totalPre = 0, totalPost = 0;
+
+        // توليد بيانات وهمية
+        for(let i=1; i<=15; i++) {
+            let pre = Math.floor(Math.random() * 40) + 40; 
+            let post = Math.floor(Math.random() * 30) + 70; 
+            let mockPreAnswers = Array.from({length: 23}, () => Math.floor(Math.random() * 4));
+            let mockPostAnswers = Array.from({length: 23}, () => Math.floor(Math.random() * 4));
+            let mockPreChart = { labels: ["التفكير التحليلي", "الخصائص السلوكية", "المعرفة بالأعمال", "التواصل", "التفاعل", "الأدوات", "السمات"], data: Array.from({length: 7}, () => Math.floor(Math.random() * 40) + 40) };
+            let mockPostChart = { labels: mockPreChart.labels, data: Array.from({length: 7}, () => Math.floor(Math.random() * 30) + 70) };
+
+            mockTrainees.push({ 
+                id: i, name: `متدرب تجريبي ${i}`, email: `trainee${i}@test.com`, mobile: `05000000${i<10?'0'+i:i}`, bootcamp: `BAC9-${Math.floor(Math.random()*900)+100}`,
+                preScore: pre, postScore: post, topSkill: competencies[Math.floor(Math.random() * competencies.length)], 
+                preChart: mockPreChart, postChart: mockPostChart,
+                preAnswers: mockPreAnswers, postAnswers: mockPostAnswers
+            });
+            totalPre += pre; totalPost += post;
+        }
+
+        // إدراج المتدرب الحقيقي إن وجد
+        const localPre = localStorage.getItem('ba_score_pre');
+        if (localPre) {
+            mockTrainees.unshift({
+                id: 999,
+                name: localStorage.getItem('ba_trainee_name') + " (بياناتك الحقيقية)",
+                email: localStorage.getItem('ba_trainee_email'),
+                mobile: localStorage.getItem('ba_trainee_mobile'),
+                bootcamp: localStorage.getItem('ba_trainee_bootcamp'),
+                preScore: localPre,
+                postScore: localStorage.getItem('ba_score_post') || '-',
+                topSkill: "تحليل متقدم وقيادة",
+                preChart: JSON.parse(localStorage.getItem('ba_chart_pre')),
+                postChart: JSON.parse(localStorage.getItem('ba_chart_post')),
+                preAnswers: JSON.parse(localStorage.getItem('ba_answers_pre') || '[]'),
+                postAnswers: JSON.parse(localStorage.getItem('ba_answers_post') || '[]')
+            });
+            totalPre += parseInt(localPre);
+            if(localStorage.getItem('ba_score_post')) totalPost += parseInt(localStorage.getItem('ba_score_post'));
+        }
+
+        document.getElementById('totalTraineesCount').innerText = mockTrainees.length;
+        document.getElementById('avgPreScore').innerText = Math.round(totalPre / mockTrainees.length) + '%';
+        document.getElementById('avgPostScore').innerText = Math.round(totalPost / mockTrainees.length) + '%';
+
+        const tbody = document.getElementById('traineesTableBody');
+        tbody.innerHTML = '';
+        mockTrainees.forEach(t => {
+            let isRealUser = t.id === 999 ? 'style="background:#ECFDF5;"' : '';
+            tbody.innerHTML += `
+                <tr ${isRealUser}>
+                    <td><strong>${t.name}</strong><br><span style="font-size:0.8em; color:gray;">${t.mobile}</span></td>
+                    <td>${t.bootcamp}</td>
+                    <td><strong style="color:var(--accent);">${t.preScore}%</strong></td>
+                    <td><strong style="color:var(--success);">${t.postScore !== '-' ? t.postScore+'%' : 'لم يختبر'}</strong></td>
+                    <td><span class="member-skill-tag">${t.topSkill}</span></td>
+                    <td><button class="btn-small" onclick="viewTraineeReport(${t.id})">التقرير والإجابات</button></td>
+                </tr>
+            `;
+        });
+
+        unassignedTrainees = [...mockTrainees];
+        teams = [];
+        renderTeamsAndPool();
+    }
+
+    // --- حساب وعرض مؤشر القوة وتوزيع الفرق ---
+    function autoGenerateBalancedTeams() {
+        let teamSize = 4;
+        let all = [...mockTrainees];
+        all.sort(() => Math.random() - 0.5);
+
+        teams = [];
+        let totalTeams = Math.ceil(all.length / teamSize);
+
+        for (let i = 0; i < totalTeams; i++) {
+            teams.push({
+                id: i + 1,
+                name: `فريق المشروع #${i + 1}`,
+                members: all.slice(i * teamSize, (i + 1) * teamSize)
+            });
+        }
+        unassignedTrainees = [];
+        renderTeamsAndPool();
+    }
+
+    function addNewEmptyTeam() {
+        let newId = teams.length > 0 ? Math.max(...teams.map(t => t.id)) + 1 : 1;
+        teams.push({ id: newId, name: `فريق المشروع #${newId}`, members: [] });
+        renderTeamsAndPool();
+    }
+
+    function deleteTeam(teamId) {
+        let t = teams.find(team => team.id === teamId);
+        if(!t) return;
+        if(t.members.length > 0) unassignedTrainees.push(...t.members);
+        teams = teams.filter(team => team.id !== teamId);
+        renderTeamsAndPool();
+    }
+
+    function reassignTrainee(traineeId, fromTeamId, targetTeamId) {
+        let trainee = null;
+        if (fromTeamId === 'unassigned') {
+            let idx = unassignedTrainees.findIndex(t => t.id === traineeId);
+            if (idx !== -1) trainee = unassignedTrainees.splice(idx, 1)[0];
+        } else {
+            let sourceTeam = teams.find(t => t.id === parseInt(fromTeamId));
+            if (sourceTeam) {
+                let idx = sourceTeam.members.findIndex(t => t.id === traineeId);
+                if (idx !== -1) trainee = sourceTeam.members.splice(idx, 1)[0];
+            }
+        }
+
+        if (!trainee) return;
+
+        if (targetTeamId === 'unassigned') {
+            unassignedTrainees.push(trainee);
+        } else {
+            let targetTeam = teams.find(t => t.id === parseInt(targetTeamId));
+            if (targetTeam) targetTeam.members.push(trainee);
+        }
+        renderTeamsAndPool();
+    }
+
+    function renderTeamsAndPool() {
+        const teamsContainer = document.getElementById('teamsCardsContainer');
+        teamsContainer.innerHTML = '';
+
+        if(teams.length === 0) {
+            teamsContainer.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:30px; color:gray; background:#fff; border-radius:8px; border:1px dashed #ddd;">لم يتم إنشاء أي فريق بعد. اضغط على <strong>تشكيل ذكي متوازن</strong> أو <strong>إضافة فريق جديد</strong>.</div>`;
+        }
+
+        teams.forEach(team => {
+            let membersHTML = '';
+            let powerScore = 0;
+            let powerColor = '#E5E7EB';
+
+            // حساب مؤشر قوة الفريق بناءً على "التقييم القبلي" فقط
+            if(team.members.length > 0) {
+                let totalScores = 0;
+                let uniqueSkills = new Set();
+
+                team.members.forEach(m => {
+                    let score = m.preScore !== '-' ? m.preScore : 0; // الاعتماد كلياً على التقييم القبلي
+                    totalScores += parseInt(score);
+                    uniqueSkills.add(m.topSkill);
+                });
+
+                let avgScore = totalScores / team.members.length;
+                let diversityRatio = uniqueSkills.size / team.members.length; // من 0 إلى 1
+                
+                // 70% متوسط الأداء القبلي + 30% تكامل وتنوع المهارات
+                powerScore = Math.round((avgScore * 0.7) + (diversityRatio * 30));
+                if(powerScore > 100) powerScore = 100;
+                
+                // تحديد لون المؤشر
+                powerColor = powerScore >= 85 ? 'var(--success)' : (powerScore >= 70 ? 'var(--accent)' : 'var(--danger)');
+
+                team.members.forEach(m => {
+                    let moveOptions = `<option value="">نقل إلى فريق...</option>`;
+                    teams.forEach(otherTeam => {
+                        if(otherTeam.id !== team.id) moveOptions += `<option value="${otherTeam.id}">${otherTeam.name}</option>`;
+                    });
+                    moveOptions += `<option value="unassigned">← إرجاع لقائمة الانتظار</option>`;
+
+                    membersHTML += `
+                        <div class="team-member-item">
+                            <div class="member-info">
+                                <span class="member-name">${m.name}</span>
+                                <span class="member-skill-tag">${m.topSkill}</span>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:5px;">
+                                <select class="member-reassign-select" onchange="if(this.value) reassignTrainee(${m.id}, ${team.id}, this.value)">
+                                    ${moveOptions}
+                                </select>
+                                <button class="remove-member-btn" title="سحب لقائمة الانتظار" onclick="reassignTrainee(${m.id}, ${team.id}, 'unassigned')"><i class="fa-solid fa-user-minus"></i></button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                membersHTML = `<p style="color:gray; font-size:0.85em; text-align:center; margin:15px 0;">لا يوجد أعضاء في هذا الفريق بعد</p>`;
+            }
+
+            // رسم شريط المؤشر البصري (Power Bar)
+            let powerBarHTML = team.members.length > 0 ? `
+                <div class="team-power-container">
+                    <div class="team-power-fill" style="width: ${powerScore}%; background-color: ${powerColor};"></div>
+                    <div class="team-power-text">مؤشر قوة وتكامل الفريق (قبلي): ${powerScore}%</div>
+                </div>
+            ` : '';
+
+            teamsContainer.innerHTML += `
+                <div class="team-card">
+                    <div class="team-card-header">
+                        <h4>${team.name} (${team.members.length} أعضاء)</h4>
+                        <button class="remove-member-btn" style="color:var(--danger);" title="حذف الفريق" onclick="deleteTeam(${team.id})"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                    <div class="team-card-body">
+                        ${powerBarHTML}
+                        ${membersHTML}
+                    </div>
+                </div>
+            `;
+        });
+
+        const unassignedContainer = document.getElementById('unassignedListContainer');
+        document.getElementById('unassignedCount').innerText = unassignedTrainees.length;
+        unassignedContainer.innerHTML = '';
+
+        if(unassignedTrainees.length === 0) {
+            unassignedContainer.innerHTML = `<p style="color:var(--success); font-size:0.9em; margin:0; grid-column:1/-1;">جميع المتدربين مسكنين في الفرق بنجاح ✔️</p>`;
+        } else {
+            unassignedTrainees.forEach(m => {
+                let assignOptions = `<option value="">تعيين في فريق...</option>`;
+                teams.forEach(t => { assignOptions += `<option value="${t.id}">${t.name}</option>`; });
+
+                unassignedContainer.innerHTML += `
+                    <div class="unassigned-item">
+                        <div>
+                            <strong>${m.name}</strong><br>
+                            <span class="member-skill-tag">${m.topSkill}</span>
+                        </div>
+                        <select class="member-reassign-select" onchange="if(this.value) reassignTrainee(${m.id}, 'unassigned', this.value)">
+                            ${assignOptions}
+                        </select>
+                    </div>
+                `;
+            });
+        }
+    }
+
+    // --- عرض تقرير المتدرب للمشرف ---
+    function viewTraineeReport(traineeId) {
+        currentAdminTrainee = mockTrainees.find(t => t.id === traineeId);
+        if(!currentAdminTrainee) return;
+
+        document.getElementById('adminRepName').innerText = currentAdminTrainee.name;
+        document.getElementById('adminRepEmailMobile').innerText = `${currentAdminTrainee.email} | ${currentAdminTrainee.mobile}`;
+        document.getElementById('adminRepBootcamp').innerText = currentAdminTrainee.bootcamp;
+        document.getElementById('adminRepPre').innerText = currentAdminTrainee.preScore + '%';
+        document.getElementById('adminRepPost').innerText = currentAdminTrainee.postScore !== '-' ? currentAdminTrainee.postScore + '%' : 'لم يختبر بعد';
+
+        const ctx = document.getElementById('adminRadarChart').getContext('2d');
+        if(adminRadarChartInstance) adminRadarChartInstance.destroy();
+
+        let datasets = [];
+        if(currentAdminTrainee.preChart) {
+            datasets.push({ label: 'التقييم القبلي', data: currentAdminTrainee.preChart.data, backgroundColor: 'rgba(217, 119, 6, 0.2)', borderColor: '#D97706', pointBackgroundColor: '#D97706', borderWidth: 2 });
+        }
+        if(currentAdminTrainee.postChart) {
+            datasets.push({ label: 'التقييم البعدي', data: currentAdminTrainee.postChart.data, backgroundColor: 'rgba(6, 78, 59, 0.2)', borderColor: '#064E3B', pointBackgroundColor: '#064E3B', borderWidth: 2 });
+        }
+
+        adminRadarChartInstance = new Chart(ctx, {
+            type: 'radar',
+            data: { labels: currentAdminTrainee.preChart ? currentAdminTrainee.preChart.labels : [], datasets: datasets },
+            options: { responsive: true, scales: { r: { suggestedMin: 0, suggestedMax: 100, ticks: { stepSize: 20, font:{family:'Tajawal'} } } }, plugins: { legend: { position: 'bottom', labels:{font:{family:'Tajawal'}} } } }
+        });
+
+        document.getElementById('adminAnswersContainer').innerHTML = '<p style="text-align:center; color:gray;">الرجاء الضغط على أحد الأزرار أعلاه لعرض الإجابات التفصيلية.</p>';
+        showView('adminReportView');
+    }
+
+    function renderAdminAnswersReview(type) {
+        if(!currentAdminTrainee) return;
+        let answersArray = type === 'pre' ? currentAdminTrainee.preAnswers : currentAdminTrainee.postAnswers;
+        let questionsBank = type === 'pre' ? preQuestions : postQuestions;
+        let container = document.getElementById('adminAnswersContainer');
+
+        if(!answersArray || answersArray.length === 0) {
+            container.innerHTML = '<p style="text-align:center; color:red; font-weight:bold;">المتدرب لم يكمل هذا التقييم بعد.</p>';
             return;
         }
 
-        const finalPercentage = Math.round((score / activeQuestions.length) * 100);
+        let html = `<h4 style="color:var(--primary); text-align:center; border-bottom:1px solid #ddd; padding-bottom:10px;">إجابات التقييم ${type==='pre'?'القبلي':'البعدي'}</h4>`;
         
-        // حفظ النتيجة والاختيارات في الذاكرة
-        localStorage.setItem(`ba_score_${currentQuizType}`, finalPercentage);
-        localStorage.setItem(`ba_answers_${currentQuizType}`, JSON.stringify(userAnswers));
-        currentScore = finalPercentage;
+        questionsBank.forEach((q, i) => {
+            let userAnsIndex = answersArray[i];
+            html += `<div style="margin-bottom:20px; padding:10px; background:#fff; border-radius:6px; border:1px solid #eee;">`;
+            html += `<div class="ans-q">${i+1}. ${q.q} <span style="font-size:0.75em; color:gray;">(${q.section})</span></div>`;
+            
+            q.options.forEach((opt, optIndex) => {
+                let optClass = "ans-opt";
+                let icon = "";
+                
+                if (optIndex === q.answer) {
+                    optClass += " ans-correct";
+                    if(userAnsIndex === optIndex) icon = '<i class="fa-solid fa-check"></i> '; 
+                    else { optClass = "ans-opt ans-missed"; icon = '<i class="fa-solid fa-arrow-left"></i> الصحيحة: '; }
+                } else if (userAnsIndex === optIndex && optIndex !== q.answer) {
+                    optClass += " ans-wrong";
+                    icon = '<i class="fa-solid fa-xmark"></i> إجابة المتدرب: ';
+                }
 
-        document.getElementById('finalScoreText').innerText = `${finalPercentage}%`;
+                html += `<div class="${optClass}">${icon}${opt}</div>`;
+            });
+            html += `</div>`;
+        });
         
-        if(finalPercentage >= 70) {
-            document.getElementById('resultMessage').innerText = "تجاوزت التقييم بنجاح. أداء مهني مميز.";
-        } else {
-            document.getElementById('resultMessage').innerText = "تم حفظ التقييم. استمر في التدريب لتحسين مؤشرات الأداء.";
-        }
-        
-        const btn = document.getElementById('emailBtn');
-        btn.innerHTML = '<i class="fa-regular fa-paper-plane"></i> إرسال التقرير لإدارة التدريب';
-        btn.disabled = false;
-        btn.style.backgroundColor = "var(--primary)";
-
-        showView('resultView');
-        window.scrollTo(0,0);
+        container.innerHTML = html;
     }
 
     function sendResultToTrainer() {
         const btn = document.getElementById('emailBtn');
-        btn.innerText = "جاري الإرسال النظامي...";
-        btn.disabled = true;
+        btn.innerText = "جاري الإرسال..."; btn.disabled = true;
+        
+        let reportData = `Name: ${localStorage.getItem('ba_trainee_name')}\nMobile: ${localStorage.getItem('ba_trainee_mobile')}\nBootcamp: ${localStorage.getItem('ba_trainee_bootcamp')}\nPre: ${localStorage.getItem('ba_score_pre')}%\nPost: ${localStorage.getItem('ba_score_post')}%`;
 
-        const templateParams = {
+        emailjs.send('service_0gv185a', 'template_2gasgy3', {
             trainee_name: localStorage.getItem('ba_trainee_name'),
             trainee_email: localStorage.getItem('ba_trainee_email'),
-            quiz_type: currentQuizType === 'pre' ? 'القبلي' : 'البعدي',
-            score: currentScore,
-            trainer_email: 'ahmed.s.auditor@gmail.com' // ضع إيميلك هنا
-        };
-
-        emailjs.send('service_0gv185a', 'template_2gasgy3', templateParams)
-            .then(function() {
-                btn.innerHTML = '<i class="fa-solid fa-check"></i> تم إرسال التقرير بنجاح';
-                btn.style.backgroundColor = "#059669";
-            }, function(error) {
-                btn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> خطأ في الإرسال، حاول مجدداً';
-                btn.disabled = false;
-                btn.style.backgroundColor = "#DC2626";
-            });
+            message: reportData,
+            trainer_email: 'ahmed.s.auditor@gmail.com'
+        }).then(() => {
+            btn.innerHTML = 'تم الإرسال للإدارة ✔️'; btn.style.background = "#059669";
+        }, () => {
+            btn.innerHTML = 'فشل الإرسال ❌'; btn.disabled = false; btn.style.background = "#DC2626";
+        });
     }
 </script>
-
 </body>
 </html>
