@@ -6,7 +6,6 @@
     <title>منصة تقييم الكفاءات وإدارة الفرق | أكاديمية تحليل الأعمال</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- مكتبة تحويل التقرير إلى PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -19,62 +18,69 @@
             --success: #059669; --danger: #DC2626;
         }
 
-        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 20px 0; display: flex; justify-content: center; min-height: 100vh; }
-        .container { width: 100%; max-width: 960px; margin: 0 15px; }
+        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 15px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; }
+        .container { width: 100%; max-width: 960px; margin: 0 auto; }
 
-        .brand-header { background-color: var(--bg-surface); border-bottom: 3px solid var(--primary); padding: 20px 30px; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 30px; border-radius: 8px; }
-        .brand-icon { font-size: 2em; color: var(--primary); }
-        .brand-title h1 { margin: 0; font-size: 1.5em; font-weight: 800; color: var(--primary); }
-        .brand-title p { margin: 5px 0 0 0; font-size: 0.9em; color: var(--text-secondary); font-weight: 500; }
+        .auth-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); overflow: hidden; max-width: 500px; margin: 0 auto; }
+        .auth-header { background: linear-gradient(135deg, var(--primary) 0%, #022C22 100%); color: white; padding: 30px 25px; text-align: center; }
+        .auth-header i { font-size: 2.5em; margin-bottom: 10px; color: #34D399; }
+        .auth-header h1 { margin: 0; font-size: 1.4em; font-weight: 800; }
+        .auth-header p { margin: 5px 0 0 0; font-size: 0.85em; opacity: 0.85; }
+        .auth-body { padding: 30px 25px; }
 
-        .panel { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 35px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 30px; }
+        .brand-header { background-color: var(--bg-surface); border-bottom: 3px solid var(--primary); padding: 15px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px; border-radius: 8px; }
+        .brand-icon { font-size: 1.8em; color: var(--primary); }
+        .brand-title h1 { margin: 0; font-size: 1.3em; font-weight: 800; color: var(--primary); }
+        .brand-title p { margin: 3px 0 0 0; font-size: 0.85em; color: var(--text-secondary); font-weight: 500; }
+
+        .panel { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 20px; box-sizing: border-box; }
         .view { display: none; }
         .view.active { display: block; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .form-label { display: block; margin-bottom: 8px; font-weight: 700; color: var(--text-main); }
-        .form-control { width: 100%; padding: 14px; border: 1px solid #D1D5DB; border-radius: 6px; font-family: inherit; font-size: 16px; box-sizing: border-box; margin-bottom: 25px; transition: border-color 0.2s; background-color: #F9FAFB; }
+        .form-label { display: block; margin-bottom: 6px; font-weight: 700; color: var(--text-main); font-size: 0.9em; }
+        .form-control { width: 100%; padding: 12px 15px; border: 1px solid #D1D5DB; border-radius: 6px; font-family: inherit; font-size: 15px; box-sizing: border-box; margin-bottom: 20px; transition: all 0.2s; background-color: #F9FAFB; }
         .form-control:focus { border-color: var(--primary); background-color: #FFF; outline: none; box-shadow: 0 0 0 3px rgba(6, 78, 59, 0.1); }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr; gap: 0; }
 
-        .btn-primary { background-color: var(--primary); color: white; border: none; padding: 14px 22px; border-radius: 6px; font-size: 1.05em; font-weight: 700; cursor: pointer; transition: background 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; font-family: inherit;}
+        .btn-primary { background-color: var(--primary); color: white; border: none; padding: 14px 20px; border-radius: 6px; font-size: 1em; font-weight: 700; cursor: pointer; transition: background 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: inherit; box-sizing: border-box;}
         .btn-primary:hover { background-color: var(--primary-light); }
-        .btn-secondary { background-color: white; color: var(--primary); border: 1px solid var(--primary); padding: 14px 22px; border-radius: 6px; font-size: 1.05em; font-weight: 700; cursor: pointer; width: 100%; margin-top: 15px; display: flex; justify-content: center; align-items: center; gap: 10px; font-family: inherit;}
+        .btn-secondary { background-color: white; color: var(--primary); border: 1px solid var(--primary); padding: 12px 20px; border-radius: 6px; font-size: 1em; font-weight: 700; cursor: pointer; width: 100%; margin-top: 12px; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: inherit; box-sizing: border-box;}
         .btn-secondary:hover { background-color: #F3F4F6; }
-        .btn-accent { background-color: var(--accent); color: white; border: none; padding: 10px 18px; border-radius: 6px; font-size: 0.95em; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-family: inherit; }
+        .btn-accent { background-color: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 6px; font-size: 0.9em; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: inherit; }
         .btn-accent:hover { background-color: #B45309; }
 
-        .user-bar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; }
-        .user-bar .user-name { font-weight: 700; color: var(--primary); font-size: 1.1em; }
-        .user-bar .logout { color: var(--danger); cursor: pointer; font-weight: 700; font-size: 0.9em; }
+        .user-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
+        .user-bar .user-name { font-weight: 700; color: var(--primary); font-size: 1.05em; }
+        .user-bar .logout { color: var(--danger); cursor: pointer; font-weight: 700; font-size: 0.85em; }
 
-        .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .assessment-card { border: 1px solid var(--border-color); border-radius: 8px; padding: 25px; text-align: right; cursor: pointer; transition: all 0.2s; background: var(--bg-surface); display: flex; flex-direction: column; justify-content: center; position: relative; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; }
+        .assessment-card { border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; text-align: right; cursor: pointer; transition: all 0.2s; background: var(--bg-surface); display: flex; flex-direction: column; justify-content: center; position: relative; box-sizing: border-box; }
         .assessment-card:hover:not(.locked) { border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .card-icon { font-size: 1.8em; color: var(--primary); background: #ECFDF5; padding: 15px; border-radius: 8px; transition: all 0.2s;}
-        .assessment-card h3 { margin: 0 0 5px 0; color: var(--text-main); font-size: 1.25em; }
-        .assessment-card p { margin: 0; color: var(--text-secondary); font-size: 0.9em; }
-        .score-badge { display: inline-block; background: #FEF3C7; color: #92400E; padding: 5px 12px; border-radius: 4px; font-weight: 700; margin-top: 20px; font-size: 0.9em; align-self: flex-start; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .card-icon { font-size: 1.5em; color: var(--primary); background: #ECFDF5; padding: 12px; border-radius: 8px; }
+        .assessment-card h3 { margin: 0 0 4px 0; color: var(--text-main); font-size: 1.15em; }
+        .assessment-card p { margin: 0; color: var(--text-secondary); font-size: 0.85em; }
+        .score-badge { display: inline-block; background: #FEF3C7; color: #92400E; padding: 4px 10px; border-radius: 4px; font-weight: 700; margin-top: 15px; font-size: 0.85em; align-self: flex-start; }
 
         .locked { background-color: var(--locked-bg); cursor: not-allowed; }
         .locked .card-icon { background: #E5E7EB; color: #9CA3AF; }
-        .status-tag { font-size: 0.85em; font-weight: 700; padding: 4px 8px; border-radius: 4px; }
+        .status-tag { font-size: 0.8em; font-weight: 700; padding: 3px 6px; border-radius: 4px; }
         .tag-locked { color: var(--danger); background: #FEE2E2; }
         .completed { background-color: #F0FDF4; border-color: var(--success); }
         .completed .card-icon { background: #D1FAE5; color: var(--success); }
         .tag-completed { color: var(--success); background: #D1FAE5; }
 
-        .section-title { background: #F0FDF4; color: var(--primary); padding: 15px 20px; border-right: 4px solid var(--primary); font-weight: 700; font-size: 1.1em; margin: 40px 0 25px 0; border-radius: 4px 0 0 4px; display: flex; justify-content: space-between; align-items: center;}
+        .section-title { background: #F0FDF4; color: var(--primary); padding: 12px 15px; border-right: 4px solid var(--primary); font-weight: 700; font-size: 1em; margin: 30px 0 15px 0; border-radius: 4px 0 0 4px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px;}
         .section-title:first-child { margin-top: 0; }
-        .section-badge { background: var(--primary); color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.8em; }
-        .question-block { margin-bottom: 40px; }
-        .question-text { font-size: 1.1em; font-weight: 700; margin-bottom: 20px; color: var(--text-main); line-height: 1.6; }
-        .options-list { display: grid; grid-template-columns: 1fr; gap: 10px; }
-        .option-item { position: relative; border: 1px solid var(--border-color); border-radius: 6px; padding: 15px 20px; cursor: pointer; transition: all 0.2s; background: var(--bg-surface); display: flex; align-items: center; }
+        .section-badge { background: var(--primary); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.75em; }
+        .question-block { margin-bottom: 30px; }
+        .question-text { font-size: 1.05em; font-weight: 700; margin-bottom: 15px; color: var(--text-main); line-height: 1.5; }
+        .options-list { display: grid; grid-template-columns: 1fr; gap: 8px; }
+        .option-item { position: relative; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 15px; cursor: pointer; transition: all 0.2s; background: var(--bg-surface); display: flex; align-items: center; box-sizing: border-box;}
         .option-item:hover { background: #F9FAFB; border-color: #D1D5DB; }
-        .option-item input[type="radio"] { margin-left: 15px; transform: scale(1.2); accent-color: var(--primary); }
-        .option-item .option-text { font-weight: 500; color: var(--text-secondary); }
+        .option-item input[type="radio"] { margin-left: 12px; transform: scale(1.1); accent-color: var(--primary); }
+        .option-item .option-text { font-weight: 500; color: var(--text-secondary); font-size: 0.95em; }
         .option-item:has(input[type="radio"]:checked) { border-color: var(--primary); background: #F0FDF4; }
         .option-item:has(input[type="radio"]:checked) .option-text { color: var(--primary); font-weight: 700; }
         
@@ -83,55 +89,69 @@
         .wrong-option { background-color: #FEF2F2 !important; border-color: var(--danger) !important; }
         .wrong-option .option-text { color: var(--danger) !important; font-weight: 700; }
 
-        .result-box { text-align: center; padding: 20px 0; }
-        .result-score { font-size: 3.5em; font-weight: 800; color: var(--primary); margin-bottom: 5px; }
-        .chart-container { width: 100%; max-width: 500px; margin: 0 auto 20px auto; }
+        /* تصميم تقرير PDF الجديد الاحترافي */
+        .pdf-report-container { background: #ffffff; padding: 25px; border-radius: 8px; text-align: right; direction: rtl; }
+        .pdf-header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary); padding-bottom: 15px; margin-bottom: 20px; }
+        .pdf-header-top h2 { margin: 0; color: var(--primary); font-size: 1.3em; }
+        .pdf-header-top span { font-size: 0.85em; color: var(--text-secondary); }
         
-        .admin-link { text-align: center; margin-top: 20px; font-size: 0.9em; color: var(--text-secondary); cursor: pointer; text-decoration: underline; }
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
-        .stat-card { background: #F8FAFC; border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; text-align: center; }
-        .stat-card h3 { margin: 0; font-size: 2em; color: var(--primary); }
-        .stat-card p { margin: 5px 0 0 0; color: var(--text-secondary); font-size: 0.9em; font-weight: 700; }
+        .pdf-meta-box { background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 6px; padding: 15px; margin-bottom: 20px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 0.9em; }
+        .pdf-meta-item strong { color: var(--primary); }
+
+        .pdf-score-summary { display: flex; justify-content: space-around; background: #F0FDF4; border: 1px solid #D1FAE5; border-radius: 6px; padding: 15px; margin-bottom: 20px; text-align: center; }
+        .pdf-score-box h4 { margin: 0 0 5px 0; color: var(--text-secondary); font-size: 0.85em; }
+        .pdf-score-box span { font-size: 1.4em; font-weight: 800; color: var(--primary); }
+
+        .chart-container { width: 100%; max-width: 400px; margin: 0 auto 15px auto; }
         
-        .admin-tabs { display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
-        .admin-tab { padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; color: var(--text-secondary); transition: all 0.2s;}
+        .admin-link { text-align: center; margin-top: 20px; font-size: 0.9em; color: var(--text-secondary); cursor: pointer; text-decoration: underline; border-top: 1px solid var(--border-color); padding-top: 15px; }
+        .admin-link:hover { color: var(--primary); }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 25px; }
+        .stat-card { background: #F8FAFC; border: 1px solid var(--border-color); padding: 15px; border-radius: 8px; text-align: center; }
+        .stat-card h3 { margin: 0; font-size: 1.8em; color: var(--primary); }
+        .stat-card p { margin: 4px 0 0 0; color: var(--text-secondary); font-size: 0.85em; font-weight: 700; }
+        
+        .admin-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 8px; }
+        .admin-tab { padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; color: var(--text-secondary); font-size: 0.9em; transition: all 0.2s;}
         .admin-tab.active { background-color: var(--primary); color: white; }
 
-        .data-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9em; }
-        .data-table th, .data-table td { border: 1px solid var(--border-color); padding: 12px; text-align: right; }
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85em; }
+        .data-table th, .data-table td { border: 1px solid var(--border-color); padding: 10px; text-align: right; }
         .data-table th { background-color: #F0FDF4; color: var(--primary); }
-        .btn-small { background: var(--accent); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-family: inherit; font-weight: bold;}
+        .btn-small { background: var(--accent); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-family: inherit; font-weight: bold; font-size: 0.8em;}
         .btn-small:hover { background: #B45309; }
 
-        .admin-report-header { background: #F8FAFC; padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;}
+        .admin-report-header { background: #F8FAFC; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px;}
         
-        .answers-review-container { max-height: 450px; overflow-y: auto; padding: 15px; border: 1px solid var(--border-color); border-radius: 8px; background: #FAFAFA; margin-top: 15px; text-align: right;}
-        .ans-q { font-weight: bold; color: var(--primary); margin-bottom: 10px; font-size: 1em;}
-        .ans-opt { padding: 8px 12px; margin-bottom: 5px; border-radius: 4px; font-size: 0.9em; background: #fff; border: 1px solid #ddd;}
+        .answers-review-container { max-height: 400px; overflow-y: auto; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; background: #FAFAFA; margin-top: 12px; text-align: right;}
+        .ans-q { font-weight: bold; color: var(--primary); margin-bottom: 8px; font-size: 0.95em;}
+        .ans-opt { padding: 8px 10px; margin-bottom: 4px; border-radius: 4px; font-size: 0.85em; background: #fff; border: 1px solid #ddd;}
         .ans-correct { background: #ECFDF5; border-color: var(--success); color: var(--success); font-weight: bold;}
         .ans-wrong { background: #FEF2F2; border-color: var(--danger); color: var(--danger); font-weight: bold;}
         .ans-missed { background: #fff; border-color: var(--success); color: var(--success); border-width: 2px; border-style: dashed;}
 
-        .teams-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .teams-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 15px; }
         .team-card { border: 1px solid var(--border-color); border-radius: 8px; background: #FFFFFF; box-shadow: 0 2px 4px rgba(0,0,0,0.03); overflow: hidden; display: flex; flex-direction: column;}
-        .team-card-header { background: #F0FDF4; border-bottom: 1px solid #D1FAE5; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center;}
-        .team-card-body { padding: 0 15px 15px 15px; flex-grow: 1; }
+        .team-card-header { background: #F0FDF4; border-bottom: 1px solid #D1FAE5; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center;}
+        .team-card-body { padding: 0 12px 12px 12px; flex-grow: 1; }
         
-        .team-power-container { background: #F3F4F6; border-radius: 4px; margin: 15px 0; overflow: hidden; position: relative; height: 26px; border: 1px solid #E5E7EB; }
+        .team-power-container { background: #F3F4F6; border-radius: 4px; margin: 12px 0; overflow: hidden; position: relative; height: 24px; border: 1px solid #E5E7EB; }
         .team-power-fill { height: 100%; transition: width 0.5s ease-in-out; }
-        .team-power-text { position: absolute; top: 0; left: 0; right: 0; text-align: center; font-size: 0.85em; font-weight: bold; color: #111827; line-height: 26px; }
+        .team-power-text { position: absolute; top: 0; left: 0; right: 0; text-align: center; font-size: 0.8em; font-weight: bold; color: #111827; line-height: 24px; }
 
-        .team-member-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #F3F4F6; gap: 10px;}
-        .member-skill-tag { font-size: 0.75em; background: #E0E7FF; color: #3730A3; padding: 2px 8px; border-radius: 10px; font-weight: bold;}
-        .member-reassign-select { padding: 4px 8px; border: 1px solid #D1D5DB; border-radius: 4px; font-size: 0.85em; background: #FFF; cursor: pointer;}
-        .remove-member-btn { color: var(--danger); background: none; border: none; cursor: pointer; font-size: 0.9em; padding: 4px;}
+        .team-member-item { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #F3F4F6; gap: 8px;}
+        .team-member-item:last-child { border-bottom: none; }
+        .member-skill-tag { font-size: 0.7em; background: #E0E7FF; color: #3730A3; padding: 2px 6px; border-radius: 8px; font-weight: bold;}
+        .member-reassign-select { padding: 3px 6px; border: 1px solid #D1D5DB; border-radius: 4px; font-family: inherit; font-size: 0.8em; background: #FFF; cursor: pointer;}
+        .remove-member-btn { color: var(--danger); background: none; border: none; cursor: pointer; font-size: 0.85em; padding: 2px;}
 
-        .unassigned-pool { border: 2px dashed #D1D5DB; border-radius: 8px; padding: 20px; background: #F9FAFB; margin-top: 25px;}
-        .unassigned-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin-top: 15px;}
-        .unassigned-item { background: white; border: 1px solid var(--border-color); padding: 10px 14px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;}
+        .unassigned-pool { border: 2px dashed #D1D5DB; border-radius: 8px; padding: 15px; background: #F9FAFB; margin-top: 20px;}
+        .unassigned-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; margin-top: 10px;}
+        .unassigned-item { background: white; border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; gap: 8px;}
 
         @media print {
-            body { background: white; padding: 0; }
+            body { background: white; padding: 0; align-items: flex-start; }
             .container { max-width: 100%; margin: 0; }
             .panel { border: none; box-shadow: none; padding: 0; }
             .btn-primary, .btn-secondary, .user-bar { display: none !important; }
@@ -141,67 +161,74 @@
 <body>
 
 <div class="container">
-    <div class="brand-header">
-        <div class="brand-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
-        <div class="brand-title">
-            <h1>أكاديمية تحليل الأعمال</h1>
-            <p>منصة القياس السحابية وتطوير الكفاءات وإدارة الفرق</p>
-        </div>
-    </div>
-
     <!-- تسجيل المتدرب -->
-    <div id="loginView" class="panel view active">
-        <h2 style="margin-top: 0; margin-bottom: 25px;">تسجيل بيانات المتدرب</h2>
-        <div class="grid-2">
-            <div>
+    <div id="loginView" class="view active">
+        <div class="auth-card">
+            <div class="auth-header">
+                <i class="fa-solid fa-layer-group"></i>
+                <h1>أكاديمية تحليل الأعمال</h1>
+                <p>منصة قياس الكفاءات وتشكيل الفرق الاحترافية</p>
+            </div>
+            <div class="auth-body">
+                <h3 style="margin-top: 0; margin-bottom: 20px; font-size: 1.15em; color: var(--primary);">تسجيل بيانات المتدرب</h3>
                 <label class="form-label">الاسم الثلاثي</label>
                 <input type="text" id="traineeName" class="form-control" placeholder="أدخل اسمك الكامل" required>
-            </div>
-            <div>
+                
                 <label class="form-label">البريد الإلكتروني</label>
-                <input type="email" id="traineeEmail" class="form-control" placeholder="أدخل البريد الإلكتروني" required>
-            </div>
-            <div>
+                <input type="email" id="traineeEmail" class="form-control" placeholder="name@example.com" required>
+                
                 <label class="form-label">رقم الجوال</label>
                 <input type="tel" id="traineeMobile" class="form-control" placeholder="05xxxxxxxx" required>
-            </div>
-            <div>
+                
                 <label class="form-label">رقم المتدرب (أرقام فقط)</label>
                 <input type="number" id="bootcampId" class="form-control" placeholder="مثال: 125" required>
+                
+                <button class="btn-primary" onclick="login()">متابعة ودخول المنصة <i class="fa-solid fa-arrow-left"></i></button>
+                
+                <div class="admin-link" onclick="showView('adminLoginView')">
+                    <i class="fa-solid fa-user-shield"></i> بوابة الإدارة والمشرفين
+                </div>
             </div>
         </div>
-        <button class="btn-primary" onclick="login()">متابعة ودخول <i class="fa-solid fa-arrow-left"></i></button>
-        <div class="admin-link" onclick="showView('adminLoginView')"><i class="fa-solid fa-user-shield"></i> بوابة الإدارة والمشرفين (مشفرة آمنة)</div>
     </div>
 
     <!-- دخول الإدارة الآمن عبر Firebase Auth -->
-    <div id="adminLoginView" class="panel view">
-        <h2 style="margin-top: 0; color: var(--accent);"><i class="fa-solid fa-lock"></i> بوابة الإدارة والمشرفين الآمنة</h2>
-        <p style="font-size: 0.9em; color: var(--text-secondary); margin-bottom: 20px;">تسجيل الدخول محمي عبر مصادقة Firebase السحابية المشفرة.</p>
-        <label class="form-label">البريد الإلكتروني للمشرف</label>
-        <input type="email" id="adminEmail" class="form-control" placeholder="admin@ba-academy.com">
-        <label class="form-label">كلمة المرور المشفرة</label>
-        <input type="password" id="adminPass" class="form-control" placeholder="••••••••">
-        <button class="btn-primary" style="background-color: var(--accent);" onclick="adminLogin()">دخول آمن للمشرفين</button>
-        <button class="btn-secondary" onclick="showView('loginView')">عودة لصفحة المتدربين</button>
+    <div id="adminLoginView" class="view">
+        <div class="auth-card">
+            <div class="auth-header" style="background: linear-gradient(135deg, var(--accent) 0%, #92400E 100%);">
+                <i class="fa-solid fa-lock"></i>
+                <h1>بوابة الإدارة والمشرفين</h1>
+                <p>تسجيل دخول آمن ومشفّر عبر النظام السحابي</p>
+            </div>
+            <div class="auth-body">
+                <label class="form-label">البريد الإلكتروني للمشرف</label>
+                <input type="email" id="adminEmail" class="form-control" placeholder="admin@ba-academy.com">
+                
+                <label class="form-label">كلمة المرور المشفرة</label>
+                <input type="password" id="adminPass" class="form-control" placeholder="••••••••">
+                
+                <button class="btn-primary" style="background-color: var(--accent);" onclick="adminLogin()">دخول آمن للمشرفين</button>
+                <button class="btn-secondary" onclick="showView('loginView')">عودة لصفحة المتدربين</button>
+            </div>
+        </div>
     </div>
 
     <!-- لوحة تحكم الإدارة -->
     <div id="adminDashboardView" class="panel view">
         <div class="user-bar">
-            <h2 style="margin: 0; color: var(--primary);"><i class="fa-solid fa-chart-line"></i> مركز قيادة المعسكر التدريبي السحابي</h2>
+            <h2 style="margin: 0; color: var(--primary); font-size: 1.2em;"><i class="fa-solid fa-chart-line"></i> مركز قيادة المعسكر التدريبي السحابي</h2>
             <div class="logout" onclick="showView('loginView')">خروج <i class="fa-solid fa-right-from-bracket"></i></div>
         </div>
 
         <div class="stats-grid">
-            <div class="stat-card"><h3 id="totalTraineesCount">0</h3><p>إجمالي المتدربين المسجلين</p></div>
-            <div class="stat-card"><h3 id="avgPreScore">0%</h3><p>متوسط التقييم القبلي</p></div>
-            <div class="stat-card"><h3 id="avgPostScore">0%</h3><p>متوسط التقييم البعدي</p></div>
+            <div class="stat-card"><h3 id="totalTraineesCount">0</h3><p>إجمالي المتدربين</p></div>
+            <div class="stat-card"><h3 id="avgPreScore">0%</h3><p>متوسط القبلي</p></div>
+            <div class="stat-card"><h3 id="avgPostScore">0%</h3><p>متوسط البعدي</p></div>
         </div>
 
         <div class="admin-tabs">
-            <div class="admin-tab active" id="tabTraineesBtn" onclick="switchAdminTab('trainees')"><i class="fa-solid fa-users"></i> سجل المتدربين والتقارير</div>
-            <div class="admin-tab" id="tabTeamsBtn" onclick="switchAdminTab('teams')"><i class="fa-solid fa-people-group"></i> أداة تشكيل وتعديل الفرق (مؤشر القوة القبلي)</div>
+            <div class="admin-tab active" id="tabTraineesBtn" onclick="switchAdminTab('trainees')"><i class="fa-solid fa-users"></i> المتدربون والتقارير</div>
+            <div class="admin-tab" id="tabTeamsBtn" onclick="switchAdminTab('teams')"><i class="fa-solid fa-people-group"></i> أداة الفرق (مؤشر القوة)</div>
         </div>
 
         <div id="adminTraineesSection">
@@ -210,10 +237,10 @@
                     <thead>
                         <tr>
                             <th>المتدرب / الجوال</th>
-                            <th>معرّف المتدرب</th>
+                            <th>المعرّف</th>
                             <th>القبلي</th>
                             <th>البعدي</th>
-                            <th>أبرز كفاءة (القوة)</th>
+                            <th>أبرز كفاءة</th>
                             <th>الإجراءات</th>
                         </tr>
                     </thead>
@@ -223,19 +250,19 @@
         </div>
 
         <div id="adminTeamsSection" style="display: none;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px;">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 15px;">
                 <div>
-                    <h3 style="margin: 0; color: var(--primary);">إدارة وتشكيل فرق مشاريع التخرج</h3>
-                    <p style="margin: 5px 0 0 0; font-size: 0.9em; color: var(--text-secondary);">مؤشر القوة يعتمد كلياً على التقييم القبلي والتكامل المهاري.</p>
+                    <h3 style="margin: 0; color: var(--primary); font-size: 1.1em;">إدارة وتشكيل فرق مشاريع التخرج</h3>
+                    <p style="margin: 3px 0 0 0; font-size: 0.85em; color: var(--text-secondary);">مؤشر القوة يعتمد كلياً على التقييم القبلي والتكامل المهاري.</p>
                 </div>
-                <div style="display: flex; gap: 10px;">
-                    <button class="btn-accent" onclick="addNewEmptyTeam()"><i class="fa-solid fa-plus"></i> إضافة فريق جديد</button>
-                    <button class="btn-primary" style="width: auto; padding: 10px 18px;" onclick="autoGenerateBalancedTeams()"><i class="fa-solid fa-wand-magic-sparkles"></i> تشكيل ذكي متوازن</button>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    <button class="btn-accent" onclick="addNewEmptyTeam()"><i class="fa-solid fa-plus"></i> إضافة فريق</button>
+                    <button class="btn-primary" style="width: auto; padding: 8px 14px; font-size: 0.9em;" onclick="autoGenerateBalancedTeams()"><i class="fa-solid fa-wand-magic-sparkles"></i> تشكيل متوازن</button>
                 </div>
             </div>
             <div class="teams-grid" id="teamsCardsContainer"></div>
             <div class="unassigned-pool">
-                <h4><i class="fa-solid fa-user-clock"></i> قائمة الانتظار: <span id="unassignedCount">0</span></h4>
+                <h4 style="margin:0 0 8px 0; font-size: 0.95em; color:var(--accent);"><i class="fa-solid fa-user-clock"></i> قائمة الانتظار: <span id="unassignedCount">0</span></h4>
                 <div class="unassigned-grid" id="unassignedListContainer"></div>
             </div>
         </div>
@@ -244,34 +271,34 @@
     <!-- تقرير المتدرب للمشرف -->
     <div id="adminReportView" class="panel view">
         <div class="user-bar">
-            <h2 style="margin: 0; color: var(--primary);"><i class="fa-solid fa-file-contract"></i> التقرير التحليلي للمتدرب</h2>
+            <h2 style="margin: 0; color: var(--primary); font-size: 1.1em;"><i class="fa-solid fa-file-contract"></i> التقرير التحليلي للمتدرب</h2>
             <div class="logout" onclick="showView('adminDashboardView')">العودة للوحة الإدارة <i class="fa-solid fa-xmark"></i></div>
         </div>
         
         <div class="admin-report-header">
             <div>
-                <h3 id="adminRepName">اسم المتدرب</h3>
-                <p id="adminRepEmailMobile">البريد الإلكتروني | الجوال</p>
-                <p style="font-size:0.85em; color: var(--accent); margin-top:5px;">المعرّف: <span id="adminRepBootcamp"></span></p>
+                <h3 id="adminRepName" style="font-size: 1.1em; margin:0 0 3px 0;">اسم المتدرب</h3>
+                <p id="adminRepEmailMobile" style="font-size: 0.85em; margin:0;">البريد | الجوال</p>
+                <p style="font-size:0.8em; color: var(--accent); margin:3px 0 0 0;">المعرّف: <span id="adminRepBootcamp"></span></p>
             </div>
-            <div style="text-align: left; background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
-                <p style="margin:0 0 10px 0;">التقييم القبلي: <strong id="adminRepPre" style="color:var(--accent); font-size:1.2em;">0%</strong></p>
-                <p style="margin:0;">التقييم البعدي: <strong id="adminRepPost" style="color:var(--success); font-size:1.2em;">0%</strong></p>
+            <div style="text-align: left; background: white; padding: 10px 15px; border-radius: 8px; border: 1px solid #ddd;">
+                <p style="margin:0 0 5px 0; font-size:0.85em;">القبلي: <strong id="adminRepPre" style="color:var(--accent); font-size:1.1em;">0%</strong></p>
+                <p style="margin:0; font-size:0.85em;">البعدي: <strong id="adminRepPost" style="color:var(--success); font-size:1.1em;">0%</strong></p>
             </div>
         </div>
 
-        <h3 style="text-align: center; color: var(--primary); margin-top:30px;">الخريطة الرادارية (مقارنة الأداء)</h3>
+        <h3 style="text-align: center; color: var(--primary); font-size: 1em; margin-top:20px;">الخريطة الرادارية (مقارنة الأداء)</h3>
         <div class="chart-container"><canvas id="adminRadarChart"></canvas></div>
 
-        <h3 style="border-bottom: 2px solid var(--primary-light); padding-bottom: 10px; margin-top: 40px;">مراجعة الإجابات التفصيلية</h3>
-        <div style="display:flex; gap:10px; margin-bottom:10px;">
-            <button class="btn-secondary" style="margin:0; padding:10px;" onclick="renderAdminAnswersReview('pre')">عرض إجابات القبلي</button>
-            <button class="btn-primary" style="margin:0; padding:10px;" onclick="renderAdminAnswersReview('post')">عرض إجابات البعدي</button>
+        <h3 style="border-bottom: 2px solid var(--primary-light); padding-bottom: 8px; margin-top: 30px; font-size: 1em;">مراجعة الإجابات التفصيلية</h3>
+        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+            <button class="btn-secondary" style="margin:0; padding:8px 12px; font-size:0.9em;" onclick="renderAdminAnswersReview('pre')">إجابات القبلي</button>
+            <button class="btn-primary" style="margin:0; padding:8px 12px; font-size:0.9em; width:auto;" onclick="renderAdminAnswersReview('post')">إجابات البعدي</button>
         </div>
         <div class="answers-review-container" id="adminAnswersContainer">
-            <p style="text-align:center; color:gray;">الرجاء تحديد الاختبار لعرض إجابات المتدرب.</p>
+            <p style="text-align:center; color:gray; font-size:0.9em;">الرجاء تحديد الاختبار لعرض إجابات المتدرب.</p>
         </div>
-        <button class="btn-secondary" onclick="showView('adminDashboardView')" style="margin-top:30px;">إغلاق التقرير</button>
+        <button class="btn-secondary" onclick="showView('adminDashboardView')" style="margin-top:20px;">إغلاق التقرير</button>
     </div>
 
     <!-- لوحة المتدرب -->
@@ -279,14 +306,14 @@
         <div class="user-bar">
             <div class="user-name">
                 <i class="fa-regular fa-circle-user"></i> <span id="displayName"></span>
-                <div style="font-size:0.75em; color:var(--text-secondary); font-weight:normal; margin-top:5px;">المعرّف: <span id="displayBootcamp"></span> | الجوال: <span id="displayMobile"></span></div>
+                <div style="font-size:0.75em; color:var(--text-secondary); font-weight:normal; margin-top:3px;">المعرّف: <span id="displayBootcamp"></span> | الجوال: <span id="displayMobile"></span></div>
             </div>
             <div style="display: flex;">
                 <div class="logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</div>
             </div>
         </div>
         
-        <h3 style="margin-top:0; margin-bottom: 20px; font-size: 1.2em;">مسار التقييم المتاح:</h3>
+        <h3 style="margin-top:0; margin-bottom: 15px; font-size: 1.1em;">مسار التقييم المتاح:</h3>
         <div class="cards-grid">
             <div class="assessment-card" id="preTestCard" onclick="handlePreTestClick()">
                 <div class="card-header">
@@ -308,35 +335,58 @@
                 <div id="postScoreBadge" class="score-badge" style="display:none;"></div>
             </div>
         </div>
-        <button id="traineeFullReportBtn" class="btn-primary" onclick="showView('resultView')" style="display:none; margin-top: 30px;"><i class="fa-solid fa-chart-radar"></i> عرض وتحميل تقرير التطور الشامل (PDF)</button>
+        <button id="traineeFullReportBtn" class="btn-primary" onclick="showView('resultView')" style="display:none; margin-top: 25px;"><i class="fa-solid fa-chart-radar"></i> عرض وتحميل تقرير التطور الشامل (PDF)</button>
     </div>
 
     <!-- شاشة الاختبار -->
     <div id="quizView" class="panel view">
         <div class="user-bar">
-            <h2 id="quizTitle" style="margin: 0; font-size: 1.3em; color: var(--primary);"></h2>
+            <h2 id="quizTitle" style="margin: 0; font-size: 1.1em; color: var(--primary);"></h2>
             <div class="logout" onclick="showView('dashboardView')" style="color: var(--text-secondary);">إغلاق <i class="fa-solid fa-xmark"></i></div>
         </div>
-        <div id="reviewNotice" style="display:none; background:#EFF6FF; color:#1D4ED8; padding:15px; border-radius:6px; margin-bottom:20px; border:1px solid #BFDBFE; font-weight:700;">
+        <div id="reviewNotice" style="display:none; background:#EFF6FF; color:#1D4ED8; padding:12px; border-radius:6px; margin-bottom:15px; border:1px solid #BFDBFE; font-weight:700; font-size: 0.9em;">
             <i class="fa-solid fa-circle-info"></i> وضع المراجعة: الإجابات الصحيحة (أخضر)، وإجاباتك الخاطئة (أحمر).
         </div>
         <div id="questionsContainer"></div>
-        <button class="btn-primary" id="submitQuizBtn" onclick="submitQuiz()" style="margin-top: 20px;">تسليم واعتماد الإجابات <i class="fa-solid fa-check"></i></button>
+        <button class="btn-primary" id="submitQuizBtn" onclick="submitQuiz()" style="margin-top: 15px;">تسليم واعتماد الإجابات <i class="fa-solid fa-check"></i></button>
         <button class="btn-secondary" id="backToDashBtn" onclick="showView('dashboardView')" style="display:none;">العودة للوحة الرئيسية</button>
     </div>
 
-    <!-- شاشة النتيجة للمتدرب مع زر تحميل PDF -->
+    <!-- شاشة النتيجة للمتدرب (تصميم PDF مؤسسي نظيف ومنسق) -->
     <div id="resultView" class="panel view">
-        <div class="result-box" id="pdfReportContent">
-            <h2 style="margin-top: 0; color: var(--primary);">تقرير خريطة الكفاءات وتطور الأداء</h2>
-            <p id="pdfTraineeInfo" style="font-weight: bold; color: var(--text-secondary);"></p>
-            <div class="result-score" id="finalScoreText"></div>
-            <div style="font-size: 1.1em; color: var(--text-secondary); margin-bottom: 10px; font-weight: 700;">مقارنة مستوى الكفاءات بين التقييم القبلي والبعدي</div>
-            
+        <div class="pdf-report-container" id="pdfReportContent">
+            <div class="pdf-header-top">
+                <h2>أكاديمية تحليل الأعمال - تقرير الكفاءات</h2>
+                <span>تاريخ التقرير: 2026</span>
+            </div>
+
+            <div class="pdf-meta-box">
+                <div class="pdf-meta-item"><strong>اسم المتدرب:</strong> <span id="pdfNameVal"></span></div>
+                <div class="pdf-meta-item"><strong>معرّف المعسكر:</strong> <span id="pdfBootcampVal"></span></div>
+                <div class="pdf-meta-item"><strong>البريد الإلكتروني:</strong> <span id="pdfEmailVal"></span></div>
+                <div class="pdf-meta-item"><strong>رقم الجوال:</strong> <span id="pdfMobileVal"></span></div>
+            </div>
+
+            <div class="pdf-score-summary">
+                <div class="pdf-score-box">
+                    <h4>التقييم القبلي</h4>
+                    <span id="pdfPreScoreVal">0%</span>
+                </div>
+                <div class="pdf-score-box">
+                    <h4>التقييم البعدي</h4>
+                    <span id="pdfPostScoreVal">0%</span>
+                </div>
+                <div class="pdf-score-box">
+                    <h4>معدل النمو الكلي</h4>
+                    <span id="pdfGrowthVal">0%</span>
+                </div>
+            </div>
+
+            <h3 style="text-align: center; color: var(--primary); font-size: 1.1em; margin-bottom: 10px;">خريطة تطور الكفاءات (الرادار المقارن)</h3>
             <div class="chart-container"><canvas id="competencyRadarChart"></canvas></div>
         </div>
 
-        <div style="display: flex; gap: 10px; margin-top: 20px;">
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
             <button class="btn-primary" onclick="downloadPDF()"><i class="fa-solid fa-file-pdf"></i> تحميل التقرير كملف PDF</button>
             <button class="btn-secondary" style="margin-top: 0;" onclick="showView('dashboardView')">العودة للرئيسية</button>
         </div>
@@ -426,12 +476,23 @@
         document.getElementById(viewId).classList.add('active');
         if(viewId === 'dashboardView') updateDashboard();
         if(viewId === 'resultView') {
-            document.getElementById('pdfTraineeInfo').innerText = `المتدرب: ${localStorage.getItem('ba_trainee_name')} | المعرّف: ${localStorage.getItem('ba_trainee_bootcamp')}`;
+            document.getElementById('pdfNameVal').innerText = localStorage.getItem('ba_trainee_name') || '-';
+            document.getElementById('pdfBootcampVal').innerText = localStorage.getItem('ba_trainee_bootcamp') || '-';
+            document.getElementById('pdfEmailVal').innerText = localStorage.getItem('ba_trainee_email') || '-';
+            document.getElementById('pdfMobileVal').innerText = localStorage.getItem('ba_trainee_mobile') || '-';
+            
+            document.getElementById('pdfPreScoreVal').innerText = (localStorage.getItem('ba_score_pre') || '0') + '%';
+            document.getElementById('pdfPostScoreVal').innerText = (localStorage.getItem('ba_score_post') || '0') + '%';
+            
+            let pre = parseInt(localStorage.getItem('ba_score_pre') || 0);
+            let post = parseInt(localStorage.getItem('ba_score_post') || 0);
+            let diff = post - pre;
+            document.getElementById('pdfGrowthVal').innerText = (diff >= 0 ? '+' + diff : diff) + '%';
+
             drawRadarChart();
         }
     };
 
-    // تسجيل المتدرب
     window.login = async function() {
         const name = document.getElementById('traineeName').value;
         const email = document.getElementById('traineeEmail').value;
@@ -650,10 +711,6 @@
                 pointBackgroundColor: '#064E3B',
                 borderWidth: 2
             });
-            let diff = localStorage.getItem('ba_score_post') - localStorage.getItem('ba_score_pre');
-            document.getElementById('finalScoreText').innerHTML = `<span style="font-size:0.45em; color:gray;">معدل النمو الكلي:</span> <span style="color:${diff>=0?'var(--success)':'var(--danger)'}">${diff >= 0 ? '+'+diff : diff}%</span>`;
-        } else {
-            document.getElementById('finalScoreText').innerText = `${localStorage.getItem('ba_score_pre')}%`;
         }
 
         const ctx = document.getElementById('competencyRadarChart').getContext('2d');
@@ -663,13 +720,12 @@
             data: { labels: preObj.labels, datasets: datasets },
             options: { 
                 responsive: true, 
-                scales: { r: { suggestedMin: 0, suggestedMax: 100, ticks: { stepSize: 20, font:{family:'Tajawal'} }, pointLabels: { font: { family: 'Tajawal', size: 11, weight: 'bold' } } } }, 
-                plugins: { legend: { position: 'bottom', labels:{font:{family:'Tajawal', size:14}} } } 
+                scales: { r: { suggestedMin: 0, suggestedMax: 100, ticks: { stepSize: 20, font:{family:'Tajawal'} }, pointLabels: { font: { family: 'Tajawal', size: 10, weight: 'bold' } } } }, 
+                plugins: { legend: { position: 'bottom', labels:{font:{family:'Tajawal', size:12}} } } 
             }
         });
     }
 
-    // زر تحميل PDF للمتدرب
     window.downloadPDF = function() {
         const element = document.getElementById('pdfReportContent');
         const opt = {
@@ -682,21 +738,18 @@
         html2pdf().from(element).set(opt).save();
     };
 
-    // ================= المصادقة الآمنة وإدارة المشرفين (Firebase Auth) =================
-    
+    // ================= المصادقة الآمنة وإدارة المشرفين =================
     window.adminLogin = async function() {
         const email = document.getElementById('adminEmail').value;
         const password = document.getElementById('adminPass').value;
         if(!email || !password) { alert("الرجاء إدخال البريد وكلمة المرور المشفرة."); return; }
 
         try {
-            // تسجيل الدخول المشفر عبر Firebase Auth
             await signInWithEmailAndPassword(auth, email, password);
             initAdminModule();
             window.showView('adminDashboardView');
         } catch(error) {
             alert("فشل تسجيل الدخول. تأكد من صحة البريد أو كلمة المرور المسجلة في Firebase Authentication.");
-            console.error(error);
         }
     };
 
@@ -746,7 +799,7 @@
             traineesList.forEach(t => {
                 tbody.innerHTML += `
                     <tr>
-                        <td><strong>${t.name}</strong><br><span style="font-size:0.8em; color:gray;">${t.mobile}</span></td>
+                        <td><strong>${t.name}</strong><br><span style="font-size:0.75em; color:gray;">${t.mobile}</span></td>
                         <td>${t.bootcamp}</td>
                         <td><strong style="color:var(--accent);">${t.preScore !== '-' ? t.preScore+'%' : '-'}</strong></td>
                         <td><strong style="color:var(--success);">${t.postScore !== '-' ? t.postScore+'%' : '-'}</strong></td>
@@ -764,7 +817,6 @@
         }
     }
 
-    // إدارة وتشكيل الفرق بناءً على القبلي
     window.autoGenerateBalancedTeams = function() {
         let teamSize = 4;
         let all = [...traineesList];
@@ -827,7 +879,7 @@
         teamsContainer.innerHTML = '';
 
         if(teams.length === 0) {
-            teamsContainer.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:30px; color:gray; background:#fff; border-radius:8px; border:1px dashed #ddd;">لم يتم إنشاء أي فريق بعد. اضغط على <strong>تشكيل ذكي متوازن</strong>.</div>`;
+            teamsContainer.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:20px; color:gray; background:#fff; border-radius:8px; border:1px dashed #ddd; font-size:0.9em;">لم يتم إنشاء فريق بعد. اضغط على <strong>تشكيل متوازن</strong>.</div>`;
         }
 
         teams.forEach(team => {
@@ -858,19 +910,19 @@
                 powerColor = powerScore >= 85 ? 'var(--success)' : (powerScore >= 70 ? 'var(--accent)' : 'var(--danger)');
 
                 team.members.forEach(m => {
-                    let moveOptions = `<option value="">نقل إلى فريق...</option>`;
+                    let moveOptions = `<option value="">نقل إلى...</option>`;
                     teams.forEach(otherTeam => {
                         if(otherTeam.id !== team.id) moveOptions += `<option value="${otherTeam.id}">${otherTeam.name}</option>`;
                     });
-                    moveOptions += `<option value="unassigned">← إرجاع لقائمة الانتظار</option>`;
+                    moveOptions += `<option value="unassigned">← للانتظار</option>`;
 
                     membersHTML += `
                         <div class="team-member-item">
                             <div class="member-info">
-                                <span class="member-name">${m.name}</span>
+                                <span class="member-name" style="font-size: 0.9em;">${m.name}</span>
                                 <span class="member-skill-tag">${m.topSkill}</span>
                             </div>
-                            <div style="display:flex; align-items:center; gap:5px;">
+                            <div style="display:flex; align-items:center; gap:4px;">
                                 <select class="member-reassign-select" onchange="if(this.value) window.reassignTrainee('${m.id}', ${team.id}, this.value)">
                                     ${moveOptions}
                                 </select>
@@ -880,20 +932,20 @@
                     `;
                 });
             } else {
-                membersHTML = `<p style="color:gray; font-size:0.85em; text-align:center; margin:15px 0;">لا يوجد أعضاء</p>`;
+                membersHTML = `<p style="color:gray; font-size:0.8em; text-align:center; margin:10px 0;">لا يوجد أعضاء</p>`;
             }
 
             let powerBarHTML = team.members.length > 0 ? `
                 <div class="team-power-container">
                     <div class="team-power-fill" style="width: ${powerScore}%; background-color: ${powerColor};"></div>
-                    <div class="team-power-text">مؤشر قوة الفريق (قبلي + تنوع): ${powerScore}%</div>
+                    <div class="team-power-text">مؤشر القوة: ${powerScore}%</div>
                 </div>
             ` : '';
 
             teamsContainer.innerHTML += `
                 <div class="team-card">
                     <div class="team-card-header">
-                        <h4>${team.name} (${team.members.length} أعضاء)</h4>
+                        <h4 style="margin:0; font-size:1em; color:var(--primary);">${team.name} (${team.members.length})</h4>
                         <button class="remove-member-btn" style="color:var(--danger);" onclick="window.deleteTeam(${team.id})"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
                     <div class="team-card-body">
@@ -909,15 +961,15 @@
         unassignedContainer.innerHTML = '';
 
         if(unassignedTrainees.length === 0) {
-            unassignedContainer.innerHTML = `<p style="color:var(--success); font-size:0.9em; margin:0; grid-column:1/-1;">جميع المتدربين مسكنين في الفرق ✔️</p>`;
+            unassignedContainer.innerHTML = `<p style="color:var(--success); font-size:0.85em; margin:0; grid-column:1/-1;">جميع المتدربين مسكنين في الفرق ✔️</p>`;
         } else {
             unassignedTrainees.forEach(m => {
-                let assignOptions = `<option value="">تعيين في فريق...</option>`;
+                let assignOptions = `<option value="">تعيين في...</option>`;
                 teams.forEach(t => { assignOptions += `<option value="${t.id}">${t.name}</option>`; });
 
                 unassignedContainer.innerHTML += `
                     <div class="unassigned-item">
-                        <div>
+                        <div style="font-size:0.85em;">
                             <strong>${m.name}</strong><br>
                             <span class="member-skill-tag">${m.topSkill}</span>
                         </div>
@@ -957,7 +1009,7 @@
             options: { responsive: true, scales: { r: { suggestedMin: 0, suggestedMax: 100, ticks: { stepSize: 20, font:{family:'Tajawal'} } } }, plugins: { legend: { position: 'bottom', labels:{font:{family:'Tajawal'}} } } }
         });
 
-        document.getElementById('adminAnswersContainer').innerHTML = '<p style="text-align:center; color:gray;">الرجاء الضغط على أحد الأزرار أعلاه لعرض الإجابات.</p>';
+        document.getElementById('adminAnswersContainer').innerHTML = '<p style="text-align:center; color:gray; font-size:0.9em;">الرجاء الضغط على أحد الأزرار أعلاه لعرض الإجابات.</p>';
         window.showView('adminReportView');
     };
 
@@ -968,15 +1020,15 @@
         let container = document.getElementById('adminAnswersContainer');
 
         if(!answersArray || answersArray.length === 0) {
-            container.innerHTML = '<p style="text-align:center; color:red; font-weight:bold;">المتدرب لم يكمل هذا التقييم بعد.</p>';
+            container.innerHTML = '<p style="text-align:center; color:red; font-weight:bold; font-size:0.9em;">المتدرب لم يكمل هذا التقييم بعد.</p>';
             return;
         }
 
-        let html = `<h4 style="color:var(--primary); text-align:center; border-bottom:1px solid #ddd; padding-bottom:10px;">إجابات التقييم ${type==='pre'?'القبلي':'البعدي'}</h4>`;
+        let html = `<h4 style="color:var(--primary); text-align:center; border-bottom:1px solid #ddd; padding-bottom:8px; font-size:0.95em;">إجابات التقييم ${type==='pre'?'القبلي':'البعدي'}</h4>`;
         
         questionsBank.forEach((q, i) => {
             let userAnsIndex = answersArray[i];
-            html += `<div style="margin-bottom:20px; padding:10px; background:#fff; border-radius:6px; border:1px solid #eee;">`;
+            html += `<div style="margin-bottom:15px; padding:8px; background:#fff; border-radius:6px; border:1px solid #eee;">`;
             html += `<div class="ans-q">${i+1}. ${q.q} <span style="font-size:0.75em; color:gray;">(${q.section})</span></div>`;
             
             q.options.forEach((opt, optIndex) => {
