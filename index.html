@@ -3,109 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة تقييم الكفاءات وإدارة الفرق | أكاديمية تحليل الأعمال</title>
+    <title>BA Bootcamp Assessment | معسكر تحليل الأعمال</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
         :root {
-            --primary: #064E3B; --primary-light: #059669; --accent: #D97706; 
-            --bg-body: #F3F4F6; --bg-surface: #FFFFFF; --text-main: #111827; 
-            --text-secondary: #4B5563; --border-color: #E5E7EB; --locked-bg: #F9FAFB;
-            --success: #059669; --danger: #DC2626;
+            --primary: #0F2A2A;         /* أخضر داكن هادئ ومريح جداً */
+            --primary-light: #2C5E5A;   /* تدرج أخضر معتدل وغير مشع */
+            --accent: #92400E;          /* بني ذهبي هادئ */
+            --bg-body: #F4F6F8;         /* رمادي فاتح مطفأ مريح للعين */
+            --bg-surface: #FFFFFF;      /* أبيض نقي */
+            --text-main: #1E293B;       /* رمادي داكن مريح للقراءة */
+            --text-secondary: #64748B;  /* رمادي متوسط للإرشادات */
+            --border-color: #CBD5E1;    /* حدود ناعمة ومحايدة */
+            --locked-bg: #F1F5F9;
+            --success: #166534;         /* أخضر هادئ للنجاح */
+            --danger: #9F1239;          /* أحمر داكن هادئ */
         }
 
-        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 15px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; }
+        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 20px 15px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; }
         .container { width: 100%; max-width: 960px; margin: 0 auto; }
 
-        .auth-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); overflow: hidden; max-width: 500px; margin: 0 auto; }
-        .auth-header { background: linear-gradient(135deg, var(--primary) 0%, #022C22 100%); color: white; padding: 30px 25px; text-align: center; }
-        .auth-header i { font-size: 2.5em; margin-bottom: 10px; color: #34D399; }
-        .auth-header h1 { margin: 0; font-size: 1.4em; font-weight: 800; }
-        .auth-header p { margin: 5px 0 0 0; font-size: 0.85em; opacity: 0.85; }
+        .auth-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 16px; box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05); overflow: hidden; max-width: 480px; margin: 0 auto; }
+        
+        /* ترويسة هادئة غير مشعة */
+        .auth-header { background: var(--primary); color: white; padding: 35px 25px; text-align: center; position: relative; }
+        .auth-header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+        
+        /* أيقونة هادئة بدمج لوني ناعم */
+        .auth-icon-wrapper { font-size: 1.6em; color: #94A3B8; background: rgba(255, 255, 255, 0.06); width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 12px auto; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.1); }
+        
+        .auth-header h1 { margin: 0; font-size: 1.35em; font-weight: 700; }
+        .auth-header p { margin: 6px 0 0 0; font-size: 0.85em; opacity: 0.75; }
         .auth-body { padding: 30px 25px; }
 
-        .brand-header { background-color: var(--bg-surface); border-bottom: 3px solid var(--primary); padding: 15px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px; border-radius: 8px; }
-        .brand-icon { font-size: 1.8em; color: var(--primary); }
-        .brand-title h1 { margin: 0; font-size: 1.3em; font-weight: 800; color: var(--primary); }
-        .brand-title p { margin: 3px 0 0 0; font-size: 0.85em; color: var(--text-secondary); font-weight: 500; }
-
-        .panel { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 20px; box-sizing: border-box; }
+        .panel { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.01); margin-bottom: 25px; box-sizing: border-box; }
         .view { display: none; }
         .view.active { display: block; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
         .form-label { display: block; margin-bottom: 6px; font-weight: 700; color: var(--text-main); font-size: 0.9em; }
-        .form-control { width: 100%; padding: 12px 15px; border: 1px solid #D1D5DB; border-radius: 6px; font-family: inherit; font-size: 15px; box-sizing: border-box; margin-bottom: 20px; transition: all 0.2s; background-color: #F9FAFB; }
-        .form-control:focus { border-color: var(--primary); background-color: #FFF; outline: none; box-shadow: 0 0 0 3px rgba(6, 78, 59, 0.1); }
-        .grid-2 { display: grid; grid-template-columns: 1fr; gap: 0; }
+        .form-control { width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 8px; font-family: inherit; font-size: 15px; box-sizing: border-box; margin-bottom: 18px; transition: all 0.2s; background-color: #FAFAFA; }
+        .form-control:focus { border-color: var(--primary-light); background-color: #FFF; outline: none; box-shadow: 0 0 0 3px rgba(44, 94, 90, 0.1); }
 
-        .btn-primary { background-color: var(--primary); color: white; border: none; padding: 14px 20px; border-radius: 6px; font-size: 1em; font-weight: 700; cursor: pointer; transition: background 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: inherit; box-sizing: border-box;}
-        .btn-primary:hover { background-color: var(--primary-light); }
-        .btn-secondary { background-color: white; color: var(--primary); border: 1px solid var(--primary); padding: 12px 20px; border-radius: 6px; font-size: 1em; font-weight: 700; cursor: pointer; width: 100%; margin-top: 12px; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: inherit; box-sizing: border-box;}
-        .btn-secondary:hover { background-color: #F3F4F6; }
+        .btn-primary { background: var(--primary); color: white; border: none; padding: 13px 20px; border-radius: 8px; font-size: 1em; font-weight: 700; cursor: pointer; transition: all 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: inherit; box-sizing: border-box; }
+        .btn-primary:hover { background: var(--primary-light); }
+        
+        .btn-secondary { background-color: white; color: var(--primary); border: 1px solid var(--border-color); padding: 12px 20px; border-radius: 8px; font-size: 0.95em; font-weight: 700; cursor: pointer; width: 100%; margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: inherit; box-sizing: border-box;}
+        .btn-secondary:hover { background-color: #F1F5F9; }
+        
         .btn-accent { background-color: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 6px; font-size: 0.9em; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: inherit; }
-        .btn-accent:hover { background-color: #B45309; }
+        .btn-accent:hover { opacity: 0.9; }
 
-        .user-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
-        .user-bar .user-name { font-weight: 700; color: var(--primary); font-size: 1.05em; }
-        .user-bar .logout { color: var(--danger); cursor: pointer; font-weight: 700; font-size: 0.85em; }
+        .dashboard-hero { background: var(--primary); color: white; border-radius: 12px; padding: 25px; margin-bottom: 25px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; box-shadow: 0 4px 6px rgba(15, 23, 42, 0.05); }
+        .hero-welcome h2 { margin: 0 0 5px 0; font-size: 1.35em; }
+        .hero-welcome p { margin: 0; opacity: 0.75; font-size: 0.88em; }
+        .hero-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+        .hero-badge { background: rgba(255, 255, 255, 0.08); padding: 7px 12px; border-radius: 6px; font-size: 0.8em; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.05); }
+        .hero-logout { background: #9F1239; color: white; border: none; padding: 7px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-weight: bold; font-size: 0.8em; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+        .hero-logout:hover { opacity: 0.9; }
 
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; }
-        .assessment-card { border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; text-align: right; cursor: pointer; transition: all 0.2s; background: var(--bg-surface); display: flex; flex-direction: column; justify-content: center; position: relative; box-sizing: border-box; }
-        .assessment-card:hover:not(.locked) { border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .assessment-card { border: 1px solid var(--border-color); border-radius: 12px; padding: 22px; text-align: right; cursor: pointer; transition: all 0.2s ease; background: var(--bg-surface); display: flex; flex-direction: column; justify-content: space-between; position: relative; box-sizing: border-box; }
+        .assessment-card:hover:not(.locked) { border-color: var(--primary-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(15,23,42,0.04); }
         .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .card-icon { font-size: 1.5em; color: var(--primary); background: #ECFDF5; padding: 12px; border-radius: 8px; }
-        .assessment-card h3 { margin: 0 0 4px 0; color: var(--text-main); font-size: 1.15em; }
-        .assessment-card p { margin: 0; color: var(--text-secondary); font-size: 0.85em; }
-        .score-badge { display: inline-block; background: #FEF3C7; color: #92400E; padding: 4px 10px; border-radius: 4px; font-weight: 700; margin-top: 15px; font-size: 0.85em; align-self: flex-start; }
+        .card-icon { font-size: 1.5em; color: var(--primary-light); background: #F1F5F9; padding: 12px; border-radius: 10px; }
+        .assessment-card h3 { margin: 0 0 5px 0; color: var(--text-main); font-size: 1.15em; }
+        .assessment-card p { margin: 0; color: var(--text-secondary); font-size: 0.88em; line-height: 1.4; }
+        .score-badge { display: inline-flex; align-items: center; gap: 6px; background: #FEF3C7; color: #92400E; padding: 5px 12px; border-radius: 6px; font-weight: 700; margin-top: 15px; font-size: 0.85em; align-self: flex-start; }
 
-        .locked { background-color: var(--locked-bg); cursor: not-allowed; }
-        .locked .card-icon { background: #E5E7EB; color: #9CA3AF; }
-        .status-tag { font-size: 0.8em; font-weight: 700; padding: 3px 6px; border-radius: 4px; }
-        .tag-locked { color: var(--danger); background: #FEE2E2; }
-        .completed { background-color: #F0FDF4; border-color: var(--success); }
-        .completed .card-icon { background: #D1FAE5; color: var(--success); }
-        .tag-completed { color: var(--success); background: #D1FAE5; }
+        .locked { background-color: var(--locked-bg); cursor: not-allowed; opacity: 0.7; }
+        .locked .card-icon { background: #E2E8F0; color: #94A3B8; }
+        .status-tag { font-size: 0.78em; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
+        .tag-locked { color: var(--danger); background: #FFE4E6; }
+        .completed { background-color: #F0FDF4; border-color: #86EFAC; }
+        .completed .card-icon { background: #DCFCE7; color: var(--success); }
+        .tag-completed { color: var(--success); background: #DCFCE7; }
 
-        .section-title { background: #F0FDF4; color: var(--primary); padding: 12px 15px; border-right: 4px solid var(--primary); font-weight: 700; font-size: 1em; margin: 30px 0 15px 0; border-radius: 4px 0 0 4px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px;}
+        .section-title { background: #F1F5F9; color: var(--primary); padding: 12px 16px; border-right: 4px solid var(--primary-light); font-weight: 700; font-size: 1em; margin: 30px 0 15px 0; border-radius: 6px 0 0 6px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px;}
         .section-title:first-child { margin-top: 0; }
-        .section-badge { background: var(--primary); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.75em; }
-        .question-block { margin-bottom: 30px; }
-        .question-text { font-size: 1.05em; font-weight: 700; margin-bottom: 15px; color: var(--text-main); line-height: 1.5; }
+        .section-badge { background: var(--primary-light); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.75em; }
+        .question-block { margin-bottom: 25px; background: #FFFFFF; padding: 18px; border-radius: 10px; border: 1px solid var(--border-color); }
+        .question-text { font-size: 1.05em; font-weight: 700; margin-bottom: 12px; color: var(--text-main); line-height: 1.5; }
         .options-list { display: grid; grid-template-columns: 1fr; gap: 8px; }
-        .option-item { position: relative; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 15px; cursor: pointer; transition: all 0.2s; background: var(--bg-surface); display: flex; align-items: center; box-sizing: border-box;}
-        .option-item:hover { background: #F9FAFB; border-color: #D1D5DB; }
-        .option-item input[type="radio"] { margin-left: 12px; transform: scale(1.1); accent-color: var(--primary); }
-        .option-item .option-text { font-weight: 500; color: var(--text-secondary); font-size: 0.95em; }
-        .option-item:has(input[type="radio"]:checked) { border-color: var(--primary); background: #F0FDF4; }
+        .option-item { position: relative; border: 1px solid var(--border-color); border-radius: 8px; padding: 12px 15px; cursor: pointer; transition: all 0.2s; background: var(--bg-surface); display: flex; align-items: center; box-sizing: border-box;}
+        .option-item:hover { background: #F8FAFC; border-color: #94A3B8; }
+        .option-item input[type="radio"] { margin-left: 12px; transform: scale(1.1); accent-color: var(--primary-light); }
+        .option-item .option-text { font-weight: 500; color: var(--text-secondary); font-size: 0.92em; }
+        .option-item:has(input[type="radio"]:checked) { border-color: var(--primary-light); background: #F1F5F9; }
         .option-item:has(input[type="radio"]:checked) .option-text { color: var(--primary); font-weight: 700; }
         
-        .correct-option { background-color: #ECFDF5 !important; border-color: var(--success) !important; }
+        .correct-option { background-color: #F0FDF4 !important; border-color: #86EFAC !important; }
         .correct-option .option-text { color: var(--success) !important; font-weight: 700; }
-        .wrong-option { background-color: #FEF2F2 !important; border-color: var(--danger) !important; }
+        .wrong-option { background-color: #FFF1F2 !important; border-color: #FECDD3 !important; }
         .wrong-option .option-text { color: var(--danger) !important; font-weight: 700; }
 
-        /* تصميم تقرير PDF الجديد الاحترافي */
-        .pdf-report-container { background: #ffffff; padding: 25px; border-radius: 8px; text-align: right; direction: rtl; }
-        .pdf-header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary); padding-bottom: 15px; margin-bottom: 20px; }
-        .pdf-header-top h2 { margin: 0; color: var(--primary); font-size: 1.3em; }
-        .pdf-header-top span { font-size: 0.85em; color: var(--text-secondary); }
+        /* تقرير الصورة */
+        .snapshot-container { background: #ffffff; padding: 30px; border-radius: 12px; text-align: right; direction: rtl; border: 1px solid var(--border-color); max-width: 700px; margin: 0 auto; box-sizing: border-box; }
+        .snapshot-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary); padding-bottom: 12px; margin-bottom: 20px; }
+        .snapshot-header h2 { margin: 0; color: var(--primary); font-size: 1.25em; font-weight: 800; }
+        .snapshot-header span { font-size: 0.8em; color: var(--text-secondary); background: #F1F5F9; padding: 4px 10px; border-radius: 6px; font-weight: bold; }
         
-        .pdf-meta-box { background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 6px; padding: 15px; margin-bottom: 20px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 0.9em; }
-        .pdf-meta-item strong { color: var(--primary); }
+        .snapshot-meta { background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; margin-bottom: 20px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 0.88em; }
+        .snapshot-meta strong { color: var(--primary); margin-left: 4px; }
 
-        .pdf-score-summary { display: flex; justify-content: space-around; background: #F0FDF4; border: 1px solid #D1FAE5; border-radius: 6px; padding: 15px; margin-bottom: 20px; text-align: center; }
-        .pdf-score-box h4 { margin: 0 0 5px 0; color: var(--text-secondary); font-size: 0.85em; }
-        .pdf-score-box span { font-size: 1.4em; font-weight: 800; color: var(--primary); }
+        .snapshot-summary { display: flex; justify-content: space-around; background: #F1F5F9; border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; margin-bottom: 20px; text-align: center; }
+        .snapshot-box h4 { margin: 0 0 4px 0; color: var(--text-secondary); font-size: 0.8em; }
+        .snapshot-box span { font-size: 1.4em; font-weight: 800; color: var(--primary); }
 
-        .chart-container { width: 100%; max-width: 400px; margin: 0 auto 15px auto; }
+        .chart-container { width: 100%; max-width: 400px; margin: 0 auto; }
         
-        .admin-link { text-align: center; margin-top: 20px; font-size: 0.9em; color: var(--text-secondary); cursor: pointer; text-decoration: underline; border-top: 1px solid var(--border-color); padding-top: 15px; }
-        .admin-link:hover { color: var(--primary); }
+        .admin-link { text-align: center; margin-top: 20px; font-size: 0.88em; color: var(--text-secondary); cursor: pointer; text-decoration: underline; border-top: 1px solid var(--border-color); padding-top: 15px; transition: 0.2s; }
+        .admin-link:hover { color: var(--primary); font-weight: bold; }
         
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 25px; }
         .stat-card { background: #F8FAFC; border: 1px solid var(--border-color); padding: 15px; border-radius: 8px; text-align: center; }
@@ -113,49 +126,42 @@
         .stat-card p { margin: 4px 0 0 0; color: var(--text-secondary); font-size: 0.85em; font-weight: 700; }
         
         .admin-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 8px; }
-        .admin-tab { padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; color: var(--text-secondary); font-size: 0.9em; transition: all 0.2s;}
+        .admin-tab { padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; color: var(--text-secondary); font-size: 0.9em; transition: all 0.2s;}
         .admin-tab.active { background-color: var(--primary); color: white; }
 
-        .data-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85em; }
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.88em; }
         .data-table th, .data-table td { border: 1px solid var(--border-color); padding: 10px; text-align: right; }
-        .data-table th { background-color: #F0FDF4; color: var(--primary); }
-        .btn-small { background: var(--accent); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-family: inherit; font-weight: bold; font-size: 0.8em;}
-        .btn-small:hover { background: #B45309; }
+        .data-table th { background-color: #F8FAFC; color: var(--primary); }
+        .btn-small { background: var(--accent); color: white; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-family: inherit; font-weight: bold; font-size: 0.8em;}
+        .btn-small:hover { opacity: 0.9; }
 
         .admin-report-header { background: #F8FAFC; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px;}
         
-        .answers-review-container { max-height: 400px; overflow-y: auto; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; background: #FAFAFA; margin-top: 12px; text-align: right;}
-        .ans-q { font-weight: bold; color: var(--primary); margin-bottom: 8px; font-size: 0.95em;}
-        .ans-opt { padding: 8px 10px; margin-bottom: 4px; border-radius: 4px; font-size: 0.85em; background: #fff; border: 1px solid #ddd;}
-        .ans-correct { background: #ECFDF5; border-color: var(--success); color: var(--success); font-weight: bold;}
-        .ans-wrong { background: #FEF2F2; border-color: var(--danger); color: var(--danger); font-weight: bold;}
-        .ans-missed { background: #fff; border-color: var(--success); color: var(--success); border-width: 2px; border-style: dashed;}
+        .answers-review-container { max-height: 400px; overflow-y: auto; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; background: #F8FAFC; margin-top: 12px; text-align: right;}
+        .ans-q { font-weight: bold; color: var(--primary); margin-bottom: 8px; font-size: 0.92em;}
+        .ans-opt { padding: 8px 10px; margin-bottom: 4px; border-radius: 6px; font-size: 0.85em; background: #fff; border: 1px solid var(--border-color);}
+        .ans-correct { background: #F0FDF4; border-color: #86EFAC; color: var(--success); font-weight: bold;}
+        .ans-wrong { background: #FFF1F2; border-color: #FECDD3; color: var(--danger); font-weight: bold;}
+        .ans-missed { background: #fff; border-color: #86EFAC; color: var(--success); border-width: 2px; border-style: dashed;}
 
         .teams-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 15px; }
-        .team-card { border: 1px solid var(--border-color); border-radius: 8px; background: #FFFFFF; box-shadow: 0 2px 4px rgba(0,0,0,0.03); overflow: hidden; display: flex; flex-direction: column;}
-        .team-card-header { background: #F0FDF4; border-bottom: 1px solid #D1FAE5; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center;}
+        .team-card { border: 1px solid var(--border-color); border-radius: 10px; background: #FFFFFF; overflow: hidden; display: flex; flex-direction: column;}
+        .team-card-header { background: #F8FAFC; border-bottom: 1px solid var(--border-color); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center;}
         .team-card-body { padding: 0 12px 12px 12px; flex-grow: 1; }
         
-        .team-power-container { background: #F3F4F6; border-radius: 4px; margin: 12px 0; overflow: hidden; position: relative; height: 24px; border: 1px solid #E5E7EB; }
+        .team-power-container { background: #E2E8F0; border-radius: 6px; margin: 12px 0; overflow: hidden; position: relative; height: 24px; }
         .team-power-fill { height: 100%; transition: width 0.5s ease-in-out; }
-        .team-power-text { position: absolute; top: 0; left: 0; right: 0; text-align: center; font-size: 0.8em; font-weight: bold; color: #111827; line-height: 24px; }
+        .team-power-text { position: absolute; top: 0; left: 0; right: 0; text-align: center; font-size: 0.8em; font-weight: bold; color: #0F172A; line-height: 24px; }
 
-        .team-member-item { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #F3F4F6; gap: 8px;}
+        .team-member-item { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #F1F5F9; gap: 8px;}
         .team-member-item:last-child { border-bottom: none; }
-        .member-skill-tag { font-size: 0.7em; background: #E0E7FF; color: #3730A3; padding: 2px 6px; border-radius: 8px; font-weight: bold;}
-        .member-reassign-select { padding: 3px 6px; border: 1px solid #D1D5DB; border-radius: 4px; font-family: inherit; font-size: 0.8em; background: #FFF; cursor: pointer;}
+        .member-skill-tag { font-size: 0.72em; background: #F1F5F9; color: var(--primary); padding: 2px 6px; border-radius: 6px; font-weight: bold; border: 1px solid var(--border-color);}
+        .member-reassign-select { padding: 3px 6px; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit; font-size: 0.8em; background: #FFF; cursor: pointer;}
         .remove-member-btn { color: var(--danger); background: none; border: none; cursor: pointer; font-size: 0.85em; padding: 2px;}
 
-        .unassigned-pool { border: 2px dashed #D1D5DB; border-radius: 8px; padding: 15px; background: #F9FAFB; margin-top: 20px;}
+        .unassigned-pool { border: 2px dashed var(--border-color); border-radius: 10px; padding: 15px; background: #F8FAFC; margin-top: 20px;}
         .unassigned-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; margin-top: 10px;}
-        .unassigned-item { background: white; border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; gap: 8px;}
-
-        @media print {
-            body { background: white; padding: 0; align-items: flex-start; }
-            .container { max-width: 100%; margin: 0; }
-            .panel { border: none; box-shadow: none; padding: 0; }
-            .btn-primary, .btn-secondary, .user-bar { display: none !important; }
-        }
+        .unassigned-item { background: white; border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; gap: 8px;}
     </style>
 </head>
 <body>
@@ -165,26 +171,34 @@
     <div id="loginView" class="view active">
         <div class="auth-card">
             <div class="auth-header">
-                <i class="fa-solid fa-layer-group"></i>
-                <h1>أكاديمية تحليل الأعمال</h1>
-                <p>منصة قياس الكفاءات وتشكيل الفرق الاحترافية</p>
+                <div class="auth-icon-wrapper"><i class="fa-solid fa-layer-group"></i></div>
+                <h1>معسكر تحليل الأعمال</h1>
+                <p>BA Bootcamp Assessment</p>
             </div>
             <div class="auth-body">
-                <h3 style="margin-top: 0; margin-bottom: 20px; font-size: 1.15em; color: var(--primary);">تسجيل بيانات المتدرب</h3>
-                <label class="form-label">الاسم الثلاثي</label>
-                <input type="text" id="traineeName" class="form-control" placeholder="أدخل اسمك الكامل" required>
-                
-                <label class="form-label">البريد الإلكتروني</label>
-                <input type="email" id="traineeEmail" class="form-control" placeholder="name@example.com" required>
-                
-                <label class="form-label">رقم الجوال</label>
-                <input type="tel" id="traineeMobile" class="form-control" placeholder="05xxxxxxxx" required>
-                
-                <label class="form-label">رقم المتدرب (أرقام فقط)</label>
-                <input type="number" id="bootcampId" class="form-control" placeholder="مثال: 125" required>
-                
-                <button class="btn-primary" onclick="login()">متابعة ودخول المنصة <i class="fa-solid fa-arrow-left"></i></button>
-                
+                <div id="quickLoginBox" style="display:none; background:#F8FAFC; border:1px solid var(--border-color); border-radius:8px; padding:15px; margin-bottom:20px; text-align:center;">
+                    <p style="margin:0 0 10px 0; font-size:0.9em; color:var(--primary); font-weight:bold;">مرحباً بك مجدداً، <span id="quickLoginName"></span>!</p>
+                    <button class="btn-primary" onclick="quickLogin()" style="padding:10px; font-size:0.92em;"><i class="fa-solid fa-right-to-bracket"></i> دخول سريع (استئناف الجلسة)</button>
+                    <div style="margin-top:8px; font-size:0.8em; color:var(--text-secondary); cursor:pointer; text-decoration:underline;" onclick="clearQuickLogin()">تسجيل برقم أو حساب جديد</div>
+                </div>
+
+                <div id="fullLoginForm">
+                    <h3 style="margin-top: 0; margin-bottom: 18px; font-size: 1.1em; color: var(--primary);">تسجيل بيانات المتدرب</h3>
+                    <label class="form-label">الاسم الثلاثي</label>
+                    <input type="text" id="traineeName" class="form-control" placeholder="أدخل اسمك الكامل" required>
+                    
+                    <label class="form-label">البريد الإلكتروني</label>
+                    <input type="email" id="traineeEmail" class="form-control" placeholder="name@example.com" required>
+                    
+                    <label class="form-label">رقم الجوال</label>
+                    <input type="tel" id="traineeMobile" class="form-control" placeholder="05xxxxxxxx - 01xxxxxxxxx" required>
+                    
+                    <label class="form-label">رقم المتدرب (أرقام فقط)</label>
+                    <input type="number" id="bootcampId" class="form-control" placeholder="مثال: 125" required>
+                    
+                    <button class="btn-primary" onclick="login()">بدء الرحلة والدخول <i class="fa-solid fa-arrow-left"></i></button>
+                </div>
+
                 <div class="admin-link" onclick="showView('adminLoginView')">
                     <i class="fa-solid fa-user-shield"></i> بوابة الإدارة والمشرفين
                 </div>
@@ -192,11 +206,11 @@
         </div>
     </div>
 
-    <!-- دخول الإدارة الآمن عبر Firebase Auth -->
+    <!-- دخول الإدارة الآمن -->
     <div id="adminLoginView" class="view">
         <div class="auth-card">
-            <div class="auth-header" style="background: linear-gradient(135deg, var(--accent) 0%, #92400E 100%);">
-                <i class="fa-solid fa-lock"></i>
+            <div class="auth-header" style="background: var(--primary);">
+                <div class="auth-icon-wrapper"><i class="fa-solid fa-shield-halved"></i></div>
                 <h1>بوابة الإدارة والمشرفين</h1>
                 <p>تسجيل دخول آمن ومشفّر عبر النظام السحابي</p>
             </div>
@@ -207,7 +221,7 @@
                 <label class="form-label">كلمة المرور المشفرة</label>
                 <input type="password" id="adminPass" class="form-control" placeholder="••••••••">
                 
-                <button class="btn-primary" style="background-color: var(--accent);" onclick="adminLogin()">دخول آمن للمشرفين</button>
+                <button class="btn-primary" onclick="adminLogin()">دخول آمن للمشرفين</button>
                 <button class="btn-secondary" onclick="showView('loginView')">عودة لصفحة المتدربين</button>
             </div>
         </div>
@@ -215,9 +229,12 @@
 
     <!-- لوحة تحكم الإدارة -->
     <div id="adminDashboardView" class="panel view">
-        <div class="user-bar">
-            <h2 style="margin: 0; color: var(--primary); font-size: 1.2em;"><i class="fa-solid fa-chart-line"></i> مركز قيادة المعسكر التدريبي السحابي</h2>
-            <div class="logout" onclick="showView('loginView')">خروج <i class="fa-solid fa-right-from-bracket"></i></div>
+        <div class="dashboard-hero" style="margin-bottom: 20px;">
+            <div class="hero-welcome">
+                <h2>مركز قيادة المعسكر التدريبي</h2>
+                <p>مراقبة أداء المتدربين، استعراض التقارير، وتشكيل فرق مشاريع التخرج بذكاء.</p>
+            </div>
+            <button class="hero-logout" onclick="showView('loginView')"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
         </div>
 
         <div class="stats-grid">
@@ -237,7 +254,7 @@
                     <thead>
                         <tr>
                             <th>المتدرب / الجوال</th>
-                            <th>المعرّف</th>
+                            <th>الرقم التعريفي</th>
                             <th>القبلي</th>
                             <th>البعدي</th>
                             <th>أبرز كفاءة</th>
@@ -253,7 +270,7 @@
             <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 15px;">
                 <div>
                     <h3 style="margin: 0; color: var(--primary); font-size: 1.1em;">إدارة وتشكيل فرق مشاريع التخرج</h3>
-                    <p style="margin: 3px 0 0 0; font-size: 0.85em; color: var(--text-secondary);">مؤشر القوة يعتمد كلياً على التقييم القبلي والتكامل المهاري.</p>
+                    <p style="margin: 3px 0 0 0; font-size: 0.85em; color: var(--text-secondary);">مؤشر القوة يعتمد على التقييم القبلي والتكامل المهاري.</p>
                 </div>
                 <div style="display: flex; flex-wrap: wrap; gap: 8px;">
                     <button class="btn-accent" onclick="addNewEmptyTeam()"><i class="fa-solid fa-plus"></i> إضافة فريق</button>
@@ -270,18 +287,13 @@
 
     <!-- تقرير المتدرب للمشرف -->
     <div id="adminReportView" class="panel view">
-        <div class="user-bar">
-            <h2 style="margin: 0; color: var(--primary); font-size: 1.1em;"><i class="fa-solid fa-file-contract"></i> التقرير التحليلي للمتدرب</h2>
-            <div class="logout" onclick="showView('adminDashboardView')">العودة للوحة الإدارة <i class="fa-solid fa-xmark"></i></div>
-        </div>
-        
         <div class="admin-report-header">
             <div>
                 <h3 id="adminRepName" style="font-size: 1.1em; margin:0 0 3px 0;">اسم المتدرب</h3>
-                <p id="adminRepEmailMobile" style="font-size: 0.85em; margin:0;">البريد | الجوال</p>
-                <p style="font-size:0.8em; color: var(--accent); margin:3px 0 0 0;">المعرّف: <span id="adminRepBootcamp"></span></p>
+                <p id="adminRepEmailMobile" style="font-size: 0.85em; margin:0; color:var(--text-secondary);">البريد | الجوال</p>
+                <p style="font-size:0.8em; color: var(--accent); margin:3px 0 0 0; font-weight:bold;">الرقم التعريفي: <span id="adminRepBootcamp"></span></p>
             </div>
-            <div style="text-align: left; background: white; padding: 10px 15px; border-radius: 8px; border: 1px solid #ddd;">
+            <div style="text-align: left; background: white; padding: 10px 15px; border-radius: 8px; border: 1px solid var(--border-color);">
                 <p style="margin:0 0 5px 0; font-size:0.85em;">القبلي: <strong id="adminRepPre" style="color:var(--accent); font-size:1.1em;">0%</strong></p>
                 <p style="margin:0; font-size:0.85em;">البعدي: <strong id="adminRepPost" style="color:var(--success); font-size:1.1em;">0%</strong></p>
             </div>
@@ -290,7 +302,7 @@
         <h3 style="text-align: center; color: var(--primary); font-size: 1em; margin-top:20px;">الخريطة الرادارية (مقارنة الأداء)</h3>
         <div class="chart-container"><canvas id="adminRadarChart"></canvas></div>
 
-        <h3 style="border-bottom: 2px solid var(--primary-light); padding-bottom: 8px; margin-top: 30px; font-size: 1em;">مراجعة الإجابات التفصيلية</h3>
+        <h3 style="border-bottom: 2px solid var(--border-color); padding-bottom: 8px; margin-top: 30px; font-size: 1em;">مراجعة الإجابات التفصيلية</h3>
         <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
             <button class="btn-secondary" style="margin:0; padding:8px 12px; font-size:0.9em;" onclick="renderAdminAnswersReview('pre')">إجابات القبلي</button>
             <button class="btn-primary" style="margin:0; padding:8px 12px; font-size:0.9em; width:auto;" onclick="renderAdminAnswersReview('post')">إجابات البعدي</button>
@@ -298,53 +310,62 @@
         <div class="answers-review-container" id="adminAnswersContainer">
             <p style="text-align:center; color:gray; font-size:0.9em;">الرجاء تحديد الاختبار لعرض إجابات المتدرب.</p>
         </div>
-        <button class="btn-secondary" onclick="showView('adminDashboardView')" style="margin-top:20px;">إغلاق التقرير</button>
+        <button class="btn-secondary" onclick="showView('adminDashboardView')" style="margin-top:20px;">العودة للوحة الإدارة</button>
     </div>
 
     <!-- لوحة المتدرب -->
     <div id="dashboardView" class="panel view">
-        <div class="user-bar">
-            <div class="user-name">
-                <i class="fa-regular fa-circle-user"></i> <span id="displayName"></span>
-                <div style="font-size:0.75em; color:var(--text-secondary); font-weight:normal; margin-top:3px;">المعرّف: <span id="displayBootcamp"></span> | الجوال: <span id="displayMobile"></span></div>
+        <div class="dashboard-hero">
+            <div class="hero-welcome">
+                <h2>أهلاً بك، <span id="displayName"></span> 👋</h2>
+                <p>استعد لرحلة احترافية في معسكر تحليل الأعمال </p>
             </div>
-            <div style="display: flex;">
-                <div class="logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</div>
+            <div class="hero-badges">
+                <div class="hero-badge"><i class="fa-solid fa-id-badge"></i> <span id="displayBootcamp"></span></div>
+                <div class="hero-badge"><i class="fa-solid fa-phone"></i> <span id="displayMobile"></span></div>
+                <button class="hero-logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
             </div>
         </div>
         
-        <h3 style="margin-top:0; margin-bottom: 15px; font-size: 1.1em;">مسار التقييم المتاح:</h3>
+        <h3 style="margin-top:10px; margin-bottom: 15px; font-size: 1.15em; color: var(--primary); display:flex; align-items:center; gap:8px;">
+            <i class="fa-solid fa-road"></i> مسار الكفاءات والتقييمات المتاحة:
+        </h3>
+        
         <div class="cards-grid">
             <div class="assessment-card" id="preTestCard" onclick="handlePreTestClick()">
-                <div class="card-header">
-                    <div class="card-icon" id="preIcon"><i class="fa-solid fa-file-signature"></i></div>
-                    <div class="status-tag tag-completed" id="preTag" style="display:none;">مكتمل (مراجعة)</div>
+                <div>
+                    <div class="card-header">
+                        <div class="card-icon" id="preIcon"><i class="fa-solid fa-file-signature"></i></div>
+                        <div class="status-tag tag-completed" id="preTag" style="display:none;">مكتمل (مراجعة)</div>
+                    </div>
+                    <h3>التقييم الشامل القبلي</h3>
+                    <p>قياس الأساسيات المعرفية والسمات الشخصية لتحديد نقطة انطلاقك.</p>
                 </div>
-                <h3>التقييم الشامل القبلي</h3>
-                <p>قياس الأساسيات المعرفية والسمات الشخصية</p>
                 <div id="preScoreBadge" class="score-badge" style="display:none;"></div>
             </div>
             
             <div class="assessment-card locked" id="postTestCard" onclick="handlePostTestClick()">
-                <div class="card-header">
-                    <div class="card-icon" id="postIcon"><i class="fa-solid fa-lock"></i></div>
-                    <div class="status-tag tag-locked" id="postTag">مغلق مؤقتاً</div>
+                <div>
+                    <div class="card-header">
+                        <div class="card-icon" id="postIcon"><i class="fa-solid fa-lock"></i></div>
+                        <div class="status-tag tag-locked" id="postTag">مغلق مؤقتاً</div>
+                    </div>
+                    <h3>التقييم الشامل البعدي</h3>
+                    <p>قياس المهارات التطبيقية المتقدمة وتقييم حجم التطور المهني.</p>
                 </div>
-                <h3>التقييم الشامل البعدي</h3>
-                <p>قياس المهارات التطبيقية تحت الضغط</p>
                 <div id="postScoreBadge" class="score-badge" style="display:none;"></div>
             </div>
         </div>
-        <button id="traineeFullReportBtn" class="btn-primary" onclick="showView('resultView')" style="display:none; margin-top: 25px;"><i class="fa-solid fa-chart-radar"></i> عرض وتحميل تقرير التطور الشامل (PDF)</button>
+        <button id="traineeFullReportBtn" class="btn-primary" onclick="showView('resultView')" style="display:none; margin-top: 25px;"><i class="fa-solid fa-chart-radar"></i> عرض وتحميل تقرير التطور الشامل (صورة)</button>
     </div>
 
     <!-- شاشة الاختبار -->
     <div id="quizView" class="panel view">
-        <div class="user-bar">
-            <h2 id="quizTitle" style="margin: 0; font-size: 1.1em; color: var(--primary);"></h2>
-            <div class="logout" onclick="showView('dashboardView')" style="color: var(--text-secondary);">إغلاق <i class="fa-solid fa-xmark"></i></div>
+        <div class="dashboard-hero" style="margin-bottom: 20px; padding: 15px 20px;">
+            <h2 id="quizTitle" style="margin: 0; font-size: 1.1em; color: white;"></h2>
+            <button class="hero-logout" onclick="showView('dashboardView')">إغلاق <i class="fa-solid fa-xmark"></i></button>
         </div>
-        <div id="reviewNotice" style="display:none; background:#EFF6FF; color:#1D4ED8; padding:12px; border-radius:6px; margin-bottom:15px; border:1px solid #BFDBFE; font-weight:700; font-size: 0.9em;">
+        <div id="reviewNotice" style="display:none; background:#F8FAFC; color:var(--primary); padding:12px; border-radius:8px; margin-bottom:15px; border:1px solid var(--border-color); font-weight:700; font-size: 0.9em;">
             <i class="fa-solid fa-circle-info"></i> وضع المراجعة: الإجابات الصحيحة (أخضر)، وإجاباتك الخاطئة (أحمر).
         </div>
         <div id="questionsContainer"></div>
@@ -352,42 +373,42 @@
         <button class="btn-secondary" id="backToDashBtn" onclick="showView('dashboardView')" style="display:none;">العودة للوحة الرئيسية</button>
     </div>
 
-    <!-- شاشة النتيجة للمتدرب (تصميم PDF مؤسسي نظيف ومنسق) -->
+    <!-- شاشة التقرير وتحميل الصورة -->
     <div id="resultView" class="panel view">
-        <div class="pdf-report-container" id="pdfReportContent">
-            <div class="pdf-header-top">
-                <h2>أكاديمية تحليل الأعمال - تقرير الكفاءات</h2>
-                <span>تاريخ التقرير: 2026</span>
+        <div class="snapshot-container" id="snapshotReportContent">
+            <div class="snapshot-header">
+                <h2>معسكر تحليل الأعمال - تقرير الكفاءات</h2>
+                <span>إصدار معتمد: 2026</span>
             </div>
 
-            <div class="pdf-meta-box">
-                <div class="pdf-meta-item"><strong>اسم المتدرب:</strong> <span id="pdfNameVal"></span></div>
-                <div class="pdf-meta-item"><strong>معرّف المعسكر:</strong> <span id="pdfBootcampVal"></span></div>
-                <div class="pdf-meta-item"><strong>البريد الإلكتروني:</strong> <span id="pdfEmailVal"></span></div>
-                <div class="pdf-meta-item"><strong>رقم الجوال:</strong> <span id="pdfMobileVal"></span></div>
+            <div class="snapshot-meta">
+                <div class="snapshot-meta-item"><strong>اسم المتدرب:</strong> <span id="snapNameVal"></span></div>
+                <div class="snapshot-meta-item"><strong>الرقم التعريفي:</strong> <span id="snapBootcampVal"></span></div>
+                <div class="snapshot-meta-item"><strong>البريد الإلكتروني:</strong> <span id="snapEmailVal"></span></div>
+                <div class="snapshot-meta-item"><strong>رقم الجوال:</strong> <span id="snapMobileVal"></span></div>
             </div>
 
-            <div class="pdf-score-summary">
-                <div class="pdf-score-box">
+            <div class="snapshot-summary">
+                <div class="snapshot-box">
                     <h4>التقييم القبلي</h4>
-                    <span id="pdfPreScoreVal">0%</span>
+                    <span id="snapPreScoreVal">0%</span>
                 </div>
-                <div class="pdf-score-box">
+                <div class="snapshot-box">
                     <h4>التقييم البعدي</h4>
-                    <span id="pdfPostScoreVal">0%</span>
+                    <span id="snapPostScoreVal">0%</span>
                 </div>
-                <div class="pdf-score-box">
+                <div class="snapshot-box">
                     <h4>معدل النمو الكلي</h4>
-                    <span id="pdfGrowthVal">0%</span>
+                    <span id="snapGrowthVal">0%</span>
                 </div>
             </div>
 
-            <h3 style="text-align: center; color: var(--primary); font-size: 1.1em; margin-bottom: 10px;">خريطة تطور الكفاءات (الرادار المقارن)</h3>
+            <h3 style="text-align: center; color: var(--primary); font-size: 1.05em; margin-bottom: 10px;">خريطة تطور الكفاءات (الرادار المقارن)</h3>
             <div class="chart-container"><canvas id="competencyRadarChart"></canvas></div>
         </div>
 
         <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
-            <button class="btn-primary" onclick="downloadPDF()"><i class="fa-solid fa-file-pdf"></i> تحميل التقرير كملف PDF</button>
+            <button class="btn-primary" onclick="downloadReportImage()"><i class="fa-solid fa-image"></i> تحميل التقرير كصورة (PNG)</button>
             <button class="btn-secondary" style="margin-top: 0;" onclick="showView('dashboardView')">العودة للرئيسية</button>
         </div>
     </div>
@@ -413,7 +434,6 @@
     const db = getFirestore(app);
     const auth = getAuth(app);
 
-    // بنك الأسئلة الشامل
     const preQuestions = [
         { section: "التفكير التحليلي", category: "Technical", q: "ما هو الهدف الرئيسي من استخدام 'التفكير النظمي' (Systems Thinking) في تحليل الأعمال؟", options: ["برمجة الأنظمة التقنية", "فهم كيفية تفاعل أجزاء المؤسسة معاً", "التفكير في الميزانية", "تحديد لغة البرمجة"], answer: 1 },
         { section: "التفكير التحليلي", category: "Technical", q: "أي التقنيات تستخدم للوصول إلى 'السبب الجذري' (Root Cause) لمشكلة بدلاً من أعراضها؟", options: ["تقنية تقصي الأسباب (5 Whys)", "مخطط البيانات (DFD)", "قصص المستخدمين", "مصفوفة RACI"], answer: 0 },
@@ -476,21 +496,34 @@
         document.getElementById(viewId).classList.add('active');
         if(viewId === 'dashboardView') updateDashboard();
         if(viewId === 'resultView') {
-            document.getElementById('pdfNameVal').innerText = localStorage.getItem('ba_trainee_name') || '-';
-            document.getElementById('pdfBootcampVal').innerText = localStorage.getItem('ba_trainee_bootcamp') || '-';
-            document.getElementById('pdfEmailVal').innerText = localStorage.getItem('ba_trainee_email') || '-';
-            document.getElementById('pdfMobileVal').innerText = localStorage.getItem('ba_trainee_mobile') || '-';
+            document.getElementById('snapNameVal').innerText = localStorage.getItem('ba_trainee_name') || '-';
+            document.getElementById('snapBootcampVal').innerText = localStorage.getItem('ba_trainee_bootcamp') || '-';
+            document.getElementById('snapEmailVal').innerText = localStorage.getItem('ba_trainee_email') || '-';
+            document.getElementById('snapMobileVal').innerText = localStorage.getItem('ba_trainee_mobile') || '-';
             
-            document.getElementById('pdfPreScoreVal').innerText = (localStorage.getItem('ba_score_pre') || '0') + '%';
-            document.getElementById('pdfPostScoreVal').innerText = (localStorage.getItem('ba_score_post') || '0') + '%';
+            document.getElementById('snapPreScoreVal').innerText = (localStorage.getItem('ba_score_pre') || '0') + '%';
+            document.getElementById('snapPostScoreVal').innerText = (localStorage.getItem('ba_score_post') || '0') + '%';
             
             let pre = parseInt(localStorage.getItem('ba_score_pre') || 0);
             let post = parseInt(localStorage.getItem('ba_score_post') || 0);
             let diff = post - pre;
-            document.getElementById('pdfGrowthVal').innerText = (diff >= 0 ? '+' + diff : diff) + '%';
+            document.getElementById('snapGrowthVal').innerText = (diff >= 0 ? '+' + diff : diff) + '%';
 
             drawRadarChart();
         }
+    };
+
+    window.quickLogin = function() {
+        window.showView('dashboardView');
+    };
+
+    window.clearQuickLogin = function() {
+        localStorage.removeItem('ba_trainee_name');
+        localStorage.removeItem('ba_trainee_email');
+        localStorage.removeItem('ba_trainee_mobile');
+        localStorage.removeItem('ba_trainee_bootcamp');
+        document.getElementById('quickLoginBox').style.display = 'none';
+        document.getElementById('fullLoginForm').style.display = 'block';
     };
 
     window.login = async function() {
@@ -522,27 +555,47 @@
             localStorage.setItem('ba_trainee_mobile', mobile);
             localStorage.setItem('ba_trainee_bootcamp', bootcamp);
             
-            document.getElementById('displayName').innerText = name;
-            document.getElementById('displayMobile').innerText = mobile;
-            document.getElementById('displayBootcamp').innerText = bootcamp;
             window.showView('dashboardView');
         } catch(e) {
             alert("حدث خطأ أثناء الاتصال بقاعدة البيانات.");
         }
     };
 
-    window.logout = function() { localStorage.clear(); window.showView('loginView'); };
+    window.logout = function() { 
+        localStorage.clear(); 
+        checkQuickLogin();
+        window.showView('loginView'); 
+    };
+
+    function checkQuickLogin() {
+        const savedName = localStorage.getItem('ba_trainee_name');
+        if(savedName) {
+            document.getElementById('quickLoginName').innerText = savedName;
+            document.getElementById('quickLoginBox').style.display = 'block';
+            document.getElementById('fullLoginForm').style.display = 'none';
+        } else {
+            document.getElementById('quickLoginBox').style.display = 'none';
+            document.getElementById('fullLoginForm').style.display = 'block';
+        }
+    }
 
     window.onload = function() {
+        checkQuickLogin();
         if(localStorage.getItem('ba_trainee_name')) {
             document.getElementById('displayName').innerText = localStorage.getItem('ba_trainee_name');
             document.getElementById('displayMobile').innerText = localStorage.getItem('ba_trainee_mobile') || '-';
             document.getElementById('displayBootcamp').innerText = localStorage.getItem('ba_trainee_bootcamp') || '-';
-            window.showView('dashboardView');
         }
     };
 
     function updateDashboard() {
+        const savedName = localStorage.getItem('ba_trainee_name');
+        if(savedName) {
+            document.getElementById('displayName').innerText = savedName;
+            document.getElementById('displayMobile').innerText = localStorage.getItem('ba_trainee_mobile') || '-';
+            document.getElementById('displayBootcamp').innerText = localStorage.getItem('ba_trainee_bootcamp') || '-';
+        }
+
         const preScore = localStorage.getItem('ba_score_pre');
         const postScore = localStorage.getItem('ba_score_post');
         const preCard = document.getElementById('preTestCard');
@@ -551,8 +604,8 @@
 
         if(preScore !== null) {
             preCard.classList.add('completed');
-            document.getElementById('preScoreBadge').style.display = 'block';
-            document.getElementById('preScoreBadge').innerText = `النتيجة: ${preScore}%`;
+            document.getElementById('preScoreBadge').style.display = 'inline-flex';
+            document.getElementById('preScoreBadge').innerHTML = `<i class="fa-solid fa-circle-check"></i> النتيجة: ${preScore}%`;
             document.getElementById('preIcon').innerHTML = '<i class="fa-solid fa-eye"></i>'; 
             document.getElementById('preTag').style.display = 'block';
             if(postScore === null) {
@@ -565,8 +618,8 @@
         if(postScore !== null) {
             postCard.classList.remove('locked');
             postCard.classList.add('completed');
-            document.getElementById('postScoreBadge').style.display = 'block';
-            document.getElementById('postScoreBadge').innerText = `النتيجة: ${postScore}%`;
+            document.getElementById('postScoreBadge').style.display = 'inline-flex';
+            document.getElementById('postScoreBadge').innerHTML = `<i class="fa-solid fa-circle-check"></i> النتيجة: ${postScore}%`;
             document.getElementById('postIcon').innerHTML = '<i class="fa-solid fa-eye"></i>';
             document.getElementById('postTag').className = 'status-tag tag-completed';
             document.getElementById('postTag').innerText = 'مكتمل (مراجعة)';
@@ -695,9 +748,9 @@
         let datasets = [{
             label: 'التقييم القبلي',
             data: preObj.data,
-            backgroundColor: 'rgba(217, 119, 6, 0.2)',
-            borderColor: '#D97706',
-            pointBackgroundColor: '#D97706',
+            backgroundColor: 'rgba(44, 94, 90, 0.12)',
+            borderColor: '#2C5E5A',
+            pointBackgroundColor: '#2C5E5A',
             borderWidth: 2
         }];
 
@@ -706,9 +759,9 @@
             datasets.push({
                 label: 'التقييم البعدي',
                 data: postObj.data,
-                backgroundColor: 'rgba(6, 78, 59, 0.2)',
-                borderColor: '#064E3B',
-                pointBackgroundColor: '#064E3B',
+                backgroundColor: 'rgba(15, 42, 42, 0.12)',
+                borderColor: '#0F2A2A',
+                pointBackgroundColor: '#0F2A2A',
                 borderWidth: 2
             });
         }
@@ -719,23 +772,29 @@
             type: 'radar',
             data: { labels: preObj.labels, datasets: datasets },
             options: { 
-                responsive: true, 
-                scales: { r: { suggestedMin: 0, suggestedMax: 100, ticks: { stepSize: 20, font:{family:'Tajawal'} }, pointLabels: { font: { family: 'Tajawal', size: 10, weight: 'bold' } } } }, 
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: { 
+                    r: { 
+                        suggestedMin: 0, 
+                        suggestedMax: 100, 
+                        ticks: { stepSize: 20, font:{family:'Tajawal'} }, 
+                        pointLabels: { font: { family: 'Tajawal', size: 10, weight: 'bold' } } 
+                    } 
+                }, 
                 plugins: { legend: { position: 'bottom', labels:{font:{family:'Tajawal', size:12}} } } 
             }
         });
     }
 
-    window.downloadPDF = function() {
-        const element = document.getElementById('pdfReportContent');
-        const opt = {
-            margin:       10,
-            filename:     `BA_Competency_Report_${localStorage.getItem('ba_trainee_bootcamp')}.pdf`,
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
-        html2pdf().from(element).set(opt).save();
+    window.downloadReportImage = function() {
+        const element = document.getElementById('snapshotReportContent');
+        html2canvas(element, { scale: 2, useCORS: true, logging: false }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `BA_Competency_Report_${localStorage.getItem('ba_trainee_bootcamp')}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
     };
 
     // ================= المصادقة الآمنة وإدارة المشرفين =================
@@ -885,7 +944,7 @@
         teams.forEach(team => {
             let membersHTML = '';
             let powerScore = 0;
-            let powerColor = '#E5E7EB';
+            let powerColor = '#E2E8F0';
 
             if(team.members.length > 0) {
                 let totalScores = 0;
@@ -997,10 +1056,10 @@
 
         let datasets = [];
         if(currentAdminTrainee.preChart) {
-            datasets.push({ label: 'التقييم القبلي', data: currentAdminTrainee.preChart.data, backgroundColor: 'rgba(217, 119, 6, 0.2)', borderColor: '#D97706', pointBackgroundColor: '#D97706', borderWidth: 2 });
+            datasets.push({ label: 'التقييم القبلي', data: currentAdminTrainee.preChart.data, backgroundColor: 'rgba(44, 94, 90, 0.12)', borderColor: '#2C5E5A', pointBackgroundColor: '#2C5E5A', borderWidth: 2 });
         }
         if(currentAdminTrainee.postChart) {
-            datasets.push({ label: 'التقييم البعدي', data: currentAdminTrainee.postChart.data, backgroundColor: 'rgba(6, 78, 59, 0.2)', borderColor: '#064E3B', pointBackgroundColor: '#064E3B', borderWidth: 2 });
+            datasets.push({ label: 'التقييم البعدي', data: currentAdminTrainee.postChart.data, backgroundColor: 'rgba(15, 42, 42, 0.12)', borderColor: '#0F2A2A', pointBackgroundColor: '#0F2A2A', borderWidth: 2 });
         }
 
         adminRadarChartInstance = new Chart(ctx, {
