@@ -7,10 +7,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
+        /* هوية بصرية مؤسسية ورصينة */
         :root {
             --primary: #0F172A; 
             --primary-light: #2563EB; 
@@ -24,9 +24,10 @@
             --danger: #DC2626; 
         }
 
-        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 25px 15px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; }
-        .container { width: 100%; max-width: 960px; margin: 0 auto; }
+        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 25px 15px; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; box-sizing: border-box; }
+        .container { width: 100%; max-width: 960px; margin: 0 auto; padding-top: 20px; }
 
+        /* البطاقات الأساسية */
         .auth-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); overflow: hidden; max-width: 480px; margin: 0 auto; transition: 0.3s; width: 100%; }
         .auth-header { background: var(--primary); color: white; padding: 35px 25px; text-align: center; border-bottom: 4px solid var(--primary-light); }
         .auth-icon-wrapper { font-size: 2.2em; color: var(--primary-light); background: var(--bg-surface); width: 75px; height: 75px; border-radius: 12px; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
@@ -41,17 +42,20 @@
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .form-label { display: block; margin-bottom: 6px; font-weight: 700; color: var(--text-main); font-size: 0.95em; }
-        .form-control { width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit; font-size: 15px; box-sizing: border-box; margin-bottom: 20px; transition: border-color 0.2s, box-shadow 0.2s; background-color: var(--bg-body); color: var(--text-main); }
+        .form-control { width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit; font-size: 15px; box-sizing: border-box; margin-bottom: 20px; transition: 0.2s; background-color: var(--bg-body); color: var(--text-main); }
         .form-control:focus { border-color: var(--primary-light); background-color: var(--bg-surface); outline: none; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
 
-        .btn-primary { background: var(--primary-light); color: white; border: none; padding: 14px 20px; border-radius: 6px; font-size: 1.05em; font-weight: 700; cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: inherit; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        /* الأزرار */
+        .btn-primary { background: var(--primary-light); color: white; border: none; padding: 12px 18px; border-radius: 6px; font-size: 1em; font-weight: 700; cursor: pointer; transition: 0.2s; display: inline-flex; justify-content: center; align-items: center; gap: 8px; font-family: inherit; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         .btn-primary:hover { background: #1D4ED8; }
         
-        .btn-secondary { background-color: var(--bg-surface); color: var(--primary-light); border: 1px solid var(--primary-light); padding: 13px 20px; border-radius: 6px; font-size: 1em; font-weight: 700; cursor: pointer; width: 100%; margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: inherit; transition: 0.2s;}
+        .btn-secondary { background-color: var(--bg-surface); color: var(--primary-light); border: 1px solid var(--primary-light); padding: 11px 18px; border-radius: 6px; font-size: 0.95em; font-weight: 700; cursor: pointer; display: inline-flex; justify-content: center; align-items: center; gap: 8px; font-family: inherit; transition: 0.2s;}
         .btn-secondary:hover { background-color: #EFF6FF; }
         
         .btn-accent { background: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 6px; font-size: 0.9em; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: inherit; transition: 0.2s;}
         .btn-accent:hover { background: #0F766E; }
+
+        .btn-action-group { display: flex; flex-wrap: wrap; gap: 8px; }
 
         .dashboard-hero { background: var(--primary); color: white; border-radius: 12px; padding: 25px 30px; margin-bottom: 25px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; border-bottom: 4px solid var(--primary-light); }
         .hero-welcome h2 { margin: 0 0 8px 0; font-size: 1.4em; font-weight: 800; }
@@ -62,6 +66,7 @@
         .hero-logout { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-weight: 700; font-size: 0.85em; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; }
         .hero-logout:hover { background: rgba(255,255,255,0.1); border-color: white; }
 
+        /* كروت التقييم */
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .assessment-card { border: 1px solid var(--border-color); border-radius: 10px; padding: 25px; text-align: right; cursor: pointer; transition: 0.2s; background: var(--bg-surface); display: flex; flex-direction: column; justify-content: space-between; position: relative; box-sizing: border-box; }
         .assessment-card:hover:not(.locked) { border-color: var(--primary-light); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); transform: translateY(-2px); }
@@ -84,7 +89,6 @@
         .tag-completed { color: var(--success); background: #DCFCE7; border: 1px solid #A7F3D0; }
 
         .admin-link { text-align: center; margin-top: 20px; font-size: 0.9em; color: var(--text-secondary); cursor: pointer; text-decoration: none; border-top: 1px solid var(--border-color); padding-top: 15px; transition: 0.2s; font-weight: 700; display: block; }
-        .admin-link:hover { color: var(--primary-light); }
         
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
         .stat-card { background: var(--bg-surface); border: 1px solid var(--border-color); padding: 25px; border-radius: 10px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
@@ -101,6 +105,7 @@
         .btn-small { background: var(--bg-body); color: var(--primary); border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-weight: 700; font-size: 0.85em; transition: 0.2s;}
         .btn-small:hover { background: var(--border-color); }
 
+        /* الأسئلة والمقاييس */
         .section-title { background: #F8FAFC; color: var(--primary); padding: 15px 20px; border-right: 4px solid var(--accent); font-weight: 800; font-size: 1.1em; margin: 40px 0 20px 0; border-radius: 6px 0 0 6px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px;}
         .section-badge { background: var(--primary); color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.75em; }
         .question-block { margin-bottom: 30px; background: var(--bg-surface); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); }
@@ -113,25 +118,42 @@
         .option-item:has(input[type="radio"]:checked) { border-color: var(--primary-light); background: #EFF6FF; }
         .option-item:has(input[type="radio"]:checked) .option-text { color: var(--primary-light); font-weight: 800; }
 
-        .snapshot-container { background: #ffffff; padding: 40px; border-radius: 12px; text-align: right; direction: rtl; border: 1px solid var(--border-color); max-width: 800px; margin: 0 auto; box-sizing: border-box; position: relative; }
-        .snapshot-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 20px; margin-bottom: 25px; }
-        .snapshot-header h2 { margin: 0; color: var(--primary); font-size: 1.4em; font-weight: 800; }
-        .snapshot-header span { font-size: 0.85em; color: var(--primary); background: var(--bg-body); padding: 6px 14px; border-radius: 6px; font-weight: 800; border: 1px solid var(--border-color); }
-        
-        .snapshot-meta { background: var(--bg-body); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-bottom: 25px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; font-size: 0.95em; }
-        .snapshot-meta-item strong { color: var(--text-secondary); margin-left: 6px; font-weight: 700; }
+        .correct-option { background-color: #F0FDF4 !important; border-color: #16A34A !important; }
+        .correct-option .option-text { color: #15803D !important; font-weight: 800; }
+        .wrong-option { background-color: #FEF2F2 !important; border-color: #DC2626 !important; }
+        .wrong-option .option-text { color: #B91C1C !important; font-weight: 800; }
 
-        .snapshot-summary { display: flex; flex-wrap: wrap; justify-content: space-around; background: white; border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-bottom: 30px; text-align: center; gap: 15px; }
-        .snapshot-box { flex: 1; min-width: 120px; }
-        .snapshot-box h4 { margin: 0 0 8px 0; color: var(--text-secondary); font-size: 0.85em; font-weight: 700; text-transform: uppercase; }
-        .snapshot-box span { font-size: 1.8em; font-weight: 800; color: var(--primary-light); }
-
-        .chart-container { width: 100%; max-width: 500px; margin: 0 auto; padding: 10px; background: white; }
-
-        /* تنسيقات المراجعة للمشرف (Maturity Assessment Styling) */
         .ans-selected { background: #EEF2FF !important; border-color: var(--primary-light) !important; font-weight: 800; border-width: 2px !important; }
         .ans-normal { background: #FFF; border-color: var(--border-color); opacity: 0.7; }
         .weight-badge { float: left; font-weight: bold; color: var(--primary); background: white; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+
+        .chart-container { width: 100%; max-width: 500px; margin: 0 auto; padding: 10px; background: white; }
+
+        /* ================= إعدادات الطباعة الذكية للمشرف ================= */
+        @media print {
+            body { background: white; padding: 0; align-items: flex-start; }
+            .container { max-width: 100%; margin: 0; padding: 0; }
+            
+            /* إخفاء كل شيء ما عدا قسم الفرق */
+            body * { visibility: hidden; }
+            #adminTeamsSection, #adminTeamsSection * { visibility: visible; }
+            
+            #adminTeamsSection { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0; border: none; background: transparent; }
+            
+            /* إخفاء أزرار التحكم وحقول الإدخال وقائمة الانتظار في الطباعة */
+            .btn-primary, .btn-secondary, .btn-accent, .remove-member-btn, .member-reassign-select, #teamSizeInput, label { display: none !important; }
+            #adminTeamsSection > div:first-child { display: none !important; } /* ترويسة أزرار التحكم */
+            .unassigned-pool { display: none !important; }
+            
+            /* ضبط شكل بطاقة الفريق في الطباعة وتمدد القوائم الطويلة */
+            .team-card { box-shadow: none !important; border: 2px solid #000 !important; page-break-inside: avoid; break-inside: avoid; margin-bottom: 30px !important; border-radius: 0 !important; }
+            .team-card-header { background: #f0f0f0 !important; border-bottom: 2px solid #000 !important; }
+            .team-card-body { max-height: none !important; overflow: visible !important; padding: 15px !important; }
+            
+            /* ضبط شريط قوة التجانس للطباعة */
+            .team-power-container { border: 1px solid #000 !important; }
+            .team-power-text { color: #000 !important; text-shadow: none !important; }
+        }
 
         @media (max-width: 600px) {
             body { padding: 10px; }
@@ -141,22 +163,11 @@
             .auth-body { padding: 20px; }
             .dashboard-hero { padding: 20px; flex-direction: column; align-items: flex-start; text-align: right; }
             .hero-badges { width: 100%; justify-content: space-between; }
-            .snapshot-container { padding: 20px 15px; }
-            .snapshot-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .snapshot-meta { grid-template-columns: 1fr; gap: 10px; padding: 15px; }
-            .snapshot-summary { flex-direction: column; gap: 15px; padding: 15px; }
             .chart-container { padding: 0; }
             .section-title { font-size: 1em; padding: 12px 15px; }
             .question-text { font-size: 1em; }
             .option-item { padding: 10px 12px; }
             .data-table th, .data-table td { padding: 8px; font-size: 0.85em; }
-        }
-
-        @media print {
-            body { background: white; padding: 0; align-items: flex-start; }
-            .container { max-width: 100%; margin: 0; }
-            .panel { border: none; box-shadow: none; padding: 0; }
-            .btn-primary, .btn-secondary, .dashboard-hero { display: none !important; }
         }
     </style>
 </head>
@@ -174,7 +185,7 @@
             <div class="auth-body">
                 <div id="quickLoginBox" style="display:none; background:var(--bg-body); border:1px solid var(--border-color); border-radius:8px; padding:20px; margin-bottom:20px; text-align:center;">
                     <p style="margin:0 0 15px 0; font-size:1em; color:var(--primary); font-weight:800;">مرحباً بعودتك، <span id="quickLoginName"></span>! 👋</p>
-                    <button class="btn-primary" onclick="quickLogin()"><i class="fa-solid fa-arrow-right-to-bracket"></i> استئناف الجلسة الحالية</button>
+                    <button class="btn-primary" style="width:100%;" onclick="quickLogin()"><i class="fa-solid fa-arrow-right-to-bracket"></i> استئناف الجلسة الحالية</button>
                     <div style="margin-top:12px; font-size:0.85em; color:var(--text-secondary); cursor:pointer; font-weight:700; text-decoration: underline;" onclick="clearQuickLogin()">تسجيل الدخول بحساب أو معرّف آخر</div>
                 </div>
 
@@ -208,7 +219,7 @@
                         <option value="في الإجازات بس">في الإجازات فقط</option>
                     </select>
                     
-                    <button class="btn-primary" onclick="login()">بدء التقييم <i class="fa-solid fa-arrow-left"></i></button>
+                    <button class="btn-primary" style="width:100%;" onclick="login()">بدء التقييم <i class="fa-solid fa-arrow-left"></i></button>
                 </div>
 
                 <div class="admin-link" onclick="showView('adminLoginView')">
@@ -233,8 +244,8 @@
                 <label class="form-label">كلمة المرور المشفرة</label>
                 <input type="password" id="adminPass" class="form-control" placeholder="••••••••">
                 
-                <button class="btn-primary" id="adminLoginBtn" onclick="adminLogin()">دخول آمن للمشرفين <i class="fa-solid fa-lock"></i></button>
-                <button class="btn-secondary" onclick="showView('loginView')">العودة لصفحة المتدربين</button>
+                <button class="btn-primary" style="width:100%;" id="adminLoginBtn" onclick="adminLogin()">دخول آمن للمشرفين <i class="fa-solid fa-lock"></i></button>
+                <button class="btn-secondary" style="width:100%;" onclick="showView('loginView')">العودة لصفحة المتدربين</button>
             </div>
         </div>
     </div>
@@ -290,25 +301,56 @@
         </div>
 
         <div id="adminTeamsSection" style="display: none;">
+            <!-- أدوات التحكم وتصدير البيانات -->
             <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 20px; background: var(--bg-body); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color);">
                 <div>
                     <h3 style="margin: 0 0 5px 0; color: var(--primary); font-size: 1.1em; font-weight: 800;">إدارة وتشكيل فرق مشاريع التخرج</h3>
-                    <p style="margin: 0; font-size: 0.9em; color: var(--text-secondary); font-weight: 500;">يتم التشكيل آلياً بناءً على التكامل المهاري والتطابق الزمني للمتدربين.</p>
+                    <p style="margin: 0; font-size: 0.9em; color: var(--text-secondary); font-weight: 500;">حدد حجم الفريق لتطبيق الخوارزمية، ثم قم بتصدير أو طباعة النتائج النهائية.</p>
                 </div>
-                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                    <button class="btn-secondary" style="width: auto; margin-top:0;" onclick="addNewEmptyTeam()"><i class="fa-solid fa-plus"></i> إضافة فريق فارغ</button>
-                    <button class="btn-primary" style="width: auto; padding: 10px 18px; font-size: 0.95em;" onclick="autoGenerateBalancedTeams()"><i class="fa-solid fa-wand-magic-sparkles"></i> تشكيل ذكي متوازن</button>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+                    <label style="font-size: 0.85em; font-weight: 800; color: var(--primary);">حجم الفريق:</label>
+                    <input type="number" id="teamSizeInput" class="form-control" value="5" min="2" max="100" style="width: 70px; padding: 8px; margin: 0; text-align: center;">
+                    <div class="btn-action-group">
+                        <button class="btn-secondary" style="width: auto; margin-top:0;" onclick="addNewEmptyTeam()"><i class="fa-solid fa-plus"></i> إضافة فريق</button>
+                        <button class="btn-primary" style="width: auto;" onclick="autoGenerateBalancedTeams()"><i class="fa-solid fa-wand-magic-sparkles"></i> تشكيل ذكي</button>
+                        <button class="btn-accent" style="width: auto; background:#16A34A;" onclick="exportTeamsToCSV()"><i class="fa-solid fa-file-csv"></i> تصدير (Google Sheets)</button>
+                        <button class="btn-secondary" style="width: auto; margin-top:0; color:#475569; border-color:#94A3B8;" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة</button>
+                    </div>
                 </div>
             </div>
             
             <div class="teams-grid" id="teamsCardsContainer"></div>
             
-            <!-- إضافة قسم قائمة الانتظار المفقود -->
+            <!-- قائمة الانتظار -->
             <div class="unassigned-pool" style="margin-top: 25px; background: var(--bg-surface); border: 2px dashed var(--border-color); border-radius: 12px; padding: 20px;">
                 <h4 style="margin:0 0 15px 0; color:var(--primary-light); font-size: 1.1em;"><i class="fa-solid fa-user-clock"></i> قائمة الانتظار (غير المسكنين في فرق): <span id="unassignedCount">0</span></h4>
                 <div class="unassigned-grid" id="unassignedListContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px;"></div>
             </div>
         </div>
+    </div>
+
+    <!-- تقرير المتدرب للمشرف -->
+    <div id="adminReportView" class="panel view">
+        <div class="admin-report-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px;">
+            <div>
+                <h3 id="adminRepName" style="margin:0 0 5px 0; color:var(--primary); font-size:1.2em;"></h3>
+                <p id="adminRepEmailMobile" style="margin:0; font-size:0.85em; color:var(--text-secondary);"></p>
+                <p style="margin:5px 0 0 0; font-size:0.85em; font-weight:bold;">المعرّف: <span id="adminRepBootcamp" style="color:var(--accent);"></span></p>
+            </div>
+            <div style="background:var(--bg-body); padding:10px 15px; border-radius:8px; border:1px solid var(--border-color); text-align:center;">
+                <p style="margin:0; font-size:0.85em;">القبلي: <strong id="adminRepPre" style="color:var(--primary-light);">0%</strong> | البعدي: <strong id="adminRepPost" style="color:var(--success);">0%</strong></p>
+            </div>
+        </div>
+        <h3 style="text-align: center; color: var(--primary); font-size: 1.1em;">الخريطة الرادارية</h3>
+        <div class="chart-container"><canvas id="adminRadarChart"></canvas></div>
+        <div style="display:flex; gap:10px; margin:20px 0;">
+            <button class="btn-secondary" style="width:100%; margin:0;" onclick="renderAdminAnswersReview('pre')">إجابات القبلي</button>
+            <button class="btn-primary" style="width:100%; margin:0;" onclick="renderAdminAnswersReview('post')">إجابات البعدي</button>
+        </div>
+        <div id="adminAnswersContainer" style="max-height:400px; overflow-y:auto; background:var(--bg-body); border-radius:8px; padding:15px; border:1px solid var(--border-color);">
+            <p style="text-align:center; color:var(--text-secondary); font-size:0.9em;">اختر التقييم لعرض الإجابات.</p>
+        </div>
+        <button class="btn-secondary" style="width:100%; margin-top:20px;" onclick="showView('adminDashboardView')">العودة للوحة الإدارة</button>
     </div>
 
     <!-- لوحة المتدرب -->
@@ -354,7 +396,7 @@
                 <div id="postScoreBadge" class="score-badge" style="display:none;"></div>
             </div>
         </div>
-        <button id="traineeFullReportBtn" class="btn-primary" style="display:none; margin-top: 30px; padding: 15px;" onclick="showView('resultView')"><i class="fa-solid fa-chart-radar fa-lg"></i> استعراض تقرير الأداء الشامل (صورة PDF)</button>
+        <button id="traineeFullReportBtn" class="btn-primary" style="display:none; margin-top: 30px; padding: 15px;" onclick="showView('resultView')"><i class="fa-solid fa-chart-radar fa-lg"></i> استعراض تقرير الأداء الشامل (صورة)</button>
     </div>
 
     <!-- شاشة الاختبار -->
@@ -368,10 +410,10 @@
         </div>
         <div id="questionsContainer"></div>
         <button class="btn-primary" id="submitQuizBtn" onclick="submitQuiz()" style="margin-top: 20px; padding: 16px; font-size: 1.1em;">تسليم واعتماد الإجابات <i class="fa-solid fa-paper-plane"></i></button>
-        <button class="btn-secondary" id="backToDashBtn" onclick="showView('dashboardView')" style="display:none;">العودة للوحة الرئيسية</button>
+        <button class="btn-secondary" style="width:100%;" id="backToDashBtn" onclick="showView('dashboardView')" style="display:none;">العودة للوحة الرئيسية</button>
     </div>
 
-    <!-- شاشة التقرير وتحميل الصورة -->
+    <!-- شاشة التقرير للمتدرب -->
     <div id="resultView" class="panel view">
         <div class="snapshot-container" id="snapshotReportContent">
             <div class="snapshot-header">
@@ -410,30 +452,6 @@
             <button class="btn-secondary" style="width: auto; padding: 14px 25px; margin-top: 0;" onclick="showView('dashboardView')">العودة للرئيسية</button>
         </div>
     </div>
-    
-    <!-- تقرير المتدرب للمشرف (يعتمد على النضج وليس الخطأ/الصح) -->
-    <div id="adminReportView" class="panel view">
-        <div class="admin-report-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px;">
-            <div>
-                <h3 id="adminRepName" style="margin:0 0 5px 0; color:var(--primary); font-size:1.2em;"></h3>
-                <p id="adminRepEmailMobile" style="margin:0; font-size:0.85em; color:var(--text-secondary);"></p>
-                <p style="margin:5px 0 0 0; font-size:0.85em; font-weight:bold;">المعرّف: <span id="adminRepBootcamp" style="color:var(--accent);"></span></p>
-            </div>
-            <div style="background:var(--bg-body); padding:10px 15px; border-radius:8px; border:1px solid var(--border-color); text-align:center;">
-                <p style="margin:0; font-size:0.85em;">القبلي: <strong id="adminRepPre" style="color:var(--primary-light);">0%</strong> | البعدي: <strong id="adminRepPost" style="color:var(--success);">0%</strong></p>
-            </div>
-        </div>
-        <h3 style="text-align: center; color: var(--primary); font-size: 1.1em;">الخريطة الرادارية</h3>
-        <div class="chart-container"><canvas id="adminRadarChart"></canvas></div>
-        <div style="display:flex; gap:10px; margin:20px 0;">
-            <button class="btn-secondary" style="margin:0;" onclick="renderAdminAnswersReview('pre')">إجابات القبلي</button>
-            <button class="btn-primary" style="margin:0;" onclick="renderAdminAnswersReview('post')">إجابات البعدي</button>
-        </div>
-        <div id="adminAnswersContainer" style="max-height:400px; overflow-y:auto; background:var(--bg-body); border-radius:8px; padding:15px; border:1px solid var(--border-color);">
-            <p style="text-align:center; color:var(--text-secondary); font-size:0.9em;">اختر التقييم لعرض الإجابات.</p>
-        </div>
-        <button class="btn-secondary" style="margin-top:20px;" onclick="showView('adminDashboardView')">العودة للوحة الإدارة</button>
-    </div>
 </div>
 
 <!-- ================= الكود السحابي والمصادقة (Firebase + App Logic) ================= -->
@@ -456,9 +474,10 @@
     const db = getFirestore(app);
     const auth = getAuth(app);
     
+    // تأمين بقاء الجلسة للمشرف
     setPersistence(auth, browserLocalPersistence);
 
-    // ================= بنك الأسئلة الدقيق (بأوزان النضج وليس الصح والخطأ) =================
+    // ================= بنك الأسئلة الدقيق (بأوزان النضج) =================
     const exactQuestionsBank = [
         { id: "ق1", section: "القيادة", q: "آخر مرة اشتغلت في فريق (شغل أو دراسة أو تطوّع) — إيه أقرب حاجة لدورك؟", options: ["أنا اللي قسّمت الشغل وحددت المواعيد وتابعت التنفيذ لحد التسليم", "كنت بحدد الهدف وأخلي الناس تتفق على الخطوات", "أخدت جزء محدد ونفّذته وسلّمته في ميعاده", "كنت بساعد لما حد يطلب مني", "ما اشتغلتش في فريق قبل كده"], scores: [5, 4, 3, 2, 1] },
         { id: "ق2", section: "القيادة", q: "لما الفريق يختلف على قرار، بتعمل إيه عادة؟", options: ["بجمع الآراء وأقترح قرارًا وأتحمّل مسؤوليته", "بحاول أقرّب وجهات النظر لحد ما نتفق", "بقول رأيي وبسيب القرار للأغلبية", "بستنى حد يقرر وأنفّذ", "ببعد عن الخلافات"], scores: [5, 4, 3, 2, 1] },
@@ -749,7 +768,6 @@
                 let isChecked = (isReadOnly && savedAnswers[index] === optIndex) ? 'checked' : '';
                 let isDisabled = isReadOnly ? 'disabled' : '';
                 
-                // في وضع قراءة المتدرب لإجاباته الخاصة، نبرز ما اختاره فقط بدون تصحيح أحمر/أخضر بناءً على مقياس النضج
                 let isSelected = (isReadOnly && savedAnswers[index] === optIndex);
                 let resultClass = isSelected ? 'ans-selected' : '';
                 
@@ -968,7 +986,6 @@
                 `;
             });
 
-            // استرجاع كل المتدربين لقائمة الانتظار مبدئياً
             unassignedTrainees = [...traineesList];
             teams = [];
             renderTeamsAndPool();
@@ -977,14 +994,27 @@
         }
     }
 
-    // خوارزمية تكوين الفرق المتوازنة بحيث تترك الزيادة في قائمة الانتظار
     window.autoGenerateBalancedTeams = function() {
-        let teamSize = 5;
-        let allTested = [...traineesList].filter(t => t.preScore !== '-'); 
-        allTested.sort(() => Math.random() - 0.5); // سيتم تطويرها للفرز بالكفاءات لاحقاً
+        let sizeInput = document.getElementById('teamSizeInput');
+        let teamSize = sizeInput && sizeInput.value ? parseInt(sizeInput.value) : 5;
+        if(teamSize < 2) teamSize = 5;
+
+        let allTested = traineesList.filter(t => t.preScore !== '-'); 
+        
+        if (allTested.length === 0) {
+            alert("عفواً، لا يوجد متدربون أكملوا التقييم القبلي حتى الآن لكي يتم تشكيل الفرق!");
+            return;
+        }
+
+        allTested.sort(() => Math.random() - 0.5); 
 
         teams = [];
-        let fullTeamsCount = Math.floor(allTested.length / teamSize); // فرق كاملة فقط
+        let fullTeamsCount = Math.floor(allTested.length / teamSize);
+
+        if (fullTeamsCount === 0 && allTested.length > 0) {
+            fullTeamsCount = 1;
+            teamSize = allTested.length; 
+        }
 
         for (let i = 0; i < fullTeamsCount; i++) {
             teams.push({
@@ -994,8 +1024,13 @@
             });
         }
         
-        // المتدربون المتبقون (الكسور + من لم يختبروا) يتم وضعهم في قائمة الانتظار
-        let assignedIds = teams.flatMap(t => t.members.map(m => m.id));
+        let assignedIds = [];
+        teams.forEach(t => {
+            t.members.forEach(m => {
+                assignedIds.push(m.id);
+            });
+        });
+
         unassignedTrainees = traineesList.filter(t => !assignedIds.includes(t.id));
         
         renderTeamsAndPool();
@@ -1082,16 +1117,16 @@
                     moveOptions += `<option value="unassigned">← للانتظار</option>`;
 
                     membersHTML += `
-                        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border-color); gap: 8px;">
+                        <div class="team-member-item" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border-color); gap: 8px;">
                             <div>
                                 <span style="font-size: 0.95em; font-weight:700;">${m.name}</span><br>
                                 <span style="font-size: 0.75em; background: var(--bg-body); color: var(--text-secondary); padding: 3px 8px; border-radius: 6px; border: 1px solid var(--border-color);">${m.topSkill} | ${String(m.shift).split(' ')[0]}</span>
                             </div>
                             <div style="display:flex; align-items:center; gap:6px;">
-                                <select style="padding: 4px 8px; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit; font-size: 0.85em; background: #FFF; cursor: pointer;" onchange="if(this.value) window.reassignTrainee('${m.id}', ${team.id}, this.value)">
+                                <select class="member-reassign-select" style="padding: 4px 8px; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit; font-size: 0.85em; background: #FFF; cursor: pointer;" onchange="if(this.value) window.reassignTrainee('${m.id}', ${team.id}, this.value)">
                                     ${moveOptions}
                                 </select>
-                                <button style="color: var(--danger); background: none; border: none; cursor: pointer; font-size: 0.9em; padding: 4px;" title="إزالة" onclick="window.reassignTrainee('${m.id}', ${team.id}, 'unassigned')"><i class="fa-solid fa-user-minus"></i></button>
+                                <button class="remove-member-btn" style="color: var(--danger); background: none; border: none; cursor: pointer; font-size: 0.9em; padding: 4px;" title="إزالة" onclick="window.reassignTrainee('${m.id}', ${team.id}, 'unassigned')"><i class="fa-solid fa-user-minus"></i></button>
                             </div>
                         </div>
                     `;
@@ -1101,19 +1136,19 @@
             }
 
             let powerBarHTML = team.members.length > 0 ? `
-                <div style="background: var(--border-color); border-radius: 6px; margin: 15px 0; overflow: hidden; position: relative; height: 26px;">
+                <div class="team-power-container" style="background: var(--border-color); border-radius: 6px; margin: 15px 0; overflow: hidden; position: relative; height: 26px;">
                     <div style="height: 100%; transition: width 0.5s ease-in-out; width: ${powerScore}%; background-color: ${powerColor};"></div>
-                    <div style="position: absolute; top: 0; left: 0; right: 0; text-align: center; font-size: 0.85em; font-weight: bold; color: white; line-height: 26px; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">قوة التجانس: ${powerScore}%</div>
+                    <div class="team-power-text" style="position: absolute; top: 0; left: 0; right: 0; text-align: center; font-size: 0.85em; font-weight: bold; color: white; line-height: 26px; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">قوة التجانس: ${powerScore}%</div>
                 </div>
             ` : '';
 
             teamsContainer.innerHTML += `
-                <div style="border: 1px solid var(--border-color); border-radius: 12px; background: #FFFFFF; overflow: hidden; display: flex; flex-direction: column;">
-                    <div style="background: var(--bg-body); border-bottom: 1px solid var(--border-color); padding: 12px 18px; display: flex; justify-content: space-between; align-items: center;">
+                <div class="team-card" style="border: 1px solid var(--border-color); border-radius: 12px; background: #FFFFFF; overflow: hidden; display: flex; flex-direction: column;">
+                    <div class="team-card-header" style="background: var(--bg-body); border-bottom: 1px solid var(--border-color); padding: 12px 18px; display: flex; justify-content: space-between; align-items: center;">
                         <h4 style="margin:0; font-size:1.1em; color:var(--primary-light); font-weight:800;">${team.name} <span style="font-size:0.8em; color:gray;">(${team.members.length})</span></h4>
-                        <button style="color:var(--danger); background:none; border:none; cursor:pointer;" onclick="window.deleteTeam(${team.id})"><i class="fa-solid fa-trash-can"></i></button>
+                        <button class="remove-member-btn" style="color:var(--danger); background:none; border:none; cursor:pointer;" onclick="window.deleteTeam(${team.id})"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
-                    <div style="padding: 0 15px 15px 15px; flex-grow: 1;">
+                    <div class="team-card-body" style="padding: 0 15px 15px 15px; flex-grow: 1; max-height: 400px; overflow-y: auto;">
                         ${powerBarHTML}
                         ${membersHTML}
                     </div>
@@ -1121,7 +1156,6 @@
             `;
         });
 
-        // تحديث وعرض قائمة الانتظار
         const unassignedContainer = document.getElementById('unassignedListContainer');
         document.getElementById('unassignedCount').innerText = unassignedTrainees.length;
         unassignedContainer.innerHTML = '';
@@ -1139,7 +1173,7 @@
                             <strong style="color:var(--text-main);">${m.name}</strong><br>
                             <span style="font-size:0.8em; color:var(--text-secondary);">${m.topSkill} | ${String(m.shift).split(' ')[0]}</span>
                         </div>
-                        <select style="padding: 4px 8px; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit; font-size: 0.85em; background: #F8FAFC; cursor: pointer;" onchange="if(this.value) window.reassignTrainee('${m.id}', 'unassigned', this.value)">
+                        <select class="member-reassign-select" style="padding: 4px 8px; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit; font-size: 0.85em; background: #F8FAFC; cursor: pointer;" onchange="if(this.value) window.reassignTrainee('${m.id}', 'unassigned', this.value)">
                             ${assignOptions}
                         </select>
                     </div>
@@ -1147,6 +1181,31 @@
             });
         }
     }
+
+    // ================= وظيفة تصدير البيانات إلى Excel/Google Sheets =================
+    window.exportTeamsToCSV = function() {
+        // إضافة BOM لدعم اللغة العربية في Excel
+        let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; 
+        csvContent += "الفريق,اسم المتدرب,المعرّف,الجوال,البريد الإلكتروني,الكفاءة الأبرز,التوافر (الوقت),التقييم القبلي,التقييم البعدي\n";
+        
+        teams.forEach(team => {
+            team.members.forEach(m => {
+                csvContent += `${team.name},${m.name},${m.bootcamp},${m.mobile},${m.email},${m.topSkill},${m.shift},${m.preScore}%,${m.postScore !== '-' ? m.postScore+'%' : '-'}\n`;
+            });
+        });
+        
+        unassignedTrainees.forEach(m => {
+            csvContent += `قائمة الانتظار,${m.name},${m.bootcamp},${m.mobile},${m.email},${m.topSkill},${m.shift},${m.preScore}%,${m.postScore !== '-' ? m.postScore+'%' : '-'}\n`;
+        });
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `BA_Teams_Export_${new Date().toISOString().slice(0,10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
 
     window.viewTraineeReport = function(traineeId) {
         currentAdminTrainee = traineesList.find(t => t.id === traineeId);
@@ -1179,7 +1238,6 @@
         window.showView('adminReportView');
     };
 
-    // المراجعة بطريقة "مقياس النضج" المخصصة للمشرف (Maturity Focus)
     window.renderAdminAnswersReview = function(type) {
         if(!currentAdminTrainee) return;
         let answersArray = type === 'pre' ? currentAdminTrainee.preAnswers : currentAdminTrainee.postAnswers;
@@ -1204,7 +1262,6 @@
                 let scoreWeight = q.scores[optIndex];
                 let maxScore = Math.max(...q.scores);
                 
-                // عرض وزن الإجابة بوضوح للمشرف
                 let weightBadge = isSelected ? `<span class="weight-badge">الوزن: ${scoreWeight}/${maxScore}</span>` : '';
                 
                 html += `<div class="${optClass}">${icon}${opt} ${weightBadge}</div>`;
