@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
+        /* هوية بصرية مؤسسية، رصينة، ومريحة للعين (Corporate & Trust Theme) */
         :root {
             --primary: #0F172A; 
             --primary-light: #2563EB; 
@@ -27,7 +28,7 @@
         body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 25px 15px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; }
         .container { width: 100%; max-width: 960px; margin: 0 auto; }
 
-        .auth-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); overflow: hidden; max-width: 480px; margin: 0 auto; transition: 0.3s; width: 100%; }
+        .auth-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); overflow: hidden; max-width: 480px; margin: 0 auto; transition: 0.3s; width: 100%; }
         .auth-header { background: var(--primary); color: white; padding: 35px 25px; text-align: center; border-bottom: 4px solid var(--primary-light); }
         .auth-icon-wrapper { font-size: 2.2em; color: var(--primary-light); background: var(--bg-surface); width: 75px; height: 75px; border-radius: 12px; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .auth-header h1 { margin: 0; font-size: 1.5em; font-weight: 800; letter-spacing: -0.5px; }
@@ -164,7 +165,7 @@
 
 <div class="container">
     <!-- تسجيل المتدرب -->
-    <div id="loginView" class="view">
+    <div id="loginView" class="view active">
         <div class="auth-card">
             <div class="auth-header">
                 <div class="auth-icon-wrapper"><i class="fa-solid fa-briefcase"></i></div>
@@ -233,7 +234,7 @@
                 <label class="form-label">كلمة المرور المشفرة</label>
                 <input type="password" id="adminPass" class="form-control" placeholder="••••••••">
                 
-                <button class="btn-primary" onclick="adminLogin()">دخول آمن للمشرفين <i class="fa-solid fa-lock"></i></button>
+                <button class="btn-primary" id="adminLoginBtn" onclick="adminLogin()">دخول آمن للمشرفين <i class="fa-solid fa-lock"></i></button>
                 <button class="btn-secondary" onclick="showView('loginView')">العودة لصفحة المتدربين</button>
             </div>
         </div>
@@ -249,7 +250,6 @@
             <button class="hero-logout" onclick="adminLogout()">إنهاء الجلسة <i class="fa-solid fa-power-off"></i></button>
         </div>
         
-        <!-- لوحة التحكم في موعد التقييم البعدي -->
         <div style="background: white; border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-right: 4px solid var(--accent);">
             <div>
                 <h4 style="margin: 0 0 5px 0; color: var(--primary); font-size: 1.05em;">موعد إتاحة التقييم البعدي للمتدربين</h4>
@@ -450,7 +450,7 @@
     const db = getFirestore(app);
     const auth = getAuth(app);
     
-    // ضبط استمرارية جلسة الإدارة لمنع الخروج عند التحديث
+    // تأمين بقاء الجلسة للمشرف
     setPersistence(auth, browserLocalPersistence);
 
     // ================= بنك الأسئلة الدقيق المستخرج من ملف الـ Excel بأوزان الدرجات =================
@@ -486,9 +486,8 @@
     let radarChartInstance = null; let adminRadarChartInstance = null;
     let traineesList = []; let currentAdminTrainee = null;
     let teams = []; let unassignedTrainees = [];
-    let postUnlockDate = null; // متغير لحفظ موعد إتاحة التقييم البعدي
+    let postUnlockDate = null;
 
-    // جلب إعدادات المنصة (موعد التقييم البعدي)
     async function fetchGlobalSettings() {
         try {
             const docSnap = await getDoc(doc(db, "settings", "config"));
@@ -502,23 +501,24 @@
                 }
             }
         } catch(e) {
-            console.log("لم يتم إعداد التواريخ بعد.");
+            console.log("إعدادات النظام غير مكتملة بعد.");
         }
         if(document.getElementById('dashboardView').classList.contains('active')) {
             updateDashboard();
         }
     }
 
-    // ================= الموجّه الذكي للتحكم بالجلسات (Auth Router) =================
+    // ================= الموجّه الذكي للتحكم بالجلسات (Auth Router) - مُعالج مشكلة الـ Refresh =================
     window.onload = function() {
-        // جلب الإعدادات فوراً عند تحميل الصفحة
         fetchGlobalSettings();
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
+                // المشرف مسجل دخوله (لا تخرجه عند التحديث)
                 initAdminModule();
                 window.showView('adminDashboardView');
             } else {
+                // ليس مشرفاً، تحقق من وجود المتدرب في الـ Local Storage
                 const savedName = localStorage.getItem('ba_trainee_name');
                 if(savedName) {
                     document.getElementById('quickLoginName').innerText = savedName;
@@ -526,6 +526,7 @@
                     document.getElementById('fullLoginForm').style.display = 'none';
                     window.showView('loginView');
                 } else {
+                    // مستخدم جديد تماماً
                     document.getElementById('quickLoginBox').style.display = 'none';
                     document.getElementById('fullLoginForm').style.display = 'block';
                     window.showView('loginView');
@@ -534,7 +535,6 @@
         });
     };
 
-    // حفظ موعد التقييم البعدي من قبل المشرف
     window.saveUnlockDate = async function() {
         const dateVal = document.getElementById('adminUnlockDate').value;
         if(!dateVal) { alert("الرجاء تحديد تاريخ ووقت."); return; }
@@ -568,7 +568,9 @@
         }
     };
 
-    window.quickLogin = function() { window.showView('dashboardView'); };
+    window.quickLogin = function() {
+        window.showView('dashboardView');
+    };
 
     window.clearQuickLogin = function() {
         localStorage.removeItem('ba_trainee_name');
@@ -624,14 +626,19 @@
         window.location.reload(); 
     };
 
+    // تسجيل دخول المشرف (بدون التكرار مع الموجه الذكي)
     window.adminLogin = async function() {
         const email = document.getElementById('adminEmail').value;
         const password = document.getElementById('adminPass').value;
         if(!email || !password) { alert("الرجاء إدخال بيانات المشرف."); return; }
         try {
+            const btn = document.getElementById('adminLoginBtn');
+            btn.innerHTML = 'جاري تسجيل الدخول... <i class="fa-solid fa-spinner fa-spin"></i>';
             await signInWithEmailAndPassword(auth, email, password);
+            // لن نستدعي شيئاً هنا، الموجّه الذكي (onAuthStateChanged) سيفتح اللوحة تلقائياً
         } catch(error) {
             alert("فشل تسجيل الدخول المشفر. تأكد من الصلاحيات.");
+            document.getElementById('adminLoginBtn').innerHTML = 'دخول آمن للمشرفين <i class="fa-solid fa-lock"></i>';
         }
     };
 
@@ -663,7 +670,6 @@
             document.getElementById('preTag').style.display = 'block';
             
             if(postScore === null) {
-                // تقييم موعد الإتاحة للمتدرب الذي أنهى القبلي فقط
                 let now = new Date();
                 if (!postUnlockDate) {
                     postCard.classList.add('locked');
@@ -879,6 +885,7 @@
         });
     }
 
+    // تقنية Desktop-Force Capture لضمان عدم قص الصورة على الجوال
     window.downloadReportImage = function() {
         const element = document.getElementById('snapshotReportContent');
         const originalWidth = element.style.width;
@@ -907,7 +914,6 @@
         });
     };
 
-    // ================= لوحة المشرف وتشكيل الفرق =================
     window.switchAdminTab = function(tab) {
         document.getElementById('tabTraineesBtn').classList.toggle('active', tab === 'trainees');
         document.getElementById('tabTeamsBtn').classList.toggle('active', tab === 'teams');
@@ -969,7 +975,7 @@
             teams = [];
             renderTeamsAndPool();
         } catch(e) {
-            alert("خطأ في جلب بيانات المتدربين من السحابة.");
+            console.error("Fetch Data Error:", e);
         }
     }
 
@@ -1076,7 +1082,7 @@
                         <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border-color); gap: 8px;">
                             <div>
                                 <span style="font-size: 0.95em; font-weight:700;">${m.name}</span><br>
-                                <span style="font-size: 0.75em; background: var(--bg-body); color: var(--text-secondary); padding: 3px 8px; border-radius: 6px; border: 1px solid var(--border-color);">${m.topSkill} | ${m.shift.split(' ')[0]}</span>
+                                <span style="font-size: 0.75em; background: var(--bg-body); color: var(--text-secondary); padding: 3px 8px; border-radius: 6px; border: 1px solid var(--border-color);">${m.topSkill} | ${String(m.shift).split(' ')[0]}</span>
                             </div>
                             <div style="display:flex; align-items:center; gap:6px;">
                                 <select style="padding: 4px 8px; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit; font-size: 0.85em; background: #FFF; cursor: pointer;" onchange="if(this.value) window.reassignTrainee('${m.id}', ${team.id}, this.value)">
@@ -1127,7 +1133,7 @@
                     <div style="background: white; border: 1px solid var(--border-color); padding: 10px 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                         <div style="font-size:0.9em;">
                             <strong style="color:var(--text-main);">${m.name}</strong><br>
-                            <span style="font-size:0.8em; color:var(--text-secondary);">${m.topSkill} | ${m.shift.split(' ')[0]}</span>
+                            <span style="font-size:0.8em; color:var(--text-secondary);">${m.topSkill} | ${String(m.shift).split(' ')[0]}</span>
                         </div>
                         <select style="padding: 4px 8px; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit; font-size: 0.85em; background: #F8FAFC; cursor: pointer;" onchange="if(this.value) window.reassignTrainee('${m.id}', 'unassigned', this.value)">
                             ${assignOptions}
