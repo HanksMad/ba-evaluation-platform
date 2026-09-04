@@ -11,7 +11,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
-        /* هوية بصرية مؤسسية، رصينة، ومريحة للعين (Corporate & Trust Theme) */
         :root {
             --primary: #0F172A; 
             --primary-light: #2563EB; 
@@ -28,7 +27,7 @@
         body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 25px 15px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; }
         .container { width: 100%; max-width: 960px; margin: 0 auto; }
 
-        .auth-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); overflow: hidden; max-width: 480px; margin: 0 auto; transition: 0.3s; width: 100%; }
+        .auth-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); overflow: hidden; max-width: 480px; margin: 0 auto; transition: 0.3s; width: 100%; }
         .auth-header { background: var(--primary); color: white; padding: 35px 25px; text-align: center; border-bottom: 4px solid var(--primary-light); }
         .auth-icon-wrapper { font-size: 2.2em; color: var(--primary-light); background: var(--bg-surface); width: 75px; height: 75px; border-radius: 12px; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .auth-header h1 { margin: 0; font-size: 1.5em; font-weight: 800; letter-spacing: -0.5px; }
@@ -114,11 +113,6 @@
         .option-item:has(input[type="radio"]:checked) { border-color: var(--primary-light); background: #EFF6FF; }
         .option-item:has(input[type="radio"]:checked) .option-text { color: var(--primary-light); font-weight: 800; }
 
-        .correct-option { background-color: #F0FDF4 !important; border-color: #16A34A !important; }
-        .correct-option .option-text { color: #15803D !important; font-weight: 800; }
-        .wrong-option { background-color: #FEF2F2 !important; border-color: #DC2626 !important; }
-        .wrong-option .option-text { color: #B91C1C !important; font-weight: 800; }
-
         .snapshot-container { background: #ffffff; padding: 40px; border-radius: 12px; text-align: right; direction: rtl; border: 1px solid var(--border-color); max-width: 800px; margin: 0 auto; box-sizing: border-box; position: relative; }
         .snapshot-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 20px; margin-bottom: 25px; }
         .snapshot-header h2 { margin: 0; color: var(--primary); font-size: 1.4em; font-weight: 800; }
@@ -133,6 +127,11 @@
         .snapshot-box span { font-size: 1.8em; font-weight: 800; color: var(--primary-light); }
 
         .chart-container { width: 100%; max-width: 500px; margin: 0 auto; padding: 10px; background: white; }
+
+        /* تنسيقات المراجعة للمشرف (Maturity Assessment Styling) */
+        .ans-selected { background: #EEF2FF !important; border-color: var(--primary-light) !important; font-weight: 800; border-width: 2px !important; }
+        .ans-normal { background: #FFF; border-color: var(--border-color); opacity: 0.7; }
+        .weight-badge { float: left; font-weight: bold; color: var(--primary); background: white; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
 
         @media (max-width: 600px) {
             body { padding: 10px; }
@@ -301,7 +300,14 @@
                     <button class="btn-primary" style="width: auto; padding: 10px 18px; font-size: 0.95em;" onclick="autoGenerateBalancedTeams()"><i class="fa-solid fa-wand-magic-sparkles"></i> تشكيل ذكي متوازن</button>
                 </div>
             </div>
+            
             <div class="teams-grid" id="teamsCardsContainer"></div>
+            
+            <!-- إضافة قسم قائمة الانتظار المفقود -->
+            <div class="unassigned-pool" style="margin-top: 25px; background: var(--bg-surface); border: 2px dashed var(--border-color); border-radius: 12px; padding: 20px;">
+                <h4 style="margin:0 0 15px 0; color:var(--primary-light); font-size: 1.1em;"><i class="fa-solid fa-user-clock"></i> قائمة الانتظار (غير المسكنين في فرق): <span id="unassignedCount">0</span></h4>
+                <div class="unassigned-grid" id="unassignedListContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px;"></div>
+            </div>
         </div>
     </div>
 
@@ -358,7 +364,7 @@
             <button class="hero-logout" onclick="showView('dashboardView')">إلغاء والعودة <i class="fa-solid fa-xmark"></i></button>
         </div>
         <div id="reviewNotice" style="display:none; background:white; color:var(--text-main); padding:15px; border-radius:8px; margin-bottom:20px; border:1px solid var(--border-color); font-weight:700; font-size: 0.95em; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
-            <i class="fa-solid fa-circle-info" style="color: var(--primary-light); margin-left: 5px;"></i> وضع المراجعة: الإجابات الصحيحة مظللة بالأخضر، وإجاباتك الخاطئة بالأحمر.
+            <i class="fa-solid fa-circle-info" style="color: var(--primary-light); margin-left: 5px;"></i> وضع المراجعة: يمكنك الاطلاع على إجاباتك التي قمت بتسليمها للمشرف.
         </div>
         <div id="questionsContainer"></div>
         <button class="btn-primary" id="submitQuizBtn" onclick="submitQuiz()" style="margin-top: 20px; padding: 16px; font-size: 1.1em;">تسليم واعتماد الإجابات <i class="fa-solid fa-paper-plane"></i></button>
@@ -405,7 +411,7 @@
         </div>
     </div>
     
-    <!-- تقرير المتدرب للمشرف (مخفي للتبديل) -->
+    <!-- تقرير المتدرب للمشرف (يعتمد على النضج وليس الخطأ/الصح) -->
     <div id="adminReportView" class="panel view">
         <div class="admin-report-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px;">
             <div>
@@ -450,10 +456,9 @@
     const db = getFirestore(app);
     const auth = getAuth(app);
     
-    // تأمين بقاء الجلسة للمشرف
     setPersistence(auth, browserLocalPersistence);
 
-    // ================= بنك الأسئلة الدقيق المستخرج من ملف الـ Excel بأوزان الدرجات =================
+    // ================= بنك الأسئلة الدقيق (بأوزان النضج وليس الصح والخطأ) =================
     const exactQuestionsBank = [
         { id: "ق1", section: "القيادة", q: "آخر مرة اشتغلت في فريق (شغل أو دراسة أو تطوّع) — إيه أقرب حاجة لدورك؟", options: ["أنا اللي قسّمت الشغل وحددت المواعيد وتابعت التنفيذ لحد التسليم", "كنت بحدد الهدف وأخلي الناس تتفق على الخطوات", "أخدت جزء محدد ونفّذته وسلّمته في ميعاده", "كنت بساعد لما حد يطلب مني", "ما اشتغلتش في فريق قبل كده"], scores: [5, 4, 3, 2, 1] },
         { id: "ق2", section: "القيادة", q: "لما الفريق يختلف على قرار، بتعمل إيه عادة؟", options: ["بجمع الآراء وأقترح قرارًا وأتحمّل مسؤوليته", "بحاول أقرّب وجهات النظر لحد ما نتفق", "بقول رأيي وبسيب القرار للأغلبية", "بستنى حد يقرر وأنفّذ", "ببعد عن الخلافات"], scores: [5, 4, 3, 2, 1] },
@@ -508,17 +513,15 @@
         }
     }
 
-    // ================= الموجّه الذكي للتحكم بالجلسات (Auth Router) - مُعالج مشكلة الـ Refresh =================
+    // ================= الموجّه الذكي للتحكم بالجلسات (Auth Router) =================
     window.onload = function() {
         fetchGlobalSettings();
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // المشرف مسجل دخوله (لا تخرجه عند التحديث)
                 initAdminModule();
                 window.showView('adminDashboardView');
             } else {
-                // ليس مشرفاً، تحقق من وجود المتدرب في الـ Local Storage
                 const savedName = localStorage.getItem('ba_trainee_name');
                 if(savedName) {
                     document.getElementById('quickLoginName').innerText = savedName;
@@ -526,7 +529,6 @@
                     document.getElementById('fullLoginForm').style.display = 'none';
                     window.showView('loginView');
                 } else {
-                    // مستخدم جديد تماماً
                     document.getElementById('quickLoginBox').style.display = 'none';
                     document.getElementById('fullLoginForm').style.display = 'block';
                     window.showView('loginView');
@@ -626,7 +628,6 @@
         window.location.reload(); 
     };
 
-    // تسجيل دخول المشرف (بدون التكرار مع الموجه الذكي)
     window.adminLogin = async function() {
         const email = document.getElementById('adminEmail').value;
         const password = document.getElementById('adminPass').value;
@@ -635,7 +636,6 @@
             const btn = document.getElementById('adminLoginBtn');
             btn.innerHTML = 'جاري تسجيل الدخول... <i class="fa-solid fa-spinner fa-spin"></i>';
             await signInWithEmailAndPassword(auth, email, password);
-            // لن نستدعي شيئاً هنا، الموجّه الذكي (onAuthStateChanged) سيفتح اللوحة تلقائياً
         } catch(error) {
             alert("فشل تسجيل الدخول المشفر. تأكد من الصلاحيات.");
             document.getElementById('adminLoginBtn').innerHTML = 'دخول آمن للمشرفين <i class="fa-solid fa-lock"></i>';
@@ -748,13 +748,10 @@
             item.options.forEach((opt, optIndex) => {
                 let isChecked = (isReadOnly && savedAnswers[index] === optIndex) ? 'checked' : '';
                 let isDisabled = isReadOnly ? 'disabled' : '';
-                let resultClass = '';
                 
-                if (isReadOnly) {
-                    let highestScoreInItem = Math.max(...item.scores);
-                    if (item.scores[optIndex] === highestScoreInItem) resultClass = 'correct-option'; 
-                    else if (savedAnswers[index] === optIndex && item.scores[optIndex] !== highestScoreInItem) resultClass = 'wrong-option'; 
-                }
+                // في وضع قراءة المتدرب لإجاباته الخاصة، نبرز ما اختاره فقط بدون تصحيح أحمر/أخضر بناءً على مقياس النضج
+                let isSelected = (isReadOnly && savedAnswers[index] === optIndex);
+                let resultClass = isSelected ? 'ans-selected' : '';
                 
                 optionsHTML += `
                     <label class="option-item ${resultClass}" style="${isReadOnly ? 'pointer-events: none;' : ''}">
@@ -885,7 +882,6 @@
         });
     }
 
-    // تقنية Desktop-Force Capture لضمان عدم قص الصورة على الجوال
     window.downloadReportImage = function() {
         const element = document.getElementById('snapshotReportContent');
         const originalWidth = element.style.width;
@@ -914,6 +910,7 @@
         });
     };
 
+    // ================= لوحة المشرف وتشكيل الفرق =================
     window.switchAdminTab = function(tab) {
         document.getElementById('tabTraineesBtn').classList.toggle('active', tab === 'trainees');
         document.getElementById('tabTeamsBtn').classList.toggle('active', tab === 'teams');
@@ -966,11 +963,12 @@
                         <td><strong style="color:var(--primary);">${t.preScore !== '-' ? t.preScore+'%' : '-'}</strong></td>
                         <td><strong style="color:var(--success);">${t.postScore !== '-' ? t.postScore+'%' : '-'}</strong></td>
                         <td><span style="font-size:0.8em; background:#F1F5F9; padding:4px 8px; border-radius:6px; font-weight:bold;">${t.topSkill}</span></td>
-                        <td><button class="btn-small" onclick="viewTraineeReport('${t.id}')">مراجعة الإجابات</button></td>
+                        <td><button class="btn-small" onclick="viewTraineeReport('${t.id}')">مراجعة التقييم</button></td>
                     </tr>
                 `;
             });
 
+            // استرجاع كل المتدربين لقائمة الانتظار مبدئياً
             unassignedTrainees = [...traineesList];
             teams = [];
             renderTeamsAndPool();
@@ -979,22 +977,27 @@
         }
     }
 
+    // خوارزمية تكوين الفرق المتوازنة بحيث تترك الزيادة في قائمة الانتظار
     window.autoGenerateBalancedTeams = function() {
         let teamSize = 5;
-        let all = [...traineesList].filter(t => t.preScore !== '-'); 
-        all.sort(() => Math.random() - 0.5);
+        let allTested = [...traineesList].filter(t => t.preScore !== '-'); 
+        allTested.sort(() => Math.random() - 0.5); // سيتم تطويرها للفرز بالكفاءات لاحقاً
 
         teams = [];
-        let totalTeams = Math.ceil(all.length / teamSize);
+        let fullTeamsCount = Math.floor(allTested.length / teamSize); // فرق كاملة فقط
 
-        for (let i = 0; i < totalTeams; i++) {
+        for (let i = 0; i < fullTeamsCount; i++) {
             teams.push({
                 id: i + 1,
                 name: `فريق المشروع #${i + 1}`,
-                members: all.slice(i * teamSize, (i + 1) * teamSize)
+                members: allTested.slice(i * teamSize, (i + 1) * teamSize)
             });
         }
-        unassignedTrainees = [...traineesList].filter(t => t.preScore === '-'); 
+        
+        // المتدربون المتبقون (الكسور + من لم يختبروا) يتم وضعهم في قائمة الانتظار
+        let assignedIds = teams.flatMap(t => t.members.map(m => m.id));
+        unassignedTrainees = traineesList.filter(t => !assignedIds.includes(t.id));
+        
         renderTeamsAndPool();
     };
 
@@ -1118,12 +1121,13 @@
             `;
         });
 
+        // تحديث وعرض قائمة الانتظار
         const unassignedContainer = document.getElementById('unassignedListContainer');
         document.getElementById('unassignedCount').innerText = unassignedTrainees.length;
         unassignedContainer.innerHTML = '';
 
         if(unassignedTrainees.length === 0) {
-            unassignedContainer.innerHTML = `<p style="color:var(--success); font-size:0.9em; margin:0; grid-column:1/-1; font-weight:700;"><i class="fa-solid fa-check-double"></i> التسكين مكتمل</p>`;
+            unassignedContainer.innerHTML = `<p style="color:var(--success); font-size:0.9em; margin:0; grid-column:1/-1; font-weight:700;"><i class="fa-solid fa-check-double"></i> جميع المتدربين مسكنين في الفرق بنجاح</p>`;
         } else {
             unassignedTrainees.forEach(m => {
                 let assignOptions = `<option value="">تسكين في...</option>`;
@@ -1171,10 +1175,11 @@
             options: { responsive: true, scales: { r: { suggestedMin: 0, suggestedMax: 100, ticks: { stepSize: 20, font:{family:'Tajawal'} } } }, plugins: { legend: { position: 'bottom', labels:{font:{family:'Tajawal'}} } } }
         });
 
-        document.getElementById('adminAnswersContainer').innerHTML = '<p style="text-align:center; color:gray; font-size:0.95em;">الرجاء تحديد الاختبار لعرض إجابات المتدرب.</p>';
+        document.getElementById('adminAnswersContainer').innerHTML = '<p style="text-align:center; color:gray; font-size:0.95em;">الرجاء تحديد التقييم لعرض سجل النضج.</p>';
         window.showView('adminReportView');
     };
 
+    // المراجعة بطريقة "مقياس النضج" المخصصة للمشرف (Maturity Focus)
     window.renderAdminAnswersReview = function(type) {
         if(!currentAdminTrainee) return;
         let answersArray = type === 'pre' ? currentAdminTrainee.preAnswers : currentAdminTrainee.postAnswers;
@@ -1185,7 +1190,7 @@
             return;
         }
 
-        let html = `<h4 style="color:var(--primary); text-align:center; border-bottom:2px solid var(--border-color); padding-bottom:10px; font-size:1em;">سجل إجابات التقييم ${type==='pre'?'القبلي':'البعدي'}</h4>`;
+        let html = `<h4 style="color:var(--primary); text-align:center; border-bottom:2px solid var(--border-color); padding-bottom:10px; font-size:1em;">سجل إجابات التقييم ${type==='pre'?'القبلي':'البعدي'} (مقياس النضج)</h4>`;
         
         exactQuestionsBank.forEach((q, i) => {
             let userAnsIndex = answersArray[i];
@@ -1193,19 +1198,16 @@
             html += `<div class="ans-q">${i+1}. ${q.q} <span style="font-size:0.8em; color:var(--text-secondary); background:var(--bg-body); padding:2px 8px; border-radius:4px; margin-right:8px;">${q.section}</span></div>`;
             
             q.options.forEach((opt, optIndex) => {
-                let optClass = "ans-opt";
-                let icon = "";
-                let maxScoreForThisQuestion = Math.max(...q.scores);
+                let isSelected = (userAnsIndex === optIndex);
+                let optClass = isSelected ? "ans-opt ans-selected" : "ans-opt ans-normal";
+                let icon = isSelected ? '<i class="fa-solid fa-check-circle" style="color: var(--primary-light);"></i> ' : '<i class="fa-regular fa-circle" style="color: #CBD5E1;"></i> ';
+                let scoreWeight = q.scores[optIndex];
+                let maxScore = Math.max(...q.scores);
                 
-                if (q.scores[optIndex] === maxScoreForThisQuestion) {
-                    optClass += " ans-correct";
-                    if(userAnsIndex === optIndex) icon = '<i class="fa-solid fa-check-circle"></i> '; 
-                    else { optClass = "ans-opt ans-missed"; icon = '<i class="fa-solid fa-arrow-left"></i> الإجابة الأمثل: '; }
-                } else if (userAnsIndex === optIndex && q.scores[optIndex] !== maxScoreForThisQuestion) {
-                    optClass += " ans-wrong";
-                    icon = '<i class="fa-solid fa-circle-xmark"></i> إجابة المتدرب: ';
-                }
-                html += `<div class="${optClass}">${icon}${opt}</div>`;
+                // عرض وزن الإجابة بوضوح للمشرف
+                let weightBadge = isSelected ? `<span class="weight-badge">الوزن: ${scoreWeight}/${maxScore}</span>` : '';
+                
+                html += `<div class="${optClass}">${icon}${opt} ${weightBadge}</div>`;
             });
             html += `</div>`;
         });
