@@ -2,8 +2,8 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BA Bootcamp Assessment | معسكر تحليل الأعمال</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>منصة تقييم الكفاءات وإدارة الفرق | معسكر تحليل الأعمال</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -12,175 +12,173 @@
     
     <style>
         :root {
-            --primary: #0F2A2A; 
-            --primary-light: #2C5E5A; 
-            --accent: #92400E; 
-            --bg-body: #F4F6F8; 
+            --primary: #0F172A; 
+            --primary-light: #2563EB; 
+            --accent: #0D9488; 
+            --bg-body: #F8FAFC; 
             --bg-surface: #FFFFFF; 
             --text-main: #1E293B; 
             --text-secondary: #64748B; 
-            --border-color: #CBD5E1; 
-            --locked-bg: #F1F5F9;
-            --success: #166534; 
-            --danger: #9F1239;
+            --border-color: #E2E8F0; 
+            --success: #16A34A; 
+            --danger: #DC2626; 
         }
 
-        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 20px 15px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; }
+        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 25px 15px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; }
         .container { width: 100%; max-width: 960px; margin: 0 auto; }
 
-        .auth-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 16px; box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05); overflow: hidden; max-width: 480px; margin: 0 auto; }
-        .auth-header { background: var(--primary); color: white; padding: 35px 25px; text-align: center; position: relative; }
-        .auth-header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
-        
-        .auth-icon-wrapper { font-size: 1.6em; color: #94A3B8; background: rgba(255, 255, 255, 0.06); width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 12px auto; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.1); }
-        
-        .auth-header h1 { margin: 0; font-size: 1.35em; font-weight: 700; }
-        .auth-header p { margin: 6px 0 0 0; font-size: 0.85em; opacity: 0.75; }
-        .auth-body { padding: 30px 25px; }
+        .auth-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); overflow: hidden; max-width: 480px; margin: 0 auto; transition: 0.3s; width: 100%; }
+        .auth-header { background: var(--primary); color: white; padding: 35px 25px; text-align: center; border-bottom: 4px solid var(--primary-light); }
+        .auth-icon-wrapper { font-size: 2.2em; color: var(--primary-light); background: var(--bg-surface); width: 75px; height: 75px; border-radius: 12px; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .auth-header h1 { margin: 0; font-size: 1.5em; font-weight: 800; letter-spacing: -0.5px; }
+        .auth-header p { margin: 8px 0 0 0; font-size: 0.9em; opacity: 0.85; font-weight: 500; }
+        .auth-body { padding: 30px; }
 
-        .panel { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.01); margin-bottom: 25px; box-sizing: border-box; }
-        .view { display: none; }
-        .view.active { display: block; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-
-        .form-label { display: block; margin-bottom: 6px; font-weight: 700; color: var(--text-main); font-size: 0.9em; }
-        .form-control { width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 8px; font-family: inherit; font-size: 15px; box-sizing: border-box; margin-bottom: 18px; transition: all 0.2s; background-color: #FAFAFA; }
-        .form-control:focus { border-color: var(--primary-light); background-color: #FFF; outline: none; box-shadow: 0 0 0 3px rgba(44, 94, 90, 0.1); }
-
-        .btn-primary { background: var(--primary); color: white; border: none; padding: 13px 20px; border-radius: 8px; font-size: 1em; font-weight: 700; cursor: pointer; transition: all 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: inherit; box-sizing: border-box; }
-        .btn-primary:hover { background: var(--primary-light); }
+        .panel { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 35px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 25px; box-sizing: border-box; width: 100%; overflow: hidden; }
         
-        .btn-secondary { background-color: white; color: var(--primary); border: 1px solid var(--border-color); padding: 12px 20px; border-radius: 8px; font-size: 0.95em; font-weight: 700; cursor: pointer; width: 100%; margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: inherit; box-sizing: border-box;}
-        .btn-secondary:hover { background-color: #F1F5F9; }
-        
-        .btn-accent { background-color: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 6px; font-size: 0.9em; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: inherit; }
-        .btn-accent:hover { opacity: 0.9; }
+        .view { display: none; opacity: 0; }
+        .view.active { display: block; animation: slideUp 0.3s ease forwards; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .dashboard-hero { background: var(--primary); color: white; border-radius: 12px; padding: 25px; margin-bottom: 25px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; box-shadow: 0 4px 6px rgba(15, 23, 42, 0.05); }
-        .hero-welcome h2 { margin: 0 0 5px 0; font-size: 1.35em; }
-        .hero-welcome p { margin: 0; opacity: 0.75; font-size: 0.88em; }
-        .hero-badges { display: flex; gap: 8px; flex-wrap: wrap; }
-        .hero-badge { background: rgba(255, 255, 255, 0.08); padding: 7px 12px; border-radius: 6px; font-size: 0.8em; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.05); }
-        .hero-logout { background: #9F1239; color: white; border: none; padding: 7px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-weight: bold; font-size: 0.8em; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; }
-        .hero-logout:hover { opacity: 0.9; }
+        .form-label { display: block; margin-bottom: 6px; font-weight: 700; color: var(--text-main); font-size: 0.95em; }
+        .form-control { width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit; font-size: 15px; box-sizing: border-box; margin-bottom: 20px; transition: border-color 0.2s, box-shadow 0.2s; background-color: var(--bg-body); color: var(--text-main); }
+        .form-control:focus { border-color: var(--primary-light); background-color: var(--bg-surface); outline: none; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
+
+        .btn-primary { background: var(--primary-light); color: white; border: none; padding: 14px 20px; border-radius: 6px; font-size: 1.05em; font-weight: 700; cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: inherit; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .btn-primary:hover { background: #1D4ED8; }
+        
+        .btn-secondary { background-color: var(--bg-surface); color: var(--primary-light); border: 1px solid var(--primary-light); padding: 13px 20px; border-radius: 6px; font-size: 1em; font-weight: 700; cursor: pointer; width: 100%; margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: inherit; transition: 0.2s;}
+        .btn-secondary:hover { background-color: #EFF6FF; }
+        
+        .btn-accent { background: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 6px; font-size: 0.9em; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: inherit; transition: 0.2s;}
+        .btn-accent:hover { background: #0F766E; }
+
+        .dashboard-hero { background: var(--primary); color: white; border-radius: 12px; padding: 25px 30px; margin-bottom: 25px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; border-bottom: 4px solid var(--primary-light); }
+        .hero-welcome h2 { margin: 0 0 8px 0; font-size: 1.4em; font-weight: 800; }
+        .hero-welcome p { margin: 0; opacity: 0.85; font-size: 0.95em; }
+        
+        .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; }
+        .hero-badge { background: rgba(255, 255, 255, 0.1); padding: 6px 12px; border-radius: 6px; font-size: 0.85em; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.1); font-weight: 700; }
+        .hero-logout { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-weight: 700; font-size: 0.85em; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+        .hero-logout:hover { background: rgba(255,255,255,0.1); border-color: white; }
 
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .assessment-card { border: 1px solid var(--border-color); border-radius: 12px; padding: 22px; text-align: right; cursor: pointer; transition: all 0.2s ease; background: var(--bg-surface); display: flex; flex-direction: column; justify-content: space-between; position: relative; box-sizing: border-box; }
-        .assessment-card:hover:not(.locked) { border-color: var(--primary-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(15,23,42,0.04); }
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .card-icon { font-size: 1.5em; color: var(--primary-light); background: #F1F5F9; padding: 12px; border-radius: 10px; }
-        .assessment-card h3 { margin: 0 0 5px 0; color: var(--text-main); font-size: 1.15em; }
-        .assessment-card p { margin: 0; color: var(--text-secondary); font-size: 0.88em; line-height: 1.4; }
-        .score-badge { display: inline-flex; align-items: center; gap: 6px; background: #FEF3C7; color: #92400E; padding: 5px 12px; border-radius: 6px; font-weight: 700; margin-top: 15px; font-size: 0.85em; align-self: flex-start; }
+        .assessment-card { border: 1px solid var(--border-color); border-radius: 10px; padding: 25px; text-align: right; cursor: pointer; transition: 0.2s; background: var(--bg-surface); display: flex; flex-direction: column; justify-content: space-between; position: relative; box-sizing: border-box; }
+        .assessment-card:hover:not(.locked) { border-color: var(--primary-light); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); transform: translateY(-2px); }
+        
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .card-icon { font-size: 1.6em; color: var(--primary-light); background: #EFF6FF; padding: 12px; border-radius: 8px; }
+        
+        .assessment-card h3 { margin: 0 0 8px 0; color: var(--primary); font-size: 1.25em; font-weight: 800; }
+        .assessment-card p { margin: 0; color: var(--text-secondary); font-size: 0.9em; line-height: 1.5; }
+        .score-badge { display: inline-flex; align-items: center; gap: 8px; background: #F0FDF4; color: var(--success); padding: 6px 12px; border-radius: 6px; font-weight: 800; margin-top: 20px; font-size: 0.9em; align-self: flex-start; border: 1px solid #BBF7D0; }
 
-        .locked { background-color: var(--locked-bg); cursor: not-allowed; opacity: 0.7; }
+        .locked { background-color: var(--bg-body); cursor: not-allowed; }
         .locked .card-icon { background: #E2E8F0; color: #94A3B8; }
-        .status-tag { font-size: 0.78em; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
-        .tag-locked { color: var(--danger); background: #FFE4E6; }
-        .completed { background-color: #F0FDF4; border-color: #86EFAC; }
+        
+        .status-tag { font-size: 0.8em; font-weight: 800; padding: 4px 10px; border-radius: 6px; }
+        .tag-locked { color: var(--danger); background: #FEE2E2; border: 1px solid #FECDD3; }
+        .tag-locked-time { color: var(--accent); background: #CCFBF1; border: 1px solid #99F6E4; }
+        .completed { border-color: #BBF7D0; }
         .completed .card-icon { background: #DCFCE7; color: var(--success); }
-        .tag-completed { color: var(--success); background: #DCFCE7; }
+        .tag-completed { color: var(--success); background: #DCFCE7; border: 1px solid #A7F3D0; }
 
-        .section-title { background: #F1F5F9; color: var(--primary); padding: 12px 16px; border-right: 4px solid var(--primary-light); font-weight: 700; font-size: 1em; margin: 30px 0 15px 0; border-radius: 6px 0 0 6px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px;}
-        .section-title:first-child { margin-top: 0; }
-        .section-badge { background: var(--primary-light); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.75em; }
-        .question-block { margin-bottom: 25px; background: #FFFFFF; padding: 18px; border-radius: 10px; border: 1px solid var(--border-color); }
-        .question-text { font-size: 1.05em; font-weight: 700; margin-bottom: 12px; color: var(--text-main); line-height: 1.5; }
-        .options-list { display: grid; grid-template-columns: 1fr; gap: 8px; }
-        .option-item { position: relative; border: 1px solid var(--border-color); border-radius: 8px; padding: 12px 15px; cursor: pointer; transition: all 0.2s; background: var(--bg-surface); display: flex; align-items: center; box-sizing: border-box;}
-        .option-item:hover { background: #F8FAFC; border-color: #94A3B8; }
-        .option-item input[type="radio"] { margin-left: 12px; transform: scale(1.1); accent-color: var(--primary-light); }
-        .option-item .option-text { font-weight: 500; color: var(--text-secondary); font-size: 0.92em; }
-        .option-item:has(input[type="radio"]:checked) { border-color: var(--primary-light); background: #F1F5F9; }
-        .option-item:has(input[type="radio"]:checked) .option-text { color: var(--primary); font-weight: 700; }
+        .admin-link { text-align: center; margin-top: 20px; font-size: 0.9em; color: var(--text-secondary); cursor: pointer; text-decoration: none; border-top: 1px solid var(--border-color); padding-top: 15px; transition: 0.2s; font-weight: 700; display: block; }
+        .admin-link:hover { color: var(--primary-light); }
         
-        .correct-option { background-color: #F0FDF4 !important; border-color: #86EFAC !important; }
-        .correct-option .option-text { color: var(--success) !important; font-weight: 700; }
-        .wrong-option { background-color: #FFF1F2 !important; border-color: #FECDD3 !important; }
-        .wrong-option .option-text { color: var(--danger) !important; font-weight: 700; }
-
-        /* تقرير الصورة */
-        .snapshot-container { background: #ffffff; padding: 30px; border-radius: 12px; text-align: right; direction: rtl; border: 1px solid var(--border-color); max-width: 700px; margin: 0 auto; box-sizing: border-box; }
-        .snapshot-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary); padding-bottom: 12px; margin-bottom: 20px; }
-        .snapshot-header h2 { margin: 0; color: var(--primary); font-size: 1.25em; font-weight: 800; }
-        .snapshot-header span { font-size: 0.8em; color: var(--text-secondary); background: #F1F5F9; padding: 4px 10px; border-radius: 6px; font-weight: bold; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .stat-card { background: var(--bg-surface); border: 1px solid var(--border-color); padding: 25px; border-radius: 10px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        .stat-card h3 { margin: 0; font-size: 2.2em; color: var(--primary); font-weight: 800; }
+        .stat-card p { margin: 8px 0 0 0; color: var(--text-secondary); font-size: 0.9em; font-weight: 700; }
         
-        .snapshot-meta { background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; margin-bottom: 20px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 0.88em; }
-        .snapshot-meta strong { color: var(--primary); margin-left: 4px; }
+        .admin-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
+        .admin-tab { padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 700; color: var(--text-secondary); font-size: 0.95em; transition: 0.2s; }
+        .admin-tab.active { background: var(--primary-light); color: white; }
 
-        .snapshot-summary { display: flex; justify-content: space-around; background: #F1F5F9; border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; margin-bottom: 20px; text-align: center; }
-        .snapshot-box h4 { margin: 0 0 4px 0; color: var(--text-secondary); font-size: 0.8em; }
-        .snapshot-box span { font-size: 1.4em; font-weight: 800; color: var(--primary); }
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9em; }
+        .data-table th, .data-table td { border: 1px solid var(--border-color); padding: 12px; text-align: right; }
+        .data-table th { background-color: var(--bg-body); color: var(--primary); font-weight: 800; }
+        .btn-small { background: var(--bg-body); color: var(--primary); border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-weight: 700; font-size: 0.85em; transition: 0.2s;}
+        .btn-small:hover { background: var(--border-color); }
 
-        .chart-container { width: 100%; max-width: 400px; margin: 0 auto; }
+        .section-title { background: #F8FAFC; color: var(--primary); padding: 15px 20px; border-right: 4px solid var(--accent); font-weight: 800; font-size: 1.1em; margin: 40px 0 20px 0; border-radius: 6px 0 0 6px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px;}
+        .section-badge { background: var(--primary); color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.75em; }
+        .question-block { margin-bottom: 30px; background: var(--bg-surface); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); }
+        .question-text { font-size: 1.1em; font-weight: 800; margin-bottom: 15px; color: var(--text-main); line-height: 1.5; }
+        .options-list { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        .option-item { position: relative; border: 1px solid var(--border-color); border-radius: 6px; padding: 14px 18px; cursor: pointer; transition: 0.2s; background: var(--bg-body); display: flex; align-items: center; box-sizing: border-box;}
+        .option-item:hover { border-color: var(--primary-light); background: white; }
+        .option-item input[type="radio"] { margin-left: 15px; transform: scale(1.2); accent-color: var(--primary-light); cursor: pointer; }
+        .option-item .option-text { font-weight: 600; color: var(--text-main); font-size: 0.95em; }
+        .option-item:has(input[type="radio"]:checked) { border-color: var(--primary-light); background: #EFF6FF; }
+        .option-item:has(input[type="radio"]:checked) .option-text { color: var(--primary-light); font-weight: 800; }
+
+        .correct-option { background-color: #F0FDF4 !important; border-color: #16A34A !important; }
+        .correct-option .option-text { color: #15803D !important; font-weight: 800; }
+        .wrong-option { background-color: #FEF2F2 !important; border-color: #DC2626 !important; }
+        .wrong-option .option-text { color: #B91C1C !important; font-weight: 800; }
+
+        .snapshot-container { background: #ffffff; padding: 40px; border-radius: 12px; text-align: right; direction: rtl; border: 1px solid var(--border-color); max-width: 800px; margin: 0 auto; box-sizing: border-box; position: relative; }
+        .snapshot-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 20px; margin-bottom: 25px; }
+        .snapshot-header h2 { margin: 0; color: var(--primary); font-size: 1.4em; font-weight: 800; }
+        .snapshot-header span { font-size: 0.85em; color: var(--primary); background: var(--bg-body); padding: 6px 14px; border-radius: 6px; font-weight: 800; border: 1px solid var(--border-color); }
         
-        .admin-link { text-align: center; margin-top: 20px; font-size: 0.88em; color: var(--text-secondary); cursor: pointer; text-decoration: underline; border-top: 1px solid var(--border-color); padding-top: 15px; transition: 0.2s; }
-        .admin-link:hover { color: var(--primary); font-weight: bold; }
-        
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 25px; }
-        .stat-card { background: #F8FAFC; border: 1px solid var(--border-color); padding: 15px; border-radius: 8px; text-align: center; }
-        .stat-card h3 { margin: 0; font-size: 1.8em; color: var(--primary); }
-        .stat-card p { margin: 4px 0 0 0; color: var(--text-secondary); font-size: 0.85em; font-weight: 700; }
-        
-        .admin-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 8px; }
-        .admin-tab { padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; color: var(--text-secondary); font-size: 0.9em; transition: all 0.2s;}
-        .admin-tab.active { background-color: var(--primary); color: white; }
+        .snapshot-meta { background: var(--bg-body); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-bottom: 25px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; font-size: 0.95em; }
+        .snapshot-meta-item strong { color: var(--text-secondary); margin-left: 6px; font-weight: 700; }
 
-        .data-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.88em; }
-        .data-table th, .data-table td { border: 1px solid var(--border-color); padding: 10px; text-align: right; }
-        .data-table th { background-color: #F8FAFC; color: var(--primary); }
-        .btn-small { background: var(--accent); color: white; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-family: inherit; font-weight: bold; font-size: 0.8em;}
-        .btn-small:hover { opacity: 0.9; }
+        .snapshot-summary { display: flex; flex-wrap: wrap; justify-content: space-around; background: white; border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-bottom: 30px; text-align: center; gap: 15px; }
+        .snapshot-box { flex: 1; min-width: 120px; }
+        .snapshot-box h4 { margin: 0 0 8px 0; color: var(--text-secondary); font-size: 0.85em; font-weight: 700; text-transform: uppercase; }
+        .snapshot-box span { font-size: 1.8em; font-weight: 800; color: var(--primary-light); }
 
-        .admin-report-header { background: #F8FAFC; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px;}
-        
-        .answers-review-container { max-height: 400px; overflow-y: auto; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; background: #F8FAFC; margin-top: 12px; text-align: right;}
-        .ans-q { font-weight: bold; color: var(--primary); margin-bottom: 8px; font-size: 0.92em;}
-        .ans-opt { padding: 8px 10px; margin-bottom: 4px; border-radius: 6px; font-size: 0.85em; background: #fff; border: 1px solid var(--border-color);}
-        .ans-correct { background: #F0FDF4; border-color: #86EFAC; color: var(--success); font-weight: bold;}
-        .ans-wrong { background: #FFF1F2; border-color: #FECDD3; color: var(--danger); font-weight: bold;}
-        .ans-missed { background: #fff; border-color: #86EFAC; color: var(--success); border-width: 2px; border-style: dashed;}
+        .chart-container { width: 100%; max-width: 500px; margin: 0 auto; padding: 10px; background: white; }
 
-        .teams-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 15px; }
-        .team-card { border: 1px solid var(--border-color); border-radius: 10px; background: #FFFFFF; overflow: hidden; display: flex; flex-direction: column;}
-        .team-card-header { background: #F8FAFC; border-bottom: 1px solid var(--border-color); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center;}
-        .team-card-body { padding: 0 12px 12px 12px; flex-grow: 1; }
-        
-        .team-power-container { background: #E2E8F0; border-radius: 6px; margin: 12px 0; overflow: hidden; position: relative; height: 24px; }
-        .team-power-fill { height: 100%; transition: width 0.5s ease-in-out; }
-        .team-power-text { position: absolute; top: 0; left: 0; right: 0; text-align: center; font-size: 0.8em; font-weight: bold; color: #0F172A; line-height: 24px; }
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .panel { padding: 20px 15px; }
+            .auth-card { border-radius: 8px; }
+            .auth-header h1 { font-size: 1.25em; }
+            .auth-body { padding: 20px; }
+            .dashboard-hero { padding: 20px; flex-direction: column; align-items: flex-start; text-align: right; }
+            .hero-badges { width: 100%; justify-content: space-between; }
+            .snapshot-container { padding: 20px 15px; }
+            .snapshot-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .snapshot-meta { grid-template-columns: 1fr; gap: 10px; padding: 15px; }
+            .snapshot-summary { flex-direction: column; gap: 15px; padding: 15px; }
+            .chart-container { padding: 0; }
+            .section-title { font-size: 1em; padding: 12px 15px; }
+            .question-text { font-size: 1em; }
+            .option-item { padding: 10px 12px; }
+            .data-table th, .data-table td { padding: 8px; font-size: 0.85em; }
+        }
 
-        .team-member-item { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #F1F5F9; gap: 8px;}
-        .team-member-item:last-child { border-bottom: none; }
-        .member-skill-tag { font-size: 0.72em; background: #F1F5F9; color: var(--primary); padding: 2px 6px; border-radius: 6px; font-weight: bold; border: 1px solid var(--border-color);}
-        .member-reassign-select { padding: 3px 6px; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit; font-size: 0.8em; background: #FFF; cursor: pointer;}
-        .remove-member-btn { color: var(--danger); background: none; border: none; cursor: pointer; font-size: 0.85em; padding: 2px;}
-
-        .unassigned-pool { border: 2px dashed var(--border-color); border-radius: 10px; padding: 15px; background: #F8FAFC; margin-top: 20px;}
-        .unassigned-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; margin-top: 10px;}
-        .unassigned-item { background: white; border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; gap: 8px;}
+        @media print {
+            body { background: white; padding: 0; align-items: flex-start; }
+            .container { max-width: 100%; margin: 0; }
+            .panel { border: none; box-shadow: none; padding: 0; }
+            .btn-primary, .btn-secondary, .dashboard-hero { display: none !important; }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <!-- تسجيل المتدرب -->
-    <div id="loginView" class="view active">
+    <div id="loginView" class="view">
         <div class="auth-card">
             <div class="auth-header">
-                <div class="auth-icon-wrapper"><i class="fa-solid fa-layer-group"></i></div>
+                <div class="auth-icon-wrapper"><i class="fa-solid fa-briefcase"></i></div>
                 <h1>معسكر تحليل الأعمال</h1>
-                <p>BA Bootcamp Assessment</p>
+                <p>بوابة التسجيل والتقييم المهني للمتدربين</p>
             </div>
             <div class="auth-body">
-                <div id="quickLoginBox" style="display:none; background:#F8FAFC; border:1px solid var(--border-color); border-radius:8px; padding:15px; margin-bottom:20px; text-align:center;">
-                    <p style="margin:0 0 10px 0; font-size:0.9em; color:var(--primary); font-weight:bold;">مرحباً بك مجدداً، <span id="quickLoginName"></span>!</p>
-                    <button class="btn-primary" onclick="quickLogin()" style="padding:10px; font-size:0.92em;"><i class="fa-solid fa-right-to-bracket"></i> دخول سريع (استئناف الجلسة)</button>
-                    <div style="margin-top:8px; font-size:0.8em; color:var(--text-secondary); cursor:pointer; text-decoration:underline;" onclick="clearQuickLogin()">تسجيل برقم أو حساب جديد</div>
+                <div id="quickLoginBox" style="display:none; background:var(--bg-body); border:1px solid var(--border-color); border-radius:8px; padding:20px; margin-bottom:20px; text-align:center;">
+                    <p style="margin:0 0 15px 0; font-size:1em; color:var(--primary); font-weight:800;">مرحباً بعودتك، <span id="quickLoginName"></span>! 👋</p>
+                    <button class="btn-primary" onclick="quickLogin()"><i class="fa-solid fa-arrow-right-to-bracket"></i> استئناف الجلسة الحالية</button>
+                    <div style="margin-top:12px; font-size:0.85em; color:var(--text-secondary); cursor:pointer; font-weight:700; text-decoration: underline;" onclick="clearQuickLogin()">تسجيل الدخول بحساب أو معرّف آخر</div>
                 </div>
 
                 <div id="fullLoginForm">
-                    <h3 style="margin-top: 0; margin-bottom: 18px; font-size: 1.1em; color: var(--primary);">تسجيل بيانات المتدرب</h3>
                     <label class="form-label">الاسم الثلاثي</label>
                     <input type="text" id="traineeName" class="form-control" placeholder="أدخل اسمك الكامل" required>
                     
@@ -188,16 +186,33 @@
                     <input type="email" id="traineeEmail" class="form-control" placeholder="name@example.com" required>
                     
                     <label class="form-label">رقم الجوال</label>
-                    <input type="tel" id="traineeMobile" class="form-control" placeholder="05xxxxxxxx - 01xxxxxxxxx " required>
+                    <input type="tel" id="traineeMobile" class="form-control" placeholder="05xxxxxxxx" required>
                     
                     <label class="form-label">رقم المتدرب (أرقام فقط)</label>
                     <input type="number" id="bootcampId" class="form-control" placeholder="مثال: 125" required>
+
+                    <label class="form-label">الساعات المتاحة للدورة أسبوعياً</label>
+                    <select id="traineeHours" class="form-control" required>
+                        <option value="أقل من 3 ساعات">أقل من 3 ساعات</option>
+                        <option value="من 3 لـ 6">من 3 لـ 6 ساعات</option>
+                        <option value="من 6 لـ 10">من 6 لـ 10 ساعات</option>
+                        <option value="أكتر من 10">أكتر من 10 ساعات</option>
+                    </select>
+
+                    <label class="form-label">أفضل وقت للعمل مع الفريق</label>
+                    <select id="traineeShift" class="form-control" required>
+                        <option value="صباحًا قبل 12">صباحًا قبل 12</option>
+                        <option value="بعد الظهر 12–5">بعد الظهر 12–5</option>
+                        <option value="مساءً 5–9">مساءً 5–9</option>
+                        <option value="متأخر بعد 9">متأخر بعد 9</option>
+                        <option value="في الإجازات بس">في الإجازات فقط</option>
+                    </select>
                     
-                    <button class="btn-primary" onclick="login()">بدء الرحلة والدخول <i class="fa-solid fa-arrow-left"></i></button>
+                    <button class="btn-primary" onclick="login()">بدء التقييم <i class="fa-solid fa-arrow-left"></i></button>
                 </div>
 
                 <div class="admin-link" onclick="showView('adminLoginView')">
-                    <i class="fa-solid fa-user-shield"></i> بوابة الإدارة والمشرفين
+                    بوابة الإدارة والمشرفين <i class="fa-solid fa-shield-halved" style="margin-right: 5px;"></i>
                 </div>
             </div>
         </div>
@@ -206,10 +221,10 @@
     <!-- دخول الإدارة الآمن -->
     <div id="adminLoginView" class="view">
         <div class="auth-card">
-            <div class="auth-header" style="background: var(--primary);">
+            <div class="auth-header">
                 <div class="auth-icon-wrapper"><i class="fa-solid fa-shield-halved"></i></div>
-                <h1>بوابة الإدارة والمشرفين</h1>
-                <p>تسجيل دخول آمن ومشفّر عبر النظام السحابي</p>
+                <h1>بوابة الإدارة المركزية</h1>
+                <p>دخول آمن ومشفّر عبر النظام السحابي للمشرفين</p>
             </div>
             <div class="auth-body">
                 <label class="form-label">البريد الإلكتروني للمشرف</label>
@@ -218,20 +233,32 @@
                 <label class="form-label">كلمة المرور المشفرة</label>
                 <input type="password" id="adminPass" class="form-control" placeholder="••••••••">
                 
-                <button class="btn-primary" onclick="adminLogin()">دخول آمن للمشرفين</button>
-                <button class="btn-secondary" onclick="showView('loginView')">عودة لصفحة المتدربين</button>
+                <button class="btn-primary" onclick="adminLogin()">دخول آمن للمشرفين <i class="fa-solid fa-lock"></i></button>
+                <button class="btn-secondary" onclick="showView('loginView')">العودة لصفحة المتدربين</button>
             </div>
         </div>
     </div>
 
     <!-- لوحة تحكم الإدارة -->
     <div id="adminDashboardView" class="panel view">
-        <div class="dashboard-hero" style="margin-bottom: 20px;">
+        <div class="dashboard-hero">
             <div class="hero-welcome">
-                <h2>مركز قيادة المعسكر التدريبي</h2>
+                <h2>مركز قيادة المعسكر التدريبي <i class="fa-solid fa-chart-simple" style="margin-right: 8px;"></i></h2>
                 <p>مراقبة أداء المتدربين، استعراض التقارير، وتشكيل فرق مشاريع التخرج بذكاء.</p>
             </div>
-            <button class="hero-logout" onclick="adminLogout()"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
+            <button class="hero-logout" onclick="adminLogout()">إنهاء الجلسة <i class="fa-solid fa-power-off"></i></button>
+        </div>
+        
+        <!-- لوحة التحكم في موعد التقييم البعدي -->
+        <div style="background: white; border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-right: 4px solid var(--accent);">
+            <div>
+                <h4 style="margin: 0 0 5px 0; color: var(--primary); font-size: 1.05em;">موعد إتاحة التقييم البعدي للمتدربين</h4>
+                <p style="margin: 0; font-size: 0.85em; color: var(--text-secondary);">سيظل التقييم البعدي مغلقاً حتى يحين هذا الموعد.</p>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <input type="datetime-local" id="adminUnlockDate" class="form-control" style="margin-bottom: 0; padding: 8px 12px; width: auto; font-size:0.9em;">
+                <button class="btn-primary" style="width: auto; padding: 8px 15px; font-size:0.9em;" onclick="saveUnlockDate()"><i class="fa-solid fa-floppy-disk"></i> حفظ الموعد</button>
+            </div>
         </div>
 
         <div class="stats-grid">
@@ -241,17 +268,17 @@
         </div>
 
         <div class="admin-tabs">
-            <div class="admin-tab active" id="tabTraineesBtn" onclick="switchAdminTab('trainees')"><i class="fa-solid fa-users"></i> المتدربون والتقارير</div>
-            <div class="admin-tab" id="tabTeamsBtn" onclick="switchAdminTab('teams')"><i class="fa-solid fa-people-group"></i> أداة الفرق (مؤشر القوة)</div>
+            <div class="admin-tab active" id="tabTraineesBtn" onclick="switchAdminTab('trainees')"><i class="fa-solid fa-users"></i> قاعدة المتدربين والتقارير</div>
+            <div class="admin-tab" id="tabTeamsBtn" onclick="switchAdminTab('teams')"><i class="fa-solid fa-people-group"></i> محرك تشكيل الفرق الذكي</div>
         </div>
 
         <div id="adminTraineesSection">
-            <div style="overflow-x: auto;">
+            <div style="overflow-x: auto; border-radius: 8px; border: 1px solid var(--border-color);">
                 <table class="data-table">
                     <thead>
                         <tr>
                             <th>المتدرب / الجوال</th>
-                            <th>الرقم التعريفي</th>
+                            <th>المعرّف / التوفر</th>
                             <th>القبلي</th>
                             <th>البعدي</th>
                             <th>أبرز كفاءة</th>
@@ -264,50 +291,18 @@
         </div>
 
         <div id="adminTeamsSection" style="display: none;">
-            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 15px;">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 20px; background: var(--bg-body); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color);">
                 <div>
-                    <h3 style="margin: 0; color: var(--primary); font-size: 1.1em;">إدارة وتشكيل فرق مشاريع التخرج</h3>
-                    <p style="margin: 3px 0 0 0; font-size: 0.85em; color: var(--text-secondary);">مؤشر القوة يعتمد على التقييم القبلي والتكامل المهاري.</p>
+                    <h3 style="margin: 0 0 5px 0; color: var(--primary); font-size: 1.1em; font-weight: 800;">إدارة وتشكيل فرق مشاريع التخرج</h3>
+                    <p style="margin: 0; font-size: 0.9em; color: var(--text-secondary); font-weight: 500;">يتم التشكيل آلياً بناءً على التكامل المهاري والتطابق الزمني للمتدربين.</p>
                 </div>
-                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                    <button class="btn-accent" onclick="addNewEmptyTeam()"><i class="fa-solid fa-plus"></i> إضافة فريق</button>
-                    <button class="btn-primary" style="width: auto; padding: 8px 14px; font-size: 0.9em;" onclick="autoGenerateBalancedTeams()"><i class="fa-solid fa-wand-magic-sparkles"></i> تشكيل متوازن</button>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    <button class="btn-secondary" style="width: auto; margin-top:0;" onclick="addNewEmptyTeam()"><i class="fa-solid fa-plus"></i> إضافة فريق فارغ</button>
+                    <button class="btn-primary" style="width: auto; padding: 10px 18px; font-size: 0.95em;" onclick="autoGenerateBalancedTeams()"><i class="fa-solid fa-wand-magic-sparkles"></i> تشكيل ذكي متوازن</button>
                 </div>
             </div>
             <div class="teams-grid" id="teamsCardsContainer"></div>
-            <div class="unassigned-pool">
-                <h4 style="margin:0 0 8px 0; font-size: 0.95em; color:var(--accent);"><i class="fa-solid fa-user-clock"></i> قائمة الانتظار: <span id="unassignedCount">0</span></h4>
-                <div class="unassigned-grid" id="unassignedListContainer"></div>
-            </div>
         </div>
-    </div>
-
-    <!-- تقرير المتدرب للمشرف -->
-    <div id="adminReportView" class="panel view">
-        <div class="admin-report-header">
-            <div>
-                <h3 id="adminRepName" style="font-size: 1.1em; margin:0 0 3px 0;">اسم المتدرب</h3>
-                <p id="adminRepEmailMobile" style="font-size: 0.85em; margin:0; color:var(--text-secondary);">البريد | الجوال</p>
-                <p style="font-size:0.8em; color: var(--accent); margin:3px 0 0 0; font-weight:bold;">الرقم التعريفي: <span id="adminRepBootcamp"></span></p>
-            </div>
-            <div style="text-align: left; background: white; padding: 10px 15px; border-radius: 8px; border: 1px solid var(--border-color);">
-                <p style="margin:0 0 5px 0; font-size:0.85em;">القبلي: <strong id="adminRepPre" style="color:var(--accent); font-size:1.1em;">0%</strong></p>
-                <p style="margin:0; font-size:0.85em;">البعدي: <strong id="adminRepPost" style="color:var(--success); font-size:1.1em;">0%</strong></p>
-            </div>
-        </div>
-
-        <h3 style="text-align: center; color: var(--primary); font-size: 1em; margin-top:20px;">الخريطة الرادارية (مقارنة الأداء)</h3>
-        <div class="chart-container"><canvas id="adminRadarChart"></canvas></div>
-
-        <h3 style="border-bottom: 2px solid var(--border-color); padding-bottom: 8px; margin-top: 30px; font-size: 1em;">مراجعة الإجابات التفصيلية</h3>
-        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-            <button class="btn-secondary" style="margin:0; padding:8px 12px; font-size:0.9em;" onclick="renderAdminAnswersReview('pre')">إجابات القبلي</button>
-            <button class="btn-primary" style="margin:0; padding:8px 12px; font-size:0.9em; width:auto;" onclick="renderAdminAnswersReview('post')">إجابات البعدي</button>
-        </div>
-        <div class="answers-review-container" id="adminAnswersContainer">
-            <p style="text-align:center; color:gray; font-size:0.9em;">الرجاء تحديد الاختبار لعرض إجابات المتدرب.</p>
-        </div>
-        <button class="btn-secondary" onclick="showView('adminDashboardView')" style="margin-top:20px;">العودة للوحة الإدارة</button>
     </div>
 
     <!-- لوحة المتدرب -->
@@ -315,17 +310,17 @@
         <div class="dashboard-hero">
             <div class="hero-welcome">
                 <h2>أهلاً بك، <span id="displayName"></span> 👋</h2>
-                <p>استعد لرحلة احترافية في معسكر تحليل الأعمال </p>
+                <p>مستعد لرحلة احترافية في معسكر تحليل الأعمال. نقطة انطلاقك تبدأ من هنا.</p>
             </div>
             <div class="hero-badges">
-                <div class="hero-badge"><i class="fa-solid fa-id-badge"></i> <span id="displayBootcamp"></span></div>
-                <div class="hero-badge"><i class="fa-solid fa-phone"></i> <span id="displayMobile"></span></div>
-                <button class="hero-logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
+                <div class="hero-badge"><i class="fa-solid fa-id-badge" style="color: #93C5FD;"></i> <span id="displayBootcamp"></span></div>
+                <div class="hero-badge"><i class="fa-solid fa-clock" style="color: #6EE7B7;"></i> <span id="displayShift"></span></div>
+                <button class="hero-logout" onclick="logout()">خروج <i class="fa-solid fa-right-from-bracket"></i></button>
             </div>
         </div>
         
-        <h3 style="margin-top:10px; margin-bottom: 15px; font-size: 1.15em; color: var(--primary); display:flex; align-items:center; gap:8px;">
-            <i class="fa-solid fa-road"></i> مسار الكفاءات والتقييمات المتاحة:
+        <h3 style="margin-top:10px; margin-bottom: 20px; font-size: 1.15em; color: var(--text-main); font-weight: 800; display:flex; align-items:center; gap:10px;">
+            <i class="fa-solid fa-layer-group" style="color: var(--primary-light);"></i> مسار الكفاءات والتقييمات المتاحة:
         </h3>
         
         <div class="cards-grid">
@@ -336,7 +331,7 @@
                         <div class="status-tag tag-completed" id="preTag" style="display:none;">مكتمل (مراجعة)</div>
                     </div>
                     <h3>التقييم الشامل القبلي</h3>
-                    <p>قياس الأساسيات المعرفية والسمات الشخصية لتحديد نقطة انطلاقك.</p>
+                    <p>أداة لقياس الأساسيات المعرفية والسمات الشخصية لتحديد نقطة انطلاقك بدقة.</p>
                 </div>
                 <div id="preScoreBadge" class="score-badge" style="display:none;"></div>
             </div>
@@ -348,25 +343,25 @@
                         <div class="status-tag tag-locked" id="postTag">مغلق مؤقتاً</div>
                     </div>
                     <h3>التقييم الشامل البعدي</h3>
-                    <p>قياس المهارات التطبيقية المتقدمة وتقييم حجم التطور المهني.</p>
+                    <p>أداة نهائية لقياس المهارات التطبيقية وتقييم التطور المهني الذي حققته في المعسكر.</p>
                 </div>
                 <div id="postScoreBadge" class="score-badge" style="display:none;"></div>
             </div>
         </div>
-        <button id="traineeFullReportBtn" class="btn-primary" onclick="showView('resultView')" style="display:none; margin-top: 25px;"><i class="fa-solid fa-chart-radar"></i> عرض وتحميل تقرير التطور الشامل (صورة)</button>
+        <button id="traineeFullReportBtn" class="btn-primary" style="display:none; margin-top: 30px; padding: 15px;" onclick="showView('resultView')"><i class="fa-solid fa-chart-radar fa-lg"></i> استعراض تقرير الأداء الشامل (صورة PDF)</button>
     </div>
 
     <!-- شاشة الاختبار -->
-    <div id="quizView" class="panel view">
-        <div class="dashboard-hero" style="margin-bottom: 20px; padding: 15px 20px;">
-            <h2 id="quizTitle" style="margin: 0; font-size: 1.1em; color: white;"></h2>
-            <button class="hero-logout" onclick="showView('dashboardView')">إغلاق <i class="fa-solid fa-xmark"></i></button>
+    <div id="quizView" class="panel view" style="padding: 0; background: transparent; border: none; box-shadow: none;">
+        <div class="dashboard-hero" style="margin-bottom: 25px;">
+            <h2 id="quizTitle" style="margin: 0; font-size: 1.2em; font-weight: 800; color: white;"></h2>
+            <button class="hero-logout" onclick="showView('dashboardView')">إلغاء والعودة <i class="fa-solid fa-xmark"></i></button>
         </div>
-        <div id="reviewNotice" style="display:none; background:#F8FAFC; color:var(--primary); padding:12px; border-radius:8px; margin-bottom:15px; border:1px solid var(--border-color); font-weight:700; font-size: 0.9em;">
-            <i class="fa-solid fa-circle-info"></i> وضع المراجعة: الإجابات الصحيحة (أخضر)، وإجاباتك الخاطئة (أحمر).
+        <div id="reviewNotice" style="display:none; background:white; color:var(--text-main); padding:15px; border-radius:8px; margin-bottom:20px; border:1px solid var(--border-color); font-weight:700; font-size: 0.95em; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+            <i class="fa-solid fa-circle-info" style="color: var(--primary-light); margin-left: 5px;"></i> وضع المراجعة: الإجابات الصحيحة مظللة بالأخضر، وإجاباتك الخاطئة بالأحمر.
         </div>
         <div id="questionsContainer"></div>
-        <button class="btn-primary" id="submitQuizBtn" onclick="submitQuiz()" style="margin-top: 15px;">تسليم واعتماد الإجابات <i class="fa-solid fa-check"></i></button>
+        <button class="btn-primary" id="submitQuizBtn" onclick="submitQuiz()" style="margin-top: 20px; padding: 16px; font-size: 1.1em;">تسليم واعتماد الإجابات <i class="fa-solid fa-paper-plane"></i></button>
         <button class="btn-secondary" id="backToDashBtn" onclick="showView('dashboardView')" style="display:none;">العودة للوحة الرئيسية</button>
     </div>
 
@@ -379,10 +374,10 @@
             </div>
 
             <div class="snapshot-meta">
-                <div class="snapshot-meta-item"><strong>اسم المتدرب:</strong> <span id="snapNameVal"></span></div>
-                <div class="snapshot-meta-item"><strong>الرقم التعريفي:</strong> <span id="snapBootcampVal"></span></div>
-                <div class="snapshot-meta-item"><strong>البريد الإلكتروني:</strong> <span id="snapEmailVal"></span></div>
-                <div class="snapshot-meta-item"><strong>رقم الجوال:</strong> <span id="snapMobileVal"></span></div>
+                <div class="snapshot-meta-item"><strong>المتدرب:</strong> <span id="snapNameVal"></span></div>
+                <div class="snapshot-meta-item"><strong>المعرّف:</strong> <span id="snapBootcampVal"></span></div>
+                <div class="snapshot-meta-item"><strong>البريد:</strong> <span id="snapEmailVal"></span></div>
+                <div class="snapshot-meta-item"><strong>الجوال:</strong> <span id="snapMobileVal"></span></div>
             </div>
 
             <div class="snapshot-summary">
@@ -395,19 +390,43 @@
                     <span id="snapPostScoreVal">0%</span>
                 </div>
                 <div class="snapshot-box">
-                    <h4>معدل النمو الكلي</h4>
+                    <h4>معدل النمو</h4>
                     <span id="snapGrowthVal">0%</span>
                 </div>
             </div>
 
-            <h3 style="text-align: center; color: var(--primary); font-size: 1.05em; margin-bottom: 10px;">خريطة تطور الكفاءات (الرادار المقارن)</h3>
+            <h3 style="text-align: center; color: var(--text-main); font-size: 1.1em; margin-bottom: 15px; font-weight: 800;">خريطة تطور الكفاءات والمحاور الستة</h3>
             <div class="chart-container"><canvas id="competencyRadarChart"></canvas></div>
         </div>
 
-        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
-            <button class="btn-primary" onclick="downloadReportImage()"><i class="fa-solid fa-image"></i> تحميل التقرير كصورة (PNG)</button>
-            <button class="btn-secondary" style="margin-top: 0;" onclick="showView('dashboardView')">العودة للرئيسية</button>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 30px;">
+            <button class="btn-primary" style="width: auto; padding: 14px 25px;" onclick="downloadReportImage()"><i class="fa-solid fa-camera"></i> حفظ التقرير كصورة عالية الدقة</button>
+            <button class="btn-secondary" style="width: auto; padding: 14px 25px; margin-top: 0;" onclick="showView('dashboardView')">العودة للرئيسية</button>
         </div>
+    </div>
+    
+    <!-- تقرير المتدرب للمشرف (مخفي للتبديل) -->
+    <div id="adminReportView" class="panel view">
+        <div class="admin-report-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px;">
+            <div>
+                <h3 id="adminRepName" style="margin:0 0 5px 0; color:var(--primary); font-size:1.2em;"></h3>
+                <p id="adminRepEmailMobile" style="margin:0; font-size:0.85em; color:var(--text-secondary);"></p>
+                <p style="margin:5px 0 0 0; font-size:0.85em; font-weight:bold;">المعرّف: <span id="adminRepBootcamp" style="color:var(--accent);"></span></p>
+            </div>
+            <div style="background:var(--bg-body); padding:10px 15px; border-radius:8px; border:1px solid var(--border-color); text-align:center;">
+                <p style="margin:0; font-size:0.85em;">القبلي: <strong id="adminRepPre" style="color:var(--primary-light);">0%</strong> | البعدي: <strong id="adminRepPost" style="color:var(--success);">0%</strong></p>
+            </div>
+        </div>
+        <h3 style="text-align: center; color: var(--primary); font-size: 1.1em;">الخريطة الرادارية</h3>
+        <div class="chart-container"><canvas id="adminRadarChart"></canvas></div>
+        <div style="display:flex; gap:10px; margin:20px 0;">
+            <button class="btn-secondary" style="margin:0;" onclick="renderAdminAnswersReview('pre')">إجابات القبلي</button>
+            <button class="btn-primary" style="margin:0;" onclick="renderAdminAnswersReview('post')">إجابات البعدي</button>
+        </div>
+        <div id="adminAnswersContainer" style="max-height:400px; overflow-y:auto; background:var(--bg-body); border-radius:8px; padding:15px; border:1px solid var(--border-color);">
+            <p style="text-align:center; color:var(--text-secondary); font-size:0.9em;">اختر التقييم لعرض الإجابات.</p>
+        </div>
+        <button class="btn-secondary" style="margin-top:20px;" onclick="showView('adminDashboardView')">العودة للوحة الإدارة</button>
     </div>
 </div>
 
@@ -415,7 +434,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, doc, setDoc, getDoc, collection, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-    import { getAuth, signInWithEmailAndPassword, browserSessionPersistence, setPersistence, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyC0AdLAyseZyGtu11c-vIZAXq08iX1mBOw",
@@ -430,68 +449,103 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const auth = getAuth(app);
+    
+    // ضبط استمرارية جلسة الإدارة لمنع الخروج عند التحديث
+    setPersistence(auth, browserLocalPersistence);
 
-    // تمديد جلسة المشرف وفتحها لفترة كافية (تخزينها في session أو local)
-    setPersistence(auth, browserSessionPersistence).catch((error) => {
-        console.error("Auth persistence error:", error);
-    });
-
-    const preQuestions = [
-        { section: "التفكير التحليلي", category: "Technical", q: "ما هو الهدف الرئيسي من استخدام 'التفكير النظمي' (Systems Thinking) في تحليل الأعمال؟", options: ["برمجة الأنظمة التقنية", "فهم كيفية تفاعل أجزاء المؤسسة معاً", "التفكير في الميزانية", "تحديد لغة البرمجة"], answer: 1 },
-        { section: "التفكير التحليلي", category: "Technical", q: "أي التقنيات تستخدم للوصول إلى 'السبب الجذري' (Root Cause) لمشكلة بدلاً من أعراضها؟", options: ["تقنية تقصي الأسباب (5 Whys)", "مخطط البيانات (DFD)", "قصص المستخدمين", "مصفوفة RACI"], answer: 0 },
-        { section: "التفكير التحليلي", category: "Technical", q: "ما هي الفائدة الأساسية من مهارة 'التفكير البصري' (Visual Thinking) لمحلل الأعمال؟", options: ["جعل المستندات تبدو أجمل", "تبسيط المعلومات المعقدة وتسهيل فهمها للجميع", "استبدال النصوص بالكامل", "تقليل تكلفة الطباعة"], answer: 1 },
-        { section: "الخصائص السلوكية", category: "Technical", q: "كيف يظهر محلل الأعمال 'المسؤولية الشخصية' (Personal Accountability)؟", options: ["بتحميل الأخطاء لفريق البرمجة", "بإنجاز المهام بجودة عالية وتحمل نتيجة القرارات", "بالموافقة على جميع طلبات العميل", "بالعمل الفردي السري"], answer: 1 },
-        { section: "الخصائص السلوكية", category: "Technical", q: "لماذا تعتبر 'الجدارة بالثقة' (Trustworthiness) مهارة حاسمة للمحلل؟", options: ["لبناء علاقات قوية تسهل استنباط المتطلبات الحقيقية", "لجعل المبرمجين يعملون أسرع", "للحصول على ترقية", "لتقليل ميزانية المشروع"], answer: 0 },
-        { section: "الخصائص السلوكية", category: "Technical", q: "ماذا تعني مهارة 'القدرة على التكيف' (Adaptability) في بيئة المشاريع؟", options: ["تغيير العمل كل شهر", "رفض أي تغيير على النطاق المعتمد", "تعديل أسلوب العمل والتقنيات بمرونة للاستجابة لتغير احتياجات بيئة العمل", "الاستسلام عند مواجهة الصعوبات"], answer: 2 },
-        { section: "المعرفة بالأعمال", category: "Technical", q: "ماذا يُقصد بـ 'الفطنة التجارية' (Business Acumen)؟", options: ["برمجة التطبيقات التجارية", "فهم المبادئ الأساسية لكيفية تحقيق المؤسسة للأرباح والقيمة", "مهارة بيع المنتجات", "صياغة العقود القانونية"], answer: 1 },
-        { section: "المعرفة بالأعمال", category: "Technical", q: "لماذا يجب فهم 'معرفة المؤسسة' (Organization Knowledge) هيكلياً وسياسياً؟", options: ["لمعرفة من يمتلك السلطة لتسهيل اعتماد المتطلبات", "لتوزيع الرواتب", "لأداء دور الموارد البشرية", "لتصميم الهوية البصرية"], answer: 0 },
-        { section: "المعرفة بالأعمال", category: "Technical", q: "أهمية 'المعرفة بالصناعة' (Industry Knowledge) لمحلل الأعمال تكمن في:", options: ["معرفة رواتب الموظفين", "فهم التوجهات والمنافسين لضمان تقديم حلول ذات صلة وتنافسية", "تطوير مواقع الويب للصناعة", "لا أهمية لها طالما يفهم البرمجة"], answer: 1 },
-        { section: "مهارات التواصل", category: "Technical", q: "ما المكون الأهم في 'الاستماع الفعال' (Active Listening) أثناء جمع المتطلبات؟", options: ["الكتابة الحرفية لكل كلمة", "تجهيز الرد أثناء حديث العميل", "التركيز التام وطرح أسئلة توضيحية لتأكيد الفهم", "الاستماع دون أي تفاعل"], answer: 2 },
-        { section: "مهارات التواصل", category: "Technical", q: "متى يكون 'التواصل الكتابي' هو الأنسب؟", options: ["لحل النزاعات العاطفية", "لتوثيق المتطلبات للرجوع إليها واعتمادها رسمياً", "للعصف الذهني السريع", "لإيصال الأخبار السيئة"], answer: 1 },
-        { section: "مهارات التواصل", category: "Technical", q: "أي مما يلي يعتبر من عناصر 'التواصل غير اللفظي'؟", options: ["البريد الإلكتروني", "لغة الجسد، التواصل البصري، ونبرة الصوت", "كتابة الأكواد", "التقارير اليومية"], answer: 1 },
-        { section: "مهارات التفاعل", category: "Technical", q: "ما دور محلل الأعمال كـ 'مُيسّر' (Facilitator) في ورش العمل؟", options: ["توجيه النقاش بفعالية وحيادية للوصول لأهداف الورشة", "فرض رأيه الشخصي", "القيام بالبرمجة أثناء الورشة", "تقديم الضيافة فقط"], answer: 0 },
-        { section: "مهارات التفاعل", category: "Technical", q: "أي مهارة تستخدم لحل خلافات أصحاب المصلحة حول أولوية المتطلبات؟", options: ["التدريس", "التفاوض وحل النزاعات", "البرمجة العصبية", "تصميم الجرافيك"], answer: 1 },
-        { section: "مهارات التفاعل", category: "Technical", q: "كيف يمارس محلل الأعمال 'القيادة والتأثير' دون امتلاك سلطة إدارية مباشرة؟", options: ["بالتهديد والوعيد", "ببناء التوافق وتوضيح القيمة الاستراتيجية للحلول", "بتجاهل الإدارة العليا", "بالعمل بمفرده"], answer: 1 },
-        { section: "الأدوات والتكنولوجيا", category: "Technical", q: "أداة شائعة لتتبع وإدارة متطلبات مشاريع الأجايل (Agile)؟", options: ["Photoshop", "MS Word", "Jira / Confluence", "AutoCAD"], answer: 2 },
-        { section: "الأدوات والتكنولوجيا", category: "Technical", q: "ما الفائدة الأساسية من استخدام أدوات نمذجة العمليات (مثل Bizagi أو Visio)؟", options: ["توفير تمثيل بصري للمسارات يسهل فهمه للجميع", "لأنها دائماً مجانية", "تولد كود البرمجة التلقائي", "تسرع الإنترنت"], answer: 0 },
-        { section: "الأدوات والتكنولوجيا", category: "Technical", q: "ما هو أفضل نوع من الأدوات لاستخدامه في 'ورش عمل استنباط المتطلبات عن بُعد'؟", options: ["البريد الإلكتروني العادي", "السبورات البيضاء الافتراضية (Virtual Whiteboards)", "برامج معالجة النصوص", "الآلة الحاسبة"], answer: 1 },
-        { section: "الذكاء الاجتماعي", category: "VIA", q: "[سيناريو] في اجتماع متوتر للمتطلبات، لاحظت أن مدير التسويق صامت وتعبيرات وجهه توحي بعدم الرضا. ماذا تفعل؟", options: ["أتجاهله طالما أنه لم يعترض", "أوجه له سؤالاً مفتوحاً بشكل ودي لإشراكه ومعرفة مخاوفه", "أطلب منه الخروج من الاجتماع", "أنهي الاجتماع فوراً"], answer: 1 },
-        { section: "التفكير النقدي", category: "VIA", q: "[سيناريو] اقترح مطور حلاً تقنياً يختلف تماماً عن فكرتك الأساسية التي تعبت في إعدادها. كيف تتصرف؟", options: ["أرفض الفكرة لأنني المحلل وأنا من يقرر", "أستمع لفكرته بموضوعية وأقارنها بالمتطلبات للوصول للحل الأمثل", "أصمت وأتركه يفعل ما يريد", "أشتكيه لمدير المشروع"], answer: 1 },
-        { section: "المثابرة", category: "VIA", q: "[سيناريو] بعد 3 أسابيع من توثيق العمليات المعقدة، تغيرت استراتيجية الشركة وتم إلغاء عملك بالكامل. ما رد فعلك؟", options: ["أستقيل فوراً لضياع جهدي", "أشعر بالإحباط وأرفض استلام مهام جديدة", "أتقبل التغيير بمرونة وأبدأ في التوثيق الجديد بحماس", "أكتب نفس الوثيقة القديمة بعناوين مختلفة"], answer: 2 },
-        { section: "النزاهة والصدق", category: "VIA", q: "[سيناريو] اكتشفت خطأ فادحاً ارتكبته أنت في وثيقة المتطلبات بعد اعتمادها، وتصحيحه سيؤخر الفريق. ماذا تفعل؟", options: ["أتجاهل الخطأ وأتمنى ألا يلاحظه أحد", "أخبر المبرمج بتعديله سراً", "أعترف بالخطأ فوراً للجميع وأطرح خطة بديلة لتصحيحه", "ألوم العميل لعدم مراجعته جيداً"], answer: 2 },
-        { section: "العمل الجماعي", category: "VIA", q: "[سيناريو] لاحظت أن زميلك المحلل المبتدئ متأخر في تسليم مهامه ويواجه ضغطاً كبيراً. ماذا تفعل؟", options: ["أبلغ مديره عن تقصيره", "أخبره أنه يجب أن يعمل لساعات إضافية", "أعرض عليه المساعدة في جزء من مهامه وتوجيهه", "أتجاهل الأمر فلكل شخص مهامه"], answer: 2 }
+    // ================= بنك الأسئلة الدقيق المستخرج من ملف الـ Excel بأوزان الدرجات =================
+    const exactQuestionsBank = [
+        { id: "ق1", section: "القيادة", q: "آخر مرة اشتغلت في فريق (شغل أو دراسة أو تطوّع) — إيه أقرب حاجة لدورك؟", options: ["أنا اللي قسّمت الشغل وحددت المواعيد وتابعت التنفيذ لحد التسليم", "كنت بحدد الهدف وأخلي الناس تتفق على الخطوات", "أخدت جزء محدد ونفّذته وسلّمته في ميعاده", "كنت بساعد لما حد يطلب مني", "ما اشتغلتش في فريق قبل كده"], scores: [5, 4, 3, 2, 1] },
+        { id: "ق2", section: "القيادة", q: "لما الفريق يختلف على قرار، بتعمل إيه عادة؟", options: ["بجمع الآراء وأقترح قرارًا وأتحمّل مسؤوليته", "بحاول أقرّب وجهات النظر لحد ما نتفق", "بقول رأيي وبسيب القرار للأغلبية", "بستنى حد يقرر وأنفّذ", "ببعد عن الخلافات"], scores: [5, 4, 3, 2, 1] },
+        { id: "ق3", section: "القيادة", q: "لو حد في الفريق اتأخر على تسليمه، إيه أول حاجة تعملها؟", options: ["أكلّمه وأفهم السبب وأعيد ترتيب الخطة", "أفكّره وأعرض عليه المساعدة", "أبلّغ المسؤول عن الفريق", "أعمل شغله بدله عشان ما نتأخرش", "أستنى لحد ما يسلّم"], scores: [5, 4, 3, 2, 1] },
+        { id: "ت1", section: "المتابعة والتواصل والتنسيق", q: "في نفس التجربة، إيه اللي كنت بتعمله في التنسيق؟", options: ["كنت بتابع كل واحد وأفكّره بميعاده وأجمع حالة الشغل في مكان واحد", "كنت بربط بين الناس وأحلّ سوء الفهم أول ما يحصل", "كنت برد بسرعة وأسلّم جزئي في الميعاد", "كنت بتابع شغلي أنا بس", "ما حصلش موقف زي ده"], scores: [5, 4, 3, 2, 1] },
+        { id: "ت2", section: "المتابعة والتواصل والتنسيق", q: "إزاي بتتابع حالة شغل الفريق؟", options: ["عندي مكان واحد مكتوب فيه مين بيعمل إيه وإمتى، وبحدّثه أول بأول", "بسأل كل واحد بشكل دوري وبكتب الحالة عندي", "بسأل لما أحتاج أعرف", "بستنى حد يقول لي", "ما جرّبتش أتابع فريق"], scores: [5, 4, 3, 2, 1] },
+        { id: "ت3", section: "المتابعة والتواصل والتنسيق", q: "بعتّ رسالة مهمة للفريق وما حدش رد — تعمل إيه؟", options: ["أعيد صياغتها بشكل أوضح وأحدد المطلوب من كل واحد بالاسم", "أفكّرهم تاني بعد وقت مناسب", "أبعت نفس الرسالة مرة تانية", "أكلّم واحد بس واللي يوصله يوصله", "أسيبها ومش بتابع"], scores: [5, 4, 3, 2, 1] },
+        { id: "و1", section: "التوثيق وترتيب الملفات", q: "شغلك ومستنداتك بتبقى متخزّنة إزاي؟", options: ["فولدرات مرتّبة وقاعدة تسمية ثابتة، ونسخة واحدة معروفة إنها الأحدث للكل", "بكتب مستندات منظّمة وبشاركها مع اللي محتاجها", "شغلي أنا مرتّب، بس ما بنظّمش ملفات الفريق", "بحفظ على سطح المكتب وبدوّر لما أحتاج", "ما اشتغلتش على ملفات مشتركة قبل كده"], scores: [5, 4, 3, 2, 1] },
+        { id: "و2", section: "التوثيق وترتيب الملفات", q: "مستند عدّلته كذا مرة — إزاي تعرف النسخة الأحدث؟", options: ["قاعدة تسمية بالإصدار (v1 · v2) ومكان واحد معروف للكل", "بحدّث نفس الملف وبعتمد على تاريخ التعديل", "بسمّي الأخير «نهائي»", "بسأل الفريق أنهي واحدة الأخيرة", "بيحصل لبس كتير في النسخ"], scores: [5, 4, 3, 2, 1] },
+        { id: "و3", section: "التوثيق وترتيب الملفات", q: "بعد أي اجتماع، إيه اللي بيفضل مكتوب؟", options: ["محضر فيه القرارات والمهام ومين مسؤول وإمتى", "ملاحظات مرتّبة بشكل عام", "نقاط سريعة لنفسي", "بعتمد على ذاكرتي", "ما بكتبش حاجة"], scores: [5, 4, 3, 2, 1] },
+        { id: "ص1", section: "تصميم العروض والواجهات", q: "آخر عرض تقديمي أو تصميم واجهة عملته كان شكله إيه؟", options: ["بصمّم بقالب موحّد وبراعي تسلسل القراءة واحتياج المتلقّي", "بعمل عروض نضيفة ومرتّبة باستخدام قالب جاهز", "بعمل عروض بسيطة تؤدّي الغرض", "بستخدم القوالب زي ما هي من غير تعديل", "ما عملتش عرض ولا تصميم قبل كده"], scores: [5, 4, 3, 2, 1] },
+        { id: "ص2", section: "تصميم العروض والواجهات", q: "لما تعمل شريحة، بتبدأ منين؟", options: ["بحدد الرسالة الواحدة اللي عايز أوصّلها، وبعدين أصمّم حواليها", "بكتب النقاط وبرتّبها وأنضّفها", "بحط المحتوى في قالب جاهز", "بحط كل اللي عندي والمهم يبان", "ما عملتش شرايح قبل كده"], scores: [5, 4, 3, 2, 1] },
+        { id: "ص3", section: "تصميم العروض والواجهات", q: "أنهي أداة تعاملت معاها فعلًا؟", options: ["أدوات تصميم واجهات (Figma · Adobe XD) بجانب أدوات العروض", "PowerPoint أو Canva بمستوى متقدّم (قوالب مخصصة وتنسيق موحّد)", "PowerPoint أو Canva بمستوى أساسي", "Word أو Google Docs بس", "ما استخدمتش أدوات عروض"], scores: [5, 4, 3, 2, 1] },
+        { id: "ذ1", section: "أدوات الذكاء الاصطناعي التوليدي", q: "أقرب وصف لاستخدامك لأدوات زي ChatGPT أو Claude؟", options: ["بستخدمها يوميًا، بكتب طلبات منظّمة، وأعرف إمتى مخرجاتها تكون غلط", "بستخدمها كتير وبعدّل في الناتج قبل ما أستخدمه", "بستخدمها وباخد الناتج زي ما هو غالبًا", "جرّبتها كام مرة بس", "سمعت عنها وما جرّبتهاش"], scores: [5, 4, 3, 2, 1] },
+        { id: "ذ2", section: "أدوات الذكاء الاصطناعي التوليدي", q: "لما الأداة تديك إجابة، بتعمل إيه؟", options: ["بتحقّق منها من مصدر تاني قبل ما أبني عليها", "بقراها بتركيز وأعدّل اللي مش مظبوط", "بستخدمها وبعدّل لو لقيت غلط بالصدفة", "باخدها زي ما هي", "ما استخدمتش"], scores: [5, 4, 3, 2, 1] },
+        { id: "ذ3", section: "أدوات الذكاء الاصطناعي التوليدي", q: "أكتر حاجة استخدمت الأداة فيها؟", options: ["شغل متعدد الخطوات: تحليل، تلخيص مصادر، توليد مسودّات ومراجعتها", "كتابة وتلخيص وتحسين نصوص", "أسئلة ومعلومات عامة", "ترجمة أو تصحيح إملائي", "ما استخدمتش"], scores: [5, 4, 3, 2, 1] },
+        { id: "م1", section: "المعرفة والتطبيق", q: "صاحب مصلحة قال لك: «عايز زرار في الشاشة الرئيسية يوديني للتقارير». الجملة دي عندك إيه؟", options: ["اقتراح حل — والمشكلة الحقيقية لسه مش معروفة", "متطلب محتاج توضيح قبل ما يتنفّذ", "متطلب وظيفي جاهز للتنفيذ", "مش عارف"], scores: [3, 2, 1, 0] },
+        { id: "م2", section: "المعرفة والتطبيق", q: "أنهي صياغة أقرب لمتطلب مكتوب صح؟", options: ["تُحمَّل صفحة النتائج في ثانيتين أو أقل لـ 95% من الطلبات", "تفتح الصفحة بسرعة مقبولة للمستخدم", "النظام يكون سريع وسهل", "مش عارف"], scores: [3, 2, 1, 0] },
+        { id: "م3", section: "المعرفة والتطبيق", q: "الفرق بين الـ BRD والـ SRS؟", options: ["الـ BRD يجاوب «لماذا وماذا» بلغة العمل، والـ SRS يجاوب «كيف» بلغة تقنية قابلة للاختبار", "الـ BRD للإدارة والـ SRS للمطورين", "الاتنين مستندات متطلبات بأسماء مختلفة", "مش عارف"], scores: [3, 2, 1, 0] },
+        { id: "م4", section: "المعرفة والتطبيق", q: "صاحب مصلحة نفوذه عالي واهتمامه منخفض — تتعامل معه إزاي؟", options: ["أُبقيه راضيًا وأبلّغه بالقرارات المهمة فقط", "أُشركه في كل التفاصيل عشان نفوذه عالي", "أتجاهله لأنه مش مهتم", "مش عارف"], scores: [3, 2, 1, 0] },
+        { id: "م5", section: "المعرفة والتطبيق", q: "فريق سلّم 40 ميزة السنة دي واحتفل بالرقم. رأيك إيه؟", options: ["السؤال الناقص: كام ميزة اتستخدمت فعلًا وغيّرت سلوك المستخدم؟", "السؤال الناقص: اتسلّمت في وقتها وفي ميزانيتها؟", "رقم كويس ويستاهل الاحتفال", "مش عارف"], scores: [3, 2, 1, 0] },
+        { id: "م6", section: "المعرفة والتطبيق", q: "قصة مستخدم من غير معايير قبول — رأيك؟", options: ["ناقصة — مفيش طريقة نحكم بيها إنها خلصت فعلًا", "مقبولة لو المطوّر فاهم المطلوب", "عادي، المعايير بتتكتب بعدين لو احتجناها", "مش عارف"], scores: [3, 2, 1, 0] },
+        { id: "م7", section: "المعرفة والتطبيق", q: "عايز تفهم عملية شغل في شركة — أول خطوة؟", options: ["أقعد أشوف الشغل بيحصل إزاي على الأرض", "أقرا التوثيق الموجود عن العملية", "أطلب من إدارة تقنية المعلومات وصف النظام", "مش عارف"], scores: [3, 2, 1, 0] },
+        { id: "م8", section: "المعرفة والتطبيق", q: "أي مشروع لازم يتبرّر بإيه عشان يعيش؟", options: ["يزوّد إيراد أو يقلّل تكلفة أو يقلّل مخاطرة", "يحسّن تجربة المستخدم", "يواكب التكنولوجيا الحديثة", "مش عارف"], scores: [3, 2, 1, 0] },
+        { id: "م9", section: "المعرفة والتطبيق", q: "مصفوفة تتبّع المتطلبات (RTM) بتفيد في إيه؟", options: ["ربط الهدف بالمتطلب بالقصة بالاختبار، وكشف الناقص في السلسلة", "توثيق قائمة المتطلبات بشكل مرتّب", "متابعة مواعيد التسليم", "مش عارف"], scores: [3, 2, 1, 0] },
+        { id: "م10", section: "المعرفة والتطبيق", q: "أداة ذكاء اصطناعي طلعت لك تحليل لمشكلة عميل — تعمل بيه إيه؟", options: ["أتحقق من مصدره وأقارنه بكلام العميل الفعلي قبل ما أبني عليه", "أراجعه سريعًا وأعدّل الواضح إنه غلط", "أستخدمه لأنه أسرع من التحليل اليدوي", "مش عارف"], scores: [3, 2, 1, 0] }
     ];
 
-    const postQuestions = [
-        { section: "التفكير التحليلي", category: "Technical", q: "[سيناريو] لاحظت كثرة شكاوى العملاء من بطء التطبيق. بدلاً من طلب زيادة سعة السيرفرات فوراً، حللت رحلة العميل واكتشفت أن المشكلة في تصميم واجهة الدفع. أي مهارة طبقت؟", options: ["التفكير المفاهيمي وحل المشكلات", "أدوات التكنولوجيا", "العمل الجماعي", "مهارات التدريس"], answer: 0 },
-        { section: "التفكير التحليلي", category: "Technical", q: "[سيناريو] أثناء تحليل نظام جديد، وجدت بيانات ضخمة ومتناثرة. كيف تطبق 'التفكير البصري'؟", options: ["كتابتها في مستند نصي طويل", "تحويل البيانات إلى نماذج ومخططات رسومية (Context/Process Models)", "تجاهل البيانات المعقدة", "قراءتها بصوت عالٍ"], answer: 1 },
-        { section: "التفكير التحليلي", category: "Technical", q: "[سيناريو] طلب العميل إضافة ميزة لنظام المبيعات، لكنك أدركت أنها ستؤثر سلباً على تقارير النظام المالي. أي مهارة جعلتك تلاحظ ذلك؟", options: ["التفكير النظمي (Systems Thinking)", "مهارة الكتابة", "إدارة الوقت", "البرمجة الموجهة للكائنات"], answer: 0 },
-        { section: "الخصائص السلوكية", category: "Technical", q: "[سيناريو] طلب منك مديرك تغيير متطلب معتمد دون المرور بإجراءات طلب التغيير (CR). التصرف الذي يعكس 'الأخلاقيات المهنية'؟", options: ["تنفيذ الطلب سراً", "رفض الطلب بلطف وتوضيح مخاطر تجاوز الإجراءات", "الاستقالة", "توجيه اللوم للعميل"], answer: 1 },
-        { section: "الخصائص السلوكية", category: "Technical", q: "[سيناريو] تغيرت استراتيجية المشروع فجأة للانتقال من منهجية Waterfall إلى Agile. كيف تظهر 'القدرة على التكيف'؟", options: ["الاعتراض المستمر", "إيقاف العمل تماماً", "تعديل أسلوب عملك فوراً والبدء في تقسيم المتطلبات لقصص مستخدمين", "نقل مسؤولياتك للآخرين"], answer: 2 },
-        { section: "الخصائص السلوكية", category: "Technical", q: "[سيناريو] نسيت توثيق متطلب هام مما تسبب في خطأ برمجي. كيف تطبق 'المسؤولية الشخصية'؟", options: ["الاعتراف بالخطأ فوراً والعمل مع الفريق لإيجاد حل بأقل الأضرار", "تحميل المبرمج المسؤولية لأنه لم يخمن المتطلب", "تعديل الوثيقة سراً", "تجاهل الخطأ"], answer: 0 },
-        { section: "المعرفة بالأعمال", category: "Technical", q: "[سيناريو] تحلل نظاماً لقطاع طبي ولا تفهم المصطلحات (مثل HIPAA). الإجراء الأفضل الذي يعكس 'المعرفة بالصناعة'؟", options: ["البحث وقراءة أدلة القطاع وعقد جلسات مع خبراء المجال لفهم السياق", "تأليف مصطلحات", "استخدام مصطلحات بنكية بدلاً منها", "إلغاء النظام"], answer: 0 },
-        { section: "المعرفة بالأعمال", category: "Technical", q: "[سيناريو] تقترح حلاً تقنياً لشركة ناشئة. كيف تستخدم 'معرفة الحلول' (Solution Knowledge)؟", options: ["اقتراح أغلى نظام دائماً", "مقارنة الحلول التقنية المتاحة بمتطلبات وقدرات الشركة لتحديد الأنسب", "اقتراح الحل الذي تعرفه أنت فقط", "رفض تقديم اقتراحات"], answer: 1 },
-        { section: "المعرفة بالأعمال", category: "Technical", q: "[سيناريو] توقف المشروع فجأة لأنك نسيت أخذ موافقة إدارة الشؤون القانونية. ما الذي كان ينقصك تحليله؟", options: ["لغة البرمجة", "المعرفة التنظيمية (Organization Knowledge) وخريطة أصحاب المصلحة", "تصميم الواجهات", "الجدول الزمني"], answer: 1 },
-        { section: "مهارات التواصل", category: "Technical", q: "[سيناريو] أثناء عرضك التقديمي، لاحظت أن الحضور ينظرون لهواتفهم. كيف تستخدم 'التواصل غير اللفظي'؟", options: ["تغيير نبرة الصوت والتحرك وطرح أسئلة تفاعلية", "الاستمرار في القراءة الرتيبة", "الصراخ عليهم", "مغادرة القاعة"], answer: 0 },
-        { section: "مهارات التواصل", category: "Technical", q: "[سيناريو] فريق البرمجة لم يفهم وثيقة المتطلبات. ما الخطأ المحتمل في تواصلك المكتوب؟", options: ["استخدام مصطلحات أعمال بحتة دون ترجمتها لمنطق يفهمه المطورون", "الوثيقة لم تكن ملونة", "الخط كان صغيراً", "حفظها بصيغة PDF"], answer: 0 },
-        { section: "مهارات التواصل", category: "Technical", q: "[سيناريو] العميل يتحدث بطريقة غير واضحة حول ما يريده من النظام. كيف تطبق 'الاستماع الفعال'؟", options: ["كتابة ما يقوله حرفياً وتخمين الباقي", "مقاطعته باستمرار", "إعادة صياغة كلامه (Paraphrasing) وطرح أسئلة مفتوحة للتأكد من القصد", "تجاهل حديثه والاعتماد على خبرتك"], answer: 2 },
-        { section: "مهارات التفاعل", category: "Technical", q: "[سيناريو] في ورشة عمل، استحوذ مدير على النقاش ولم يسمح للآخرين بالحديث. كيف تتصرف كـ 'مُيسّر'؟", options: ["تطرده من الاجتماع", "تصمت لنهاية الوقت", "تشكره بلطف وتوجه سؤالاً مباشراً لشخص آخر لإشراك الجميع", "تدخل معه في جدال"], answer: 2 },
-        { section: "مهارات التفاعل", category: "Technical", q: "[سيناريو] يتنازع مدير التسويق والمبيعات على ميزانية خاصية في النظام. كيف تطبق مهارات 'القيادة والتأثير'؟", options: ["الوقوف مع المدير الأعلى منصباً", "تسهيل النقاش للبحث عن أرضية مشتركة والتركيز على القيمة للمؤسسة ككل", "تجاهلهما", "إلغاء الخاصية"], answer: 1 },
-        { section: "مهارات التفاعل", category: "Technical", q: "[سيناريو] فريق التطوير وفريق الجودة يتجادلون حول وضوح معيار القبول. ما هو دورك؟", options: ["تنظيم جلسة مراجعة مشتركة للتوفيق بين الفهم التقني وفهم الأعمال", "الانحياز لفريق الجودة", "تركهم يتجادلون", "إعادة كتابة الكود بنفسك"], answer: 0 },
-        { section: "الأدوات والتكنولوجيا", category: "Technical", q: "[سيناريو] فريقك يعمل عن بُعد وتحتاجون لتصميم رحلة المستخدم (User Journey) معاً. الأداة الأنسب؟", options: ["البريد الإلكتروني", "السبورات الافتراضية (مثل Miro/Mural)", "برنامج Excel", "المكالمات العادية"], answer: 1 },
-        { section: "الأدوات والتكنولوجيا", category: "Technical", q: "[سيناريو] لإدارة التغييرات المتكررة (Requirements Traceability) ومعرفة من غير ماذا. الأداة الأنسب؟", options: ["ورق الملاحظات", "ملف Word شخصي", "أدوات إدارة دورة حياة التطبيقات (مثل Jira / Azure DevOps)", "الذاكرة الشخصية"], answer: 2 },
-        { section: "الأدوات والتكنولوجيا", category: "Technical", q: "[سيناريو] العميل لا يستطيع تخيل شكل الشاشات من خلال النص المكتوب. ما هي الأداة التي تستخدمها لحل هذا؟", options: ["أدوات تصميم النماذج المبدئية (Prototyping/Wireframing tools)", "لغة C++", "برنامج محاسبي", "قواعد البيانات SQL"], answer: 0 },
-        { section: "القيادة", category: "VIA", q: "[سيناريو] نشب خلاف حاد بين المبرمجين وفريق الجودة حول متطلب معقد. كيف تتدخل؟", options: ["أتجاهل الخلاف ليتدبروا أمرهم", "أجمعهم في ورشة عمل لتهدئة الوضع وتوضيح المتطلب تقنياً وحل النزاع بالتوجيه", "أقف مع المبرمجين دائماً", "أبلغ مدير الإدارة لمعاقبتهم"], answer: 1 },
-        { section: "الحكمة", category: "VIA", q: "[سيناريو] طلب العميل حلاً سريعاً جداً (Patch) لحل مشكلة، لكنك تعلم أن هذا سيدمر بنية النظام مستقبلاً. ماذا تفعل؟", options: ["أنفذ ما يريده فوراً دون نقاش", "أرفض طلبه بحدة", "أشرح له التبعات التقنية طويلة المدى وأقترح حلاً وسطياً آمناً", "أنفذ الحل وأستقيل"], answer: 2 },
-        { section: "الشجاعة", category: "VIA", q: "[سيناريو] يصر مدير تنفيذي على إضافة ميزة ستتجاوز الميزانية وتفشل المشروع. أنت الوحيد الذي يملك الأرقام. ماذا تفعل؟", options: ["أخفي الأرقام خوفاً من منصبه", "أوافق على طلبه لتجنب الصدام", "أعرض الأرقام بشجاعة وأدب وأوضح المخاطر الكارثية لطلبه", "أرسل له الأرقام عبر إيميل غامض"], answer: 2 },
-        { section: "التروي", category: "VIA", q: "[سيناريو] هناك ضغط هائل لإطلاق النظام غداً، لكنك لم تقم باختبار الأمان بشكل كامل. ما قرارك؟", options: ["إطلاق النظام والتوكل على الله", "طلب تأجيل الإطلاق رسمياً لضمان الجودة وعدم تعريض بيانات العملاء للخطر", "اختبار الأجزاء السهلة فقط", "تجاهل الأمان فهو مسؤولية المبرمجين"], answer: 1 },
-        { section: "الفضول", category: "VIA", q: "[سيناريو] تم نقلك من تحليل مشاريع البنوك إلى مشروع طبي معقد لا تفهم مصطلحاته إطلاقاً. كيف تستجيب؟", options: ["أرفض المشروع وأطلب العودة", "أحاول استخدام المصطلحات البنكية في المشروع الطبي", "أعتبرها فرصة عظيمة وأبدأ بالقراءة وسؤال الأطباء بفضول لفهم المجال", "أترك التوثيق للمبرمجين"], answer: 2 }
-    ];
-
-    let currentQuizType = ''; let activeQuestions = []; 
+    let currentQuizType = ''; 
     let radarChartInstance = null; let adminRadarChartInstance = null;
     let traineesList = []; let currentAdminTrainee = null;
     let teams = []; let unassignedTrainees = [];
+    let postUnlockDate = null; // متغير لحفظ موعد إتاحة التقييم البعدي
+
+    // جلب إعدادات المنصة (موعد التقييم البعدي)
+    async function fetchGlobalSettings() {
+        try {
+            const docSnap = await getDoc(doc(db, "settings", "config"));
+            if (docSnap.exists() && docSnap.data().postUnlockDate) {
+                postUnlockDate = new Date(docSnap.data().postUnlockDate);
+                const adminInput = document.getElementById('adminUnlockDate');
+                if(adminInput) {
+                    const tzoffset = (new Date()).getTimezoneOffset() * 60000;
+                    const localISOTime = (new Date(postUnlockDate - tzoffset)).toISOString().slice(0, 16);
+                    adminInput.value = localISOTime;
+                }
+            }
+        } catch(e) {
+            console.log("لم يتم إعداد التواريخ بعد.");
+        }
+        if(document.getElementById('dashboardView').classList.contains('active')) {
+            updateDashboard();
+        }
+    }
+
+    // ================= الموجّه الذكي للتحكم بالجلسات (Auth Router) =================
+    window.onload = function() {
+        // جلب الإعدادات فوراً عند تحميل الصفحة
+        fetchGlobalSettings();
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                initAdminModule();
+                window.showView('adminDashboardView');
+            } else {
+                const savedName = localStorage.getItem('ba_trainee_name');
+                if(savedName) {
+                    document.getElementById('quickLoginName').innerText = savedName;
+                    document.getElementById('quickLoginBox').style.display = 'block';
+                    document.getElementById('fullLoginForm').style.display = 'none';
+                    window.showView('loginView');
+                } else {
+                    document.getElementById('quickLoginBox').style.display = 'none';
+                    document.getElementById('fullLoginForm').style.display = 'block';
+                    window.showView('loginView');
+                }
+            }
+        });
+    };
+
+    // حفظ موعد التقييم البعدي من قبل المشرف
+    window.saveUnlockDate = async function() {
+        const dateVal = document.getElementById('adminUnlockDate').value;
+        if(!dateVal) { alert("الرجاء تحديد تاريخ ووقت."); return; }
+        try {
+            await setDoc(doc(db, "settings", "config"), { postUnlockDate: new Date(dateVal).toISOString() }, { merge: true });
+            alert("تم حفظ وتحديث موعد إتاحة التقييم البعدي بنجاح!");
+            postUnlockDate = new Date(dateVal);
+        } catch(e) {
+            alert("حدث خطأ أثناء الحفظ.");
+        }
+    };
 
     window.showView = function(viewId) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -510,20 +564,18 @@
             let post = parseInt(localStorage.getItem('ba_score_post') || 0);
             let diff = post - pre;
             document.getElementById('snapGrowthVal').innerText = (diff >= 0 ? '+' + diff : diff) + '%';
-
             drawRadarChart();
         }
     };
 
-    window.quickLogin = function() {
-        window.showView('dashboardView');
-    };
+    window.quickLogin = function() { window.showView('dashboardView'); };
 
     window.clearQuickLogin = function() {
         localStorage.removeItem('ba_trainee_name');
         localStorage.removeItem('ba_trainee_email');
         localStorage.removeItem('ba_trainee_mobile');
         localStorage.removeItem('ba_trainee_bootcamp');
+        localStorage.removeItem('ba_trainee_shift');
         document.getElementById('quickLoginBox').style.display = 'none';
         document.getElementById('fullLoginForm').style.display = 'block';
     };
@@ -533,7 +585,10 @@
         const email = document.getElementById('traineeEmail').value;
         const mobile = document.getElementById('traineeMobile').value;
         const traineeNum = document.getElementById('bootcampId').value;
-        if(!name || !email || !mobile || !traineeNum) { alert("الرجاء تعبئة كافة البيانات"); return; }
+        const hours = document.getElementById('traineeHours').value;
+        const shift = document.getElementById('traineeShift').value;
+
+        if(!name || !email || !mobile || !traineeNum) { alert("الرجاء تعبئة كافة البيانات الأساسية."); return; }
         
         const bootcamp = "BAC9-" + traineeNum;
         const traineeRef = doc(db, "trainees", bootcamp);
@@ -549,13 +604,14 @@
                 if(data.preAnswers) localStorage.setItem('ba_answers_pre', JSON.stringify(data.preAnswers));
                 if(data.postAnswers) localStorage.setItem('ba_answers_post', JSON.stringify(data.postAnswers));
             } else {
-                await setDoc(traineeRef, { name, email, mobile, bootcamp, createdAt: new Date().toISOString() }, { merge: true });
+                await setDoc(traineeRef, { name, email, mobile, bootcamp, hours, shift, createdAt: new Date().toISOString() }, { merge: true });
             }
             
             localStorage.setItem('ba_trainee_name', name);
             localStorage.setItem('ba_trainee_email', email);
             localStorage.setItem('ba_trainee_mobile', mobile);
             localStorage.setItem('ba_trainee_bootcamp', bootcamp);
+            localStorage.setItem('ba_trainee_shift', shift);
             
             window.showView('dashboardView');
         } catch(e) {
@@ -565,73 +621,68 @@
 
     window.logout = function() { 
         localStorage.clear(); 
-        checkQuickLogin();
-        window.showView('loginView'); 
+        window.location.reload(); 
+    };
+
+    window.adminLogin = async function() {
+        const email = document.getElementById('adminEmail').value;
+        const password = document.getElementById('adminPass').value;
+        if(!email || !password) { alert("الرجاء إدخال بيانات المشرف."); return; }
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+        } catch(error) {
+            alert("فشل تسجيل الدخول المشفر. تأكد من الصلاحيات.");
+        }
     };
 
     window.adminLogout = function() {
-        signOut(auth).then(() => {
-            window.showView('loginView');
-        }).catch((error) => {
-            console.error("Sign out error", error);
-        });
-    };
-
-    function checkQuickLogin() {
-        const savedName = localStorage.getItem('ba_trainee_name');
-        if(savedName) {
-            document.getElementById('quickLoginName').innerText = savedName;
-            document.getElementById('quickLoginBox').style.display = 'block';
-            document.getElementById('fullLoginForm').style.display = 'none';
-        } else {
-            document.getElementById('quickLoginBox').style.display = 'none';
-            document.getElementById('fullLoginForm').style.display = 'block';
-        }
-    }
-
-    window.onload = function() {
-        checkQuickLogin();
-        // مراقبة حالة مصادقة المشرف وسحب الجلسة
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // إذا كان المشرف مسجلاً مسبقاً خلال الساعة الأخيرة
-                initAdminModule();
-            }
-        });
-
-        const savedName = localStorage.getItem('ba_trainee_name');
-        if(savedName) {
-            document.getElementById('displayName').innerText = savedName;
-            document.getElementById('displayMobile').innerText = localStorage.getItem('ba_trainee_mobile') || '-';
-            document.getElementById('displayBootcamp').innerText = localStorage.getItem('ba_trainee_bootcamp') || '-';
-            window.showView('dashboardView');
-        }
+        signOut(auth).then(() => { window.location.reload(); });
     };
 
     function updateDashboard() {
         const savedName = localStorage.getItem('ba_trainee_name');
         if(savedName) {
             document.getElementById('displayName').innerText = savedName;
-            document.getElementById('displayMobile').innerText = localStorage.getItem('ba_trainee_mobile') || '-';
             document.getElementById('displayBootcamp').innerText = localStorage.getItem('ba_trainee_bootcamp') || '-';
+            document.getElementById('displayShift').innerText = localStorage.getItem('ba_trainee_shift') || 'وقت غير محدد';
         }
 
         const preScore = localStorage.getItem('ba_score_pre');
         const postScore = localStorage.getItem('ba_score_post');
         const preCard = document.getElementById('preTestCard');
         const postCard = document.getElementById('postTestCard');
+        const postTag = document.getElementById('postTag');
+        const postIcon = document.getElementById('postIcon');
         const reportBtn = document.getElementById('traineeFullReportBtn');
 
         if(preScore !== null) {
             preCard.classList.add('completed');
             document.getElementById('preScoreBadge').style.display = 'inline-flex';
-            document.getElementById('preScoreBadge').innerHTML = `<i class="fa-solid fa-circle-check"></i> النتيجة: ${preScore}%`;
+            document.getElementById('preScoreBadge').innerHTML = `<i class="fa-solid fa-circle-check"></i> حققت: ${preScore}%`;
             document.getElementById('preIcon').innerHTML = '<i class="fa-solid fa-eye"></i>'; 
             document.getElementById('preTag').style.display = 'block';
+            
             if(postScore === null) {
-                postCard.classList.remove('locked');
-                document.getElementById('postTag').style.display = 'none';
-                document.getElementById('postIcon').innerHTML = '<i class="fa-solid fa-chart-pie"></i>';
+                // تقييم موعد الإتاحة للمتدرب الذي أنهى القبلي فقط
+                let now = new Date();
+                if (!postUnlockDate) {
+                    postCard.classList.add('locked');
+                    postTag.style.display = 'block';
+                    postTag.className = 'status-tag tag-locked-time';
+                    postTag.innerText = 'في انتظار تحديد الموعد من الإدارة';
+                    postIcon.innerHTML = '<i class="fa-solid fa-clock"></i>';
+                } else if (now < postUnlockDate) {
+                    postCard.classList.add('locked');
+                    postTag.style.display = 'block';
+                    postTag.className = 'status-tag tag-locked-time';
+                    let options = { month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' };
+                    postTag.innerText = `يفتح في: ${postUnlockDate.toLocaleDateString('ar-SA', options)}`;
+                    postIcon.innerHTML = '<i class="fa-solid fa-clock"></i>';
+                } else {
+                    postCard.classList.remove('locked');
+                    postTag.style.display = 'none';
+                    postIcon.innerHTML = '<i class="fa-solid fa-chart-pie"></i>';
+                }
             }
         }
 
@@ -639,12 +690,12 @@
             postCard.classList.remove('locked');
             postCard.classList.add('completed');
             document.getElementById('postScoreBadge').style.display = 'inline-flex';
-            document.getElementById('postScoreBadge').innerHTML = `<i class="fa-solid fa-circle-check"></i> النتيجة: ${postScore}%`;
-            document.getElementById('postIcon').innerHTML = '<i class="fa-solid fa-eye"></i>';
-            document.getElementById('postTag').className = 'status-tag tag-completed';
-            document.getElementById('postTag').innerText = 'مكتمل (مراجعة)';
-            document.getElementById('postTag').style.display = 'block';
-            reportBtn.style.display = 'block';
+            document.getElementById('postScoreBadge').innerHTML = `<i class="fa-solid fa-circle-check"></i> حققت: ${postScore}%`;
+            postIcon.innerHTML = '<i class="fa-solid fa-eye"></i>';
+            postTag.className = 'status-tag tag-completed';
+            postTag.innerText = 'مكتمل (مراجعة)';
+            postTag.style.display = 'block';
+            reportBtn.style.display = 'flex';
         } else {
             reportBtn.style.display = 'none';
         }
@@ -653,26 +704,37 @@
     window.handlePreTestClick = function() { window.startQuiz('pre', localStorage.getItem('ba_score_pre') !== null); };
     window.handlePostTestClick = function() {
         if(localStorage.getItem('ba_score_pre') === null) { alert("يجب إتمام التقييم القبلي أولاً."); return; }
-        window.startQuiz('post', localStorage.getItem('ba_score_post') !== null);
+        
+        const postScore = localStorage.getItem('ba_score_post');
+        if (postScore === null) {
+            let now = new Date();
+            if (!postUnlockDate) {
+                alert("التقييم البعدي قيد التجهيز. لم يتم تحديد موعد الإطلاق من قِبل الإدارة بعد.");
+                return;
+            } else if (now < postUnlockDate) {
+                alert("التقييم البعدي غير متاح بعد. الرجاء الانتظار حتى الموعد المحدد.");
+                return;
+            }
+        }
+        window.startQuiz('post', postScore !== null);
     };
 
     window.startQuiz = function(type, isReadOnly = false) {
         currentQuizType = type;
         let titleText = type === 'pre' ? 'التقييم الشامل القبلي' : 'التقييم الشامل البعدي';
-        if(isReadOnly) titleText += ' <span style="color:var(--accent); font-size:0.8em;">(مراجعة النتائج)</span>';
+        if(isReadOnly) titleText += ' <span style="font-size:0.8em; opacity:0.8;">(وضع المراجعة)</span>';
         document.getElementById('quizTitle').innerHTML = titleText;
         
-        activeQuestions = (type === 'pre') ? preQuestions : postQuestions;
         const container = document.getElementById('questionsContainer');
         container.innerHTML = ''; 
 
         let savedAnswers = isReadOnly ? (JSON.parse(localStorage.getItem(`ba_answers_${type}`)) || []) : [];
         let currentSection = "";
         
-        activeQuestions.forEach((item, index) => {
+        exactQuestionsBank.forEach((item, index) => {
             if (item.section !== currentSection) {
                 currentSection = item.section;
-                let badgeHTML = item.category === 'VIA' ? '<span class="section-badge" style="background:var(--accent);">السمات الشخصية (VIA)</span>' : '<span class="section-badge">كفاءات فنية (BABOK)</span>';
+                let badgeHTML = (item.scores[0] === 5) ? '<span class="section-badge">كفاءات ومهارات (سلوكي)</span>' : '<span class="section-badge" style="background:var(--accent);">معرفة وتطبيق (فني)</span>';
                 container.innerHTML += `<div class="section-title"><span>${currentSection}</span> ${badgeHTML}</div>`;
             }
 
@@ -681,10 +743,13 @@
                 let isChecked = (isReadOnly && savedAnswers[index] === optIndex) ? 'checked' : '';
                 let isDisabled = isReadOnly ? 'disabled' : '';
                 let resultClass = '';
+                
                 if (isReadOnly) {
-                    if (optIndex === item.answer) resultClass = 'correct-option'; 
-                    else if (savedAnswers[index] === optIndex && optIndex !== item.answer) resultClass = 'wrong-option'; 
+                    let highestScoreInItem = Math.max(...item.scores);
+                    if (item.scores[optIndex] === highestScoreInItem) resultClass = 'correct-option'; 
+                    else if (savedAnswers[index] === optIndex && item.scores[optIndex] !== highestScoreInItem) resultClass = 'wrong-option'; 
                 }
+                
                 optionsHTML += `
                     <label class="option-item ${resultClass}" style="${isReadOnly ? 'pointer-events: none;' : ''}">
                         <input type="radio" name="q${index}" value="${optIndex}" ${isChecked} ${isDisabled}>
@@ -703,36 +768,43 @@
 
     window.submitQuiz = async function() {
         let score = 0, answered = 0, userAnswers = [], sectionTotals = {}, sectionScores = {};
+        let maxPossibleScore = 0;
 
-        activeQuestions.forEach(item => {
-            let key = item.category === 'VIA' ? item.section.split('(')[0].trim() : item.section;
+        exactQuestionsBank.forEach(item => {
+            let maxInQ = Math.max(...item.scores);
+            maxPossibleScore += maxInQ;
+            let key = item.section;
             if(!sectionTotals[key]) { sectionTotals[key] = 0; sectionScores[key] = 0; }
-            sectionTotals[key]++;
+            sectionTotals[key] += maxInQ;
         });
 
-        activeQuestions.forEach((item, index) => {
+        exactQuestionsBank.forEach((item, index) => {
             const selected = document.querySelector(`input[name="q${index}"]:checked`);
             if (selected) {
                 answered++;
                 let val = parseInt(selected.value);
                 userAnswers.push(val);
-                if (val === item.answer) {
-                    score++;
-                    let key = item.category === 'VIA' ? item.section.split('(')[0].trim() : item.section;
-                    sectionScores[key]++; 
-                }
+                
+                let earnedPoints = item.scores[val];
+                score += earnedPoints;
+                
+                let key = item.section;
+                sectionScores[key] += earnedPoints; 
             }
         });
 
-        if (answered < activeQuestions.length) { alert("الرجاء استكمال جميع الأسئلة."); return; }
+        if (answered < exactQuestionsBank.length) { alert("الرجاء استكمال جميع الأسئلة لتتمكن من تسليم التقييم."); return; }
 
-        const finalPercentage = Math.round((score / activeQuestions.length) * 100);
+        const finalPercentage = Math.round((score / maxPossibleScore) * 100);
         let chartLabels = [], chartData = [];
         let highestRatio = -1, topSkill = "قيد الانتظار";
         
         for(let sec in sectionTotals) {
             let ratio = sectionScores[sec] / sectionTotals[sec];
-            if(ratio > highestRatio) { highestRatio = ratio; topSkill = sec; }
+            if(sec !== "المعرفة والتطبيق" && ratio > highestRatio) { 
+                highestRatio = ratio; 
+                topSkill = sec; 
+            }
             chartLabels.push(sec);
             chartData.push(Math.round(ratio * 100));
         }
@@ -755,7 +827,7 @@
             window.showView('resultView');
             window.scrollTo(0,0);
         } catch(e) {
-            alert("حدث خطأ أثناء الحفظ بالسحابة.");
+            alert("حدث خطأ أثناء حفظ النتيجة بالسحابة.");
         }
     };
 
@@ -768,9 +840,9 @@
         let datasets = [{
             label: 'التقييم القبلي',
             data: preObj.data,
-            backgroundColor: 'rgba(44, 94, 90, 0.12)',
-            borderColor: '#2C5E5A',
-            pointBackgroundColor: '#2C5E5A',
+            backgroundColor: 'rgba(37, 99, 235, 0.15)',
+            borderColor: '#2563EB',
+            pointBackgroundColor: '#2563EB',
             borderWidth: 2
         }];
 
@@ -779,9 +851,9 @@
             datasets.push({
                 label: 'التقييم البعدي',
                 data: postObj.data,
-                backgroundColor: 'rgba(15, 42, 42, 0.12)',
-                borderColor: '#0F2A2A',
-                pointBackgroundColor: '#0F2A2A',
+                backgroundColor: 'rgba(13, 148, 136, 0.15)',
+                borderColor: '#0D9488',
+                pointBackgroundColor: '#0D9488',
                 borderWidth: 2
             });
         }
@@ -793,13 +865,13 @@
             data: { labels: preObj.labels, datasets: datasets },
             options: { 
                 responsive: true,
-                maintainAspectRatio: true,
+                maintainAspectRatio: false,
                 scales: { 
                     r: { 
                         suggestedMin: 0, 
                         suggestedMax: 100, 
                         ticks: { stepSize: 20, font:{family:'Tajawal'} }, 
-                        pointLabels: { font: { family: 'Tajawal', size: 10, weight: 'bold' } } 
+                        pointLabels: { font: { family: 'Tajawal', size: 11, weight: 'bold' } } 
                     } 
                 }, 
                 plugins: { legend: { position: 'bottom', labels:{font:{family:'Tajawal', size:12}} } } 
@@ -809,7 +881,25 @@
 
     window.downloadReportImage = function() {
         const element = document.getElementById('snapshotReportContent');
-        html2canvas(element, { scale: 2, useCORS: true, logging: false }).then(canvas => {
+        const originalWidth = element.style.width;
+        const originalMaxWidth = element.style.maxWidth;
+        
+        element.style.width = '800px';
+        element.style.maxWidth = '800px';
+        
+        const scrollY = window.scrollY;
+
+        html2canvas(element, { 
+            scale: 2, 
+            useCORS: true, 
+            logging: false,
+            scrollY: -window.scrollY,
+            windowWidth: 800
+        }).then(canvas => {
+            element.style.width = originalWidth;
+            element.style.maxWidth = originalMaxWidth;
+            window.scrollTo(0, scrollY);
+            
             const link = document.createElement('a');
             link.download = `BA_Competency_Report_${localStorage.getItem('ba_trainee_bootcamp')}.png`;
             link.href = canvas.toDataURL('image/png');
@@ -817,21 +907,7 @@
         });
     };
 
-    // ================= المصادقة الآمنة وإدارة المشرفين (جلسة مفتوحة لساعة) =================
-    window.adminLogin = async function() {
-        const email = document.getElementById('adminEmail').value;
-        const password = document.getElementById('adminPass').value;
-        if(!email || !password) { alert("الرجاء إدخال البريد وكلمة المرور."); return; }
-
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-            initAdminModule();
-            window.showView('adminDashboardView');
-        } catch(error) {
-            alert("فشل تسجيل الدخول. تأكد من صحة بيانات المشرف في Firebase Authentication.");
-        }
-    };
-
+    // ================= لوحة المشرف وتشكيل الفرق =================
     window.switchAdminTab = function(tab) {
         document.getElementById('tabTraineesBtn').classList.toggle('active', tab === 'trainees');
         document.getElementById('tabTeamsBtn').classList.toggle('active', tab === 'teams');
@@ -859,6 +935,7 @@
                     email: data.email || '',
                     mobile: data.mobile || '',
                     bootcamp: data.bootcamp || docSnap.id,
+                    shift: data.shift || 'غير محدد',
                     preScore: pre,
                     postScore: post,
                     topSkill: data.topSkill || 'قيد الانتظار',
@@ -879,11 +956,11 @@
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>${t.name}</strong><br><span style="font-size:0.75em; color:gray;">${t.mobile}</span></td>
-                        <td>${t.bootcamp}</td>
-                        <td><strong style="color:var(--accent);">${t.preScore !== '-' ? t.preScore+'%' : '-'}</strong></td>
+                        <td>${t.bootcamp}<br><span style="font-size:0.75em; color:var(--primary-light);"><i class="fa-solid fa-clock"></i> ${t.shift}</span></td>
+                        <td><strong style="color:var(--primary);">${t.preScore !== '-' ? t.preScore+'%' : '-'}</strong></td>
                         <td><strong style="color:var(--success);">${t.postScore !== '-' ? t.postScore+'%' : '-'}</strong></td>
-                        <td><span class="member-skill-tag">${t.topSkill}</span></td>
-                        <td><button class="btn-small" onclick="viewTraineeReport('${t.id}')">التقرير والإجابات</button></td>
+                        <td><span style="font-size:0.8em; background:#F1F5F9; padding:4px 8px; border-radius:6px; font-weight:bold;">${t.topSkill}</span></td>
+                        <td><button class="btn-small" onclick="viewTraineeReport('${t.id}')">مراجعة الإجابات</button></td>
                     </tr>
                 `;
             });
@@ -897,8 +974,8 @@
     }
 
     window.autoGenerateBalancedTeams = function() {
-        let teamSize = 4;
-        let all = [...traineesList];
+        let teamSize = 5;
+        let all = [...traineesList].filter(t => t.preScore !== '-'); 
         all.sort(() => Math.random() - 0.5);
 
         teams = [];
@@ -911,7 +988,7 @@
                 members: all.slice(i * teamSize, (i + 1) * teamSize)
             });
         }
-        unassignedTrainees = [];
+        unassignedTrainees = [...traineesList].filter(t => t.preScore === '-'); 
         renderTeamsAndPool();
     };
 
@@ -958,7 +1035,7 @@
         teamsContainer.innerHTML = '';
 
         if(teams.length === 0) {
-            teamsContainer.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:20px; color:gray; background:#fff; border-radius:8px; border:1px dashed #ddd; font-size:0.9em;">لم يتم إنشاء فريق بعد. اضغط على <strong>تشكيل متوازن</strong>.</div>`;
+            teamsContainer.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:20px; color:gray; background:#fff; border-radius:8px; border:1px dashed var(--border-color); font-size:0.95em;">لم يتم إنشاء فرق بعد. الخوارزمية بانتظارك!</div>`;
         }
 
         teams.forEach(team => {
@@ -986,7 +1063,7 @@
                     if(powerScore > 100) powerScore = 100;
                 }
                 
-                powerColor = powerScore >= 85 ? 'var(--success)' : (powerScore >= 70 ? 'var(--accent)' : 'var(--danger)');
+                powerColor = powerScore >= 85 ? 'var(--success)' : (powerScore >= 70 ? 'var(--primary-light)' : 'var(--danger)');
 
                 team.members.forEach(m => {
                     let moveOptions = `<option value="">نقل إلى...</option>`;
@@ -996,38 +1073,38 @@
                     moveOptions += `<option value="unassigned">← للانتظار</option>`;
 
                     membersHTML += `
-                        <div class="team-member-item">
-                            <div class="member-info">
-                                <span class="member-name" style="font-size: 0.9em;">${m.name}</span>
-                                <span class="member-skill-tag">${m.topSkill}</span>
+                        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border-color); gap: 8px;">
+                            <div>
+                                <span style="font-size: 0.95em; font-weight:700;">${m.name}</span><br>
+                                <span style="font-size: 0.75em; background: var(--bg-body); color: var(--text-secondary); padding: 3px 8px; border-radius: 6px; border: 1px solid var(--border-color);">${m.topSkill} | ${m.shift.split(' ')[0]}</span>
                             </div>
-                            <div style="display:flex; align-items:center; gap:4px;">
-                                <select class="member-reassign-select" onchange="if(this.value) window.reassignTrainee('${m.id}', ${team.id}, this.value)">
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <select style="padding: 4px 8px; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit; font-size: 0.85em; background: #FFF; cursor: pointer;" onchange="if(this.value) window.reassignTrainee('${m.id}', ${team.id}, this.value)">
                                     ${moveOptions}
                                 </select>
-                                <button class="remove-member-btn" title="سحب" onclick="window.reassignTrainee('${m.id}', ${team.id}, 'unassigned')"><i class="fa-solid fa-user-minus"></i></button>
+                                <button style="color: var(--danger); background: none; border: none; cursor: pointer; font-size: 0.9em; padding: 4px;" title="إزالة" onclick="window.reassignTrainee('${m.id}', ${team.id}, 'unassigned')"><i class="fa-solid fa-user-minus"></i></button>
                             </div>
                         </div>
                     `;
                 });
             } else {
-                membersHTML = `<p style="color:gray; font-size:0.8em; text-align:center; margin:10px 0;">لا يوجد أعضاء</p>`;
+                membersHTML = `<p style="color:gray; font-size:0.85em; text-align:center; margin:15px 0;">لا يوجد أعضاء</p>`;
             }
 
             let powerBarHTML = team.members.length > 0 ? `
-                <div class="team-power-container">
-                    <div class="team-power-fill" style="width: ${powerScore}%; background-color: ${powerColor};"></div>
-                    <div class="team-power-text">مؤشر القوة: ${powerScore}%</div>
+                <div style="background: var(--border-color); border-radius: 6px; margin: 15px 0; overflow: hidden; position: relative; height: 26px;">
+                    <div style="height: 100%; transition: width 0.5s ease-in-out; width: ${powerScore}%; background-color: ${powerColor};"></div>
+                    <div style="position: absolute; top: 0; left: 0; right: 0; text-align: center; font-size: 0.85em; font-weight: bold; color: white; line-height: 26px; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">قوة التجانس: ${powerScore}%</div>
                 </div>
             ` : '';
 
             teamsContainer.innerHTML += `
-                <div class="team-card">
-                    <div class="team-card-header">
-                        <h4 style="margin:0; font-size:1em; color:var(--primary);">${team.name} (${team.members.length})</h4>
-                        <button class="remove-member-btn" style="color:var(--danger);" onclick="window.deleteTeam(${team.id})"><i class="fa-solid fa-trash-can"></i></button>
+                <div style="border: 1px solid var(--border-color); border-radius: 12px; background: #FFFFFF; overflow: hidden; display: flex; flex-direction: column;">
+                    <div style="background: var(--bg-body); border-bottom: 1px solid var(--border-color); padding: 12px 18px; display: flex; justify-content: space-between; align-items: center;">
+                        <h4 style="margin:0; font-size:1.1em; color:var(--primary-light); font-weight:800;">${team.name} <span style="font-size:0.8em; color:gray;">(${team.members.length})</span></h4>
+                        <button style="color:var(--danger); background:none; border:none; cursor:pointer;" onclick="window.deleteTeam(${team.id})"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
-                    <div class="team-card-body">
+                    <div style="padding: 0 15px 15px 15px; flex-grow: 1;">
                         ${powerBarHTML}
                         ${membersHTML}
                     </div>
@@ -1040,19 +1117,19 @@
         unassignedContainer.innerHTML = '';
 
         if(unassignedTrainees.length === 0) {
-            unassignedContainer.innerHTML = `<p style="color:var(--success); font-size:0.85em; margin:0; grid-column:1/-1;">جميع المتدربين مسكنين في الفرق ✔️</p>`;
+            unassignedContainer.innerHTML = `<p style="color:var(--success); font-size:0.9em; margin:0; grid-column:1/-1; font-weight:700;"><i class="fa-solid fa-check-double"></i> التسكين مكتمل</p>`;
         } else {
             unassignedTrainees.forEach(m => {
-                let assignOptions = `<option value="">تعيين في...</option>`;
+                let assignOptions = `<option value="">تسكين في...</option>`;
                 teams.forEach(t => { assignOptions += `<option value="${t.id}">${t.name}</option>`; });
 
                 unassignedContainer.innerHTML += `
-                    <div class="unassigned-item">
-                        <div style="font-size:0.85em;">
-                            <strong>${m.name}</strong><br>
-                            <span class="member-skill-tag">${m.topSkill}</span>
+                    <div style="background: white; border: 1px solid var(--border-color); padding: 10px 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                        <div style="font-size:0.9em;">
+                            <strong style="color:var(--text-main);">${m.name}</strong><br>
+                            <span style="font-size:0.8em; color:var(--text-secondary);">${m.topSkill} | ${m.shift.split(' ')[0]}</span>
                         </div>
-                        <select class="member-reassign-select" onchange="if(this.value) window.reassignTrainee('${m.id}', 'unassigned', this.value)">
+                        <select style="padding: 4px 8px; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit; font-size: 0.85em; background: #F8FAFC; cursor: pointer;" onchange="if(this.value) window.reassignTrainee('${m.id}', 'unassigned', this.value)">
                             ${assignOptions}
                         </select>
                     </div>
@@ -1076,10 +1153,10 @@
 
         let datasets = [];
         if(currentAdminTrainee.preChart) {
-            datasets.push({ label: 'التقييم القبلي', data: currentAdminTrainee.preChart.data, backgroundColor: 'rgba(44, 94, 90, 0.12)', borderColor: '#2C5E5A', pointBackgroundColor: '#2C5E5A', borderWidth: 2 });
+            datasets.push({ label: 'التقييم القبلي', data: currentAdminTrainee.preChart.data, backgroundColor: 'rgba(37, 99, 235, 0.15)', borderColor: '#2563EB', pointBackgroundColor: '#2563EB', borderWidth: 2 });
         }
         if(currentAdminTrainee.postChart) {
-            datasets.push({ label: 'التقييم البعدي', data: currentAdminTrainee.postChart.data, backgroundColor: 'rgba(15, 42, 42, 0.12)', borderColor: '#0F2A2A', pointBackgroundColor: '#0F2A2A', borderWidth: 2 });
+            datasets.push({ label: 'التقييم البعدي', data: currentAdminTrainee.postChart.data, backgroundColor: 'rgba(13, 148, 136, 0.15)', borderColor: '#0D9488', pointBackgroundColor: '#0D9488', borderWidth: 2 });
         }
 
         adminRadarChartInstance = new Chart(ctx, {
@@ -1088,38 +1165,39 @@
             options: { responsive: true, scales: { r: { suggestedMin: 0, suggestedMax: 100, ticks: { stepSize: 20, font:{family:'Tajawal'} } } }, plugins: { legend: { position: 'bottom', labels:{font:{family:'Tajawal'}} } } }
         });
 
-        document.getElementById('adminAnswersContainer').innerHTML = '<p style="text-align:center; color:gray; font-size:0.9em;">الرجاء الضغط على أحد الأزرار أعلاه لعرض الإجابات.</p>';
+        document.getElementById('adminAnswersContainer').innerHTML = '<p style="text-align:center; color:gray; font-size:0.95em;">الرجاء تحديد الاختبار لعرض إجابات المتدرب.</p>';
         window.showView('adminReportView');
     };
 
     window.renderAdminAnswersReview = function(type) {
         if(!currentAdminTrainee) return;
         let answersArray = type === 'pre' ? currentAdminTrainee.preAnswers : currentAdminTrainee.postAnswers;
-        let questionsBank = type === 'pre' ? preQuestions : postQuestions;
         let container = document.getElementById('adminAnswersContainer');
 
         if(!answersArray || answersArray.length === 0) {
-            container.innerHTML = '<p style="text-align:center; color:red; font-weight:bold; font-size:0.9em;">المتدرب لم يكمل هذا التقييم بعد.</p>';
+            container.innerHTML = '<p style="text-align:center; color:var(--danger); font-weight:bold; font-size:0.95em;">المتدرب لم يكمل هذا التقييم بعد.</p>';
             return;
         }
 
-        let html = `<h4 style="color:var(--primary); text-align:center; border-bottom:1px solid #ddd; padding-bottom:8px; font-size:0.95em;">إجابات التقييم ${type==='pre'?'القبلي':'البعدي'}</h4>`;
+        let html = `<h4 style="color:var(--primary); text-align:center; border-bottom:2px solid var(--border-color); padding-bottom:10px; font-size:1em;">سجل إجابات التقييم ${type==='pre'?'القبلي':'البعدي'}</h4>`;
         
-        questionsBank.forEach((q, i) => {
+        exactQuestionsBank.forEach((q, i) => {
             let userAnsIndex = answersArray[i];
-            html += `<div style="margin-bottom:15px; padding:8px; background:#fff; border-radius:6px; border:1px solid #eee;">`;
-            html += `<div class="ans-q">${i+1}. ${q.q} <span style="font-size:0.75em; color:gray;">(${q.section})</span></div>`;
+            html += `<div style="margin-bottom:20px; padding:15px; background:white; border-radius:8px; border:1px solid var(--border-color); box-shadow:0 1px 3px rgba(0,0,0,0.02);">`;
+            html += `<div class="ans-q">${i+1}. ${q.q} <span style="font-size:0.8em; color:var(--text-secondary); background:var(--bg-body); padding:2px 8px; border-radius:4px; margin-right:8px;">${q.section}</span></div>`;
             
             q.options.forEach((opt, optIndex) => {
                 let optClass = "ans-opt";
                 let icon = "";
-                if (optIndex === q.answer) {
+                let maxScoreForThisQuestion = Math.max(...q.scores);
+                
+                if (q.scores[optIndex] === maxScoreForThisQuestion) {
                     optClass += " ans-correct";
-                    if(userAnsIndex === optIndex) icon = '<i class="fa-solid fa-check"></i> '; 
-                    else { optClass = "ans-opt ans-missed"; icon = '<i class="fa-solid fa-arrow-left"></i> الصحيحة: '; }
-                } else if (userAnsIndex === optIndex && optIndex !== q.answer) {
+                    if(userAnsIndex === optIndex) icon = '<i class="fa-solid fa-check-circle"></i> '; 
+                    else { optClass = "ans-opt ans-missed"; icon = '<i class="fa-solid fa-arrow-left"></i> الإجابة الأمثل: '; }
+                } else if (userAnsIndex === optIndex && q.scores[optIndex] !== maxScoreForThisQuestion) {
                     optClass += " ans-wrong";
-                    icon = '<i class="fa-solid fa-xmark"></i> إجابة المتدرب: ';
+                    icon = '<i class="fa-solid fa-circle-xmark"></i> إجابة المتدرب: ';
                 }
                 html += `<div class="${optClass}">${icon}${opt}</div>`;
             });
