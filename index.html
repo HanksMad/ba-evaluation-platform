@@ -132,7 +132,6 @@
 
         .chart-container { width: 100%; max-width: 500px; margin: 0 auto; padding: 10px; background: white; }
 
-        /* نافذة التعديل المنبثقة (Modal) */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); z-index: 1000; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px); }
         .modal-content { background: var(--bg-surface); padding: 30px; border-radius: 12px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); position: relative; }
         .modal-close-btn { position: absolute; left: 20px; top: 20px; background: none; border: none; font-size: 1.2em; color: var(--text-secondary); cursor: pointer; transition: 0.2s; }
@@ -230,7 +229,6 @@
                                 <option value="+44">🇬🇧 +44</option>
                                 <option value="+90">🇹🇷 +90</option>
                                 <option value="+91">🇮🇳 +91</option>
-                                <option value="+92">🇵🇰 +92</option>
                                 <option value="+33">🇫🇷 +33</option>
                                 <option value="+49">🇩🇪 +49</option>
                                 <option value="+39">🇮🇹 +39</option>
@@ -308,7 +306,11 @@
                 <h2>مركز قيادة المعسكر التدريبي <i class="fa-solid fa-chart-simple" style="margin-right: 8px;"></i></h2>
                 <p>مراقبة أداء المتدربين، استعراض التقارير، وتشكيل فرق مشاريع التخرج بذكاء.</p>
             </div>
-            <button class="hero-logout" onclick="adminLogout()">إنهاء الجلسة <i class="fa-solid fa-power-off"></i></button>
+            <div class="hero-badges">
+                <!-- شارة توضح دور المشرف (كامل الصلاحيات أو مساعد) -->
+                <div id="adminRoleBadge" class="hero-badge" style="background:var(--accent);">جاري التحقق من الصلاحيات...</div>
+                <button class="hero-logout" onclick="adminLogout()">إنهاء الجلسة <i class="fa-solid fa-power-off"></i></button>
+            </div>
         </div>
         
         <div style="background: white; border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-right: 4px solid var(--accent);">
@@ -333,12 +335,10 @@
             <div class="admin-tab" id="tabTeamsBtn" onclick="switchAdminTab('teams')"><i class="fa-solid fa-people-group"></i> محرك تشكيل الفرق الذكي</div>
         </div>
 
-        <!-- قسم المتدربين مع فلاتر البحث -->
         <div id="adminTraineesSection">
             <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; background: var(--bg-surface); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); align-items: center;">
                 <strong style="color: var(--primary); font-size: 0.9em;"><i class="fa-solid fa-filter"></i> بحث وتصفية:</strong>
                 
-                <!-- شريط البحث الذكي (Live Search) -->
                 <div style="position: relative; flex-grow: 1; min-width: 200px;">
                     <i class="fa-solid fa-search" style="position: absolute; right: 12px; top: 10px; color: var(--text-secondary);"></i>
                     <input type="text" id="searchTraineeInput" class="form-control" placeholder="ابحث بالاسم، المعرّف، البريد، أو الجوال..." style="margin-bottom: 0; padding: 8px 35px 8px 12px; font-size: 0.85em; width: 100%; box-sizing: border-box;" onkeyup="renderTraineesTable()">
@@ -400,7 +400,6 @@
             
             <div class="teams-grid" id="teamsCardsContainer"></div>
             
-            <!-- قائمة الانتظار المنظمة حسب أوقات التوافر -->
             <div class="unassigned-pool" style="margin-top: 25px; background: var(--bg-surface); border: 2px dashed var(--border-color); border-radius: 12px; padding: 20px;">
                 <h4 style="margin:0 0 15px 0; color:var(--primary-light); font-size: 1.1em;"><i class="fa-solid fa-user-clock"></i> قائمة الانتظار (غير المسكنين في فرق): <span id="unassignedCount">0</span></h4>
                 <div id="unassignedListContainer"></div>
@@ -594,6 +593,18 @@
     
     setPersistence(auth, browserLocalPersistence);
 
+    // ================== نظام الصلاحيات (RBAC - Role Based Access Control) ==================
+    // هنا تضع إيميلات الإدارة العليا الذين يحق لهم (تعديل وحذف) المتدربين.
+    // أي إيميل ليس في هذه القائمة سيكون "مشرف مساعد" يرى فقط البيانات ولا يستطيع مسحها.
+    const SUPER_ADMINS = [
+        'ahmed.s.auditor@gmail.com',
+        'ibrahim.mashaal@gmail.com', // يمكنك إضافة إيميلك هنا إذا كان لديك حساب مشرف آخر
+        'enggyahhmed@gmail.com',
+	'marwabadr1357@gmail.com'
+    ];
+    window.isSuperAdmin = false;
+    window.currentAdminEmail = '';
+
     const exactQuestionsBank = [
         { id: "ق1", section: "القيادة", q: "آخر مرة اشتغلت في فريق (شغل أو دراسة أو تطوّع) — إيه أقرب حاجة لدورك؟", options: ["أنا اللي قسّمت الشغل وحددت المواعيد وتابعت التنفيذ لحد التسليم", "كنت بحدد الهدف وأخلي الناس تتفق على الخطوات", "أخدت جزء محدد ونفّذته وسلّمته في ميعاده", "كنت بساعد لما حد يطلب مني", "ما اشتغلتش في فريق قبل كده"], scores: [5, 4, 3, 2, 1] },
         { id: "ق2", section: "القيادة", q: "لما الفريق يختلف على قرار، بتعمل إيه عادة؟", options: ["بجمع الآراء وأقترح قرارًا وأتحمّل مسؤوليته", "بحاول أقرّب وجهات النظر لحد ما نتفق", "بقول رأيي وبسيب القرار للأغلبية", "بستنى حد يقرر وأنفّذ", "ببعد عن الخلافات"], scores: [5, 4, 3, 2, 1] },
@@ -671,6 +682,19 @@
         fetchGlobalSettings();
         onAuthStateChanged(auth, (user) => {
             if (user) {
+                // تفعيل نظام الصلاحيات بناءً على الإيميل
+                window.currentAdminEmail = user.email;
+                window.isSuperAdmin = SUPER_ADMINS.includes(user.email);
+                
+                const badge = document.getElementById('adminRoleBadge');
+                if (window.isSuperAdmin) {
+                    badge.innerHTML = '<i class="fa-solid fa-crown"></i> مشرف عام (صلاحيات كاملة)';
+                    badge.style.background = '#0D9488'; // لون مختلف للتمييز
+                } else {
+                    badge.innerHTML = '<i class="fa-solid fa-user-shield"></i> مشرف مساعد (مراقب)';
+                    badge.style.background = '#64748B'; 
+                }
+
                 initAdminModule();
                 window.showView('adminDashboardView');
             } else {
@@ -1077,7 +1101,6 @@
         document.getElementById('adminTeamsSection').style.display = tab === 'teams' ? 'block' : 'none';
     };
 
-    // ================= فلاتر البحث وإدارة عرض المتدربين للمشرف =================
     window.renderTraineesTable = function() {
         const tbody = document.getElementById('traineesTableBody');
         tbody.innerHTML = '';
@@ -1109,6 +1132,16 @@
         }
 
         filteredList.forEach(t => {
+            // إخفاء أزرار التعديل والحذف إذا لم يكن المشرف (Super Admin)
+            let actionsHTML = `<button class="btn-small" style="background:#F1F5F9; color:var(--primary-light); border-color:#CBD5E1;" onclick="viewTraineeReport('${t.id}')" title="مراجعة التقييم"><i class="fa-solid fa-eye"></i></button>`;
+            
+            if (window.isSuperAdmin) {
+                actionsHTML += `
+                    <button class="btn-small" style="background:#FFFBEB; color:#D97706; border-color:#FDE68A;" onclick="openEditModal('${t.id}')" title="تعديل البيانات"><i class="fa-solid fa-pen"></i></button>
+                    <button class="btn-small" style="background:#FEF2F2; color:var(--danger); border-color:#FECDD3;" onclick="deleteTrainee('${t.id}')" title="حذف المتدرب"><i class="fa-solid fa-trash"></i></button>
+                `;
+            }
+
             tbody.innerHTML += `
                 <tr>
                     <td><strong>${t.name}</strong><br><span style="font-size:0.75em; color:gray;" dir="ltr">${t.mobile}</span></td>
@@ -1116,19 +1149,14 @@
                     <td><strong style="color:var(--primary);">${t.preScore !== '-' ? t.preScore+'%' : '-'}</strong></td>
                     <td><strong style="color:var(--success);">${t.postScore !== '-' ? t.postScore+'%' : '-'}</strong></td>
                     <td><span style="font-size:0.8em; background:#F1F5F9; padding:4px 8px; border-radius:6px; font-weight:bold;">${t.topSkill}</span></td>
-                    <td>
-                        <div style="display:flex; gap:5px; justify-content:flex-end;">
-                            <button class="btn-small" style="background:#F1F5F9; color:var(--primary-light); border-color:#CBD5E1;" onclick="viewTraineeReport('${t.id}')" title="مراجعة التقييم"><i class="fa-solid fa-eye"></i></button>
-                            <button class="btn-small" style="background:#FFFBEB; color:#D97706; border-color:#FDE68A;" onclick="openEditModal('${t.id}')" title="تعديل البيانات"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn-small" style="background:#FEF2F2; color:var(--danger); border-color:#FECDD3;" onclick="deleteTrainee('${t.id}')" title="حذف المتدرب"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    </td>
+                    <td><div style="display:flex; gap:5px; justify-content:flex-end;">${actionsHTML}</div></td>
                 </tr>
             `;
         });
     };
 
     window.deleteTrainee = async function(traineeId) {
+        if(!window.isSuperAdmin) return;
         if(!confirm("هل أنت متأكد من حذف هذا المتدرب نهائياً؟ سيتم مسح كافة درجاته من النظام ولن يمكن التراجع عن هذا الإجراء.")) return;
         try {
             await deleteDoc(doc(db, "trainees", traineeId));
@@ -1146,6 +1174,7 @@
     };
 
     window.openEditModal = function(traineeId) {
+        if(!window.isSuperAdmin) return;
         const trainee = traineesList.find(t => t.id === traineeId);
         if(!trainee) return;
         editingTraineeId = traineeId;
@@ -1169,6 +1198,7 @@
     };
 
     window.saveTraineeEdit = async function() {
+        if(!window.isSuperAdmin) return;
         const name = document.getElementById('editTraineeName').value.trim();
         const email = document.getElementById('editTraineeEmail').value.trim();
         const fullMobile = document.getElementById('editTraineeMobile').value.trim();
@@ -1478,6 +1508,33 @@
         }
         unassignedContainer.innerHTML = unassignedHTML;
     }
+
+    window.exportTeamsToCSV = function() {
+        let csvRows = [];
+        csvRows.push(["الفريق", "اسم المتدرب", "المعرّف", "الجوال", "البريد الإلكتروني", "الكفاءة الأبرز", "التوافر (الوقت)", "التقييم القبلي", "التقييم البعدي"].join(","));
+        
+        teams.forEach(team => {
+            team.members.forEach(m => {
+                let row = [`"${team.name}"`, `"${m.name}"`, `"${m.bootcamp}"`, `"${m.mobile}"`, `"${m.email}"`, `"${m.topSkill}"`, `"${m.shift}"`, `"${m.preScore}%"`, `"${m.postScore !== '-' ? m.postScore+'%' : '-'}"`];
+                csvRows.push(row.join(","));
+            });
+        });
+        
+        unassignedTrainees.forEach(m => {
+            let row = [`"قائمة الانتظار"`, `"${m.name}"`, `"${m.bootcamp}"`, `"${m.mobile}"`, `"${m.email}"`, `"${m.topSkill}"`, `"${m.shift}"`, `"${m.preScore}%"`, `"${m.postScore !== '-' ? m.postScore+'%' : '-'}"`];
+            csvRows.push(row.join(","));
+        });
+
+        let csvString = "\uFEFF" + csvRows.join("\n");
+        let blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+        let url = URL.createObjectURL(blob);
+        let link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", `BA_Teams_Export_${new Date().toISOString().slice(0,10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
 
     window.viewTraineeReport = function(traineeId) {
         currentAdminTrainee = traineesList.find(t => t.id === traineeId);
