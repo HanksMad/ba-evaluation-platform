@@ -132,6 +132,7 @@
 
         .chart-container { width: 100%; max-width: 500px; margin: 0 auto; padding: 10px; background: white; }
 
+        /* نافذة التعديل المنبثقة (Modal) */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); z-index: 1000; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px); }
         .modal-content { background: var(--bg-surface); padding: 30px; border-radius: 12px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); position: relative; }
         .modal-close-btn { position: absolute; left: 20px; top: 20px; background: none; border: none; font-size: 1.2em; color: var(--text-secondary); cursor: pointer; transition: 0.2s; }
@@ -307,7 +308,6 @@
                 <p>مراقبة أداء المتدربين، استعراض التقارير، وتشكيل فرق مشاريع التخرج بذكاء.</p>
             </div>
             <div class="hero-badges">
-                <!-- شارة توضح دور المشرف (كامل الصلاحيات أو مساعد) -->
                 <div id="adminRoleBadge" class="hero-badge" style="background:var(--accent);">جاري التحقق من الصلاحيات...</div>
                 <button class="hero-logout" onclick="adminLogout()">إنهاء الجلسة <i class="fa-solid fa-power-off"></i></button>
             </div>
@@ -547,7 +547,7 @@
         <label class="form-label">رقم الجوال (بالصيغة الدولية +)</label>
         <input type="tel" id="editTraineeMobile" class="form-control" dir="ltr" style="text-align: left;" required>
         
-        <label class="form-label">رقم المتدرب (أرقام فقط)</label>
+        <label class="form-label">كود المتدرب (أرقام فقط)</label>
         <input type="number" id="editBootcampId" class="form-control" dir="ltr" style="text-align: left;" required>
         
         <label class="form-label">الساعات المتاحة</label>
@@ -593,12 +593,10 @@
     
     setPersistence(auth, browserLocalPersistence);
 
-    // ================== نظام الصلاحيات (RBAC - Role Based Access Control) ==================
-    // هنا تضع إيميلات الإدارة العليا الذين يحق لهم (تعديل وحذف) المتدربين.
-    // أي إيميل ليس في هذه القائمة سيكون "مشرف مساعد" يرى فقط البيانات ولا يستطيع مسحها.
+    // ================== نظام الصلاحيات ==================
     const SUPER_ADMINS = [
         'ahmed.s.auditor@gmail.com',
-        'ibrahim.mashaal@gmail.com', // يمكنك إضافة إيميلك هنا إذا كان لديك حساب مشرف آخر
+        'ibrahim.mashaal@gmail.com', 
         'enggyahhmed@gmail.com',
 	'marwabadr1357@gmail.com'
     ];
@@ -678,40 +676,47 @@
         } catch(e) { console.log(e); }
     };
 
-    window.onload = function() {
-        fetchGlobalSettings();
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // تفعيل نظام الصلاحيات بناءً على الإيميل
-                window.currentAdminEmail = user.email;
-                window.isSuperAdmin = SUPER_ADMINS.includes(user.email);
-                
-                const badge = document.getElementById('adminRoleBadge');
-                if (window.isSuperAdmin) {
-                    badge.innerHTML = '<i class="fa-solid fa-crown"></i> مشرف عام (صلاحيات كاملة)';
-                    badge.style.background = '#0D9488'; // لون مختلف للتمييز
-                } else {
-                    badge.innerHTML = '<i class="fa-solid fa-user-shield"></i> مشرف مساعد (مراقب)';
-                    badge.style.background = '#64748B'; 
-                }
-
-                initAdminModule();
-                window.showView('adminDashboardView');
+    fetchGlobalSettings();
+    
+    // إزالة window.onload لمنع التأخير عند التحميل وحل مشكلة Refresh
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            window.currentAdminEmail = user.email;
+            window.isSuperAdmin = SUPER_ADMINS.includes(user.email);
+            
+            const badge = document.getElementById('adminRoleBadge');
+            if (window.isSuperAdmin) {
+                badge.innerHTML = '<i class="fa-solid fa-crown"></i> مشرف عام (صلاحيات كاملة)';
+                badge.style.background = '#0D9488'; 
             } else {
-                const savedName = localStorage.getItem('ba_trainee_name');
-                if(savedName) {
-                    document.getElementById('quickLoginName').innerText = savedName;
-                    document.getElementById('quickLoginBox').style.display = 'block';
-                    document.getElementById('fullLoginForm').style.display = 'none';
-                    window.showView('loginView');
-                } else {
-                    document.getElementById('quickLoginBox').style.display = 'none';
-                    document.getElementById('fullLoginForm').style.display = 'block';
-                    window.showView('loginView');
-                }
+                badge.innerHTML = '<i class="fa-solid fa-user-shield"></i> مشرف مساعد (مراقب)';
+                badge.style.background = '#64748B'; 
             }
-        });
-    };
+
+            // عرض الشاشة فوراً مع علامة التحميل لمنع التحديث
+            window.showView('adminDashboardView');
+            document.getElementById('traineesTableBody').innerHTML = '<tr><td colspan="6" style="text-align:center; padding:40px; color:var(--primary-light);"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><br><br><strong style="font-size:1.1em;">جاري تحميل ومعالجة البيانات من السحابة...</strong></td></tr>';
+            document.getElementById('teamsCardsContainer').innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding:40px; color:var(--primary-light);"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><br><br><strong style="font-size:1.1em;">جاري تحميل هيكل الفرق...</strong></div>';
+
+            await initAdminModule();
+            
+            const btn = document.getElementById('adminLoginBtn');
+            if(btn) btn.innerHTML = 'دخول آمن للمشرفين <i class="fa-solid fa-lock"></i>';
+            
+        } else {
+            const savedName = localStorage.getItem('ba_trainee_name');
+            if(savedName) {
+                document.getElementById('quickLoginName').innerText = savedName;
+                document.getElementById('quickLoginBox').style.display = 'block';
+                document.getElementById('fullLoginForm').style.display = 'none';
+                window.showView('loginView');
+            } else {
+                document.getElementById('quickLoginBox').style.display = 'none';
+                document.getElementById('fullLoginForm').style.display = 'block';
+                window.showView('loginView');
+            }
+        }
+    });
 
     window.saveUnlockDate = async function() {
         const dateVal = document.getElementById('adminUnlockDate').value;
@@ -857,7 +862,8 @@
             await signInWithEmailAndPassword(auth, email, password);
         } catch(error) {
             alert("فشل تسجيل الدخول المشفر. تأكد من الصلاحيات.");
-            document.getElementById('adminLoginBtn').innerHTML = 'دخول آمن للمشرفين <i class="fa-solid fa-lock"></i>';
+            const btn = document.getElementById('adminLoginBtn');
+            if(btn) btn.innerHTML = 'دخول آمن للمشرفين <i class="fa-solid fa-lock"></i>';
         }
     };
 
@@ -1132,7 +1138,6 @@
         }
 
         filteredList.forEach(t => {
-            // إخفاء أزرار التعديل والحذف إذا لم يكن المشرف (Super Admin)
             let actionsHTML = `<button class="btn-small" style="background:#F1F5F9; color:var(--primary-light); border-color:#CBD5E1;" onclick="viewTraineeReport('${t.id}')" title="مراجعة التقييم"><i class="fa-solid fa-eye"></i></button>`;
             
             if (window.isSuperAdmin) {
