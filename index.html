@@ -183,16 +183,65 @@
                 </div>
 
                 <div id="fullLoginForm">
-                    <label class="form-label">الاسم الثلاثي</label>
-                    <input type="text" id="traineeName" class="form-control" placeholder="أدخل اسمك الكامل" required>
+                    <label class="form-label">الاسم الكامل</label>
+                    <input type="text" id="traineeName" class="form-control" placeholder="أدخل اسمك الثنائي أو الثلاثي" required>
                     
                     <label class="form-label">البريد الإلكتروني</label>
                     <input type="email" id="traineeEmail" class="form-control" placeholder="name@example.com" style="text-align: left;" dir="ltr" required>
                     
-                    <label class="form-label">رقم الجوال (شاملاً مفتاح الدولة)</label>
-                    <input type="tel" id="traineeMobile" class="form-control" placeholder="+9665xxxxxxxx" style="text-align: left;" dir="ltr" required>
+                    <label class="form-label">رقم الجوال</label>
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px;" dir="ltr">
+                        <select id="countryCode" class="form-control" style="width: 140px; margin-bottom: 0; padding: 12px 5px; font-size: 0.9em; direction: ltr;">
+                            <optgroup label="الدول الأكثر استخداماً">
+                                <option value="+966">🇸🇦 +966</option>
+                                <option value="+20">🇪🇬 +20</option>
+                                <option value="+212">🇲🇦 +212</option>
+                            </optgroup>
+                            <optgroup label="باقي الدول العربية">
+                                <option value="+971">🇦🇪 +971</option>
+                                <option value="+965">🇰🇼 +965</option>
+                                <option value="+974">🇶🇦 +974</option>
+                                <option value="+973">🇧🇭 +973</option>
+                                <option value="+968">🇴🇲 +968</option>
+                                <option value="+964">🇮🇶 +964</option>
+                                <option value="+962">🇯🇴 +962</option>
+                                <option value="+970">🇵🇸 +970</option>
+                                <option value="+961">🇱🇧 +961</option>
+                                <option value="+967">🇾🇪 +967</option>
+                                <option value="+963">🇸🇾 +963</option>
+                                <option value="+213">🇩🇿 +213</option>
+                                <option value="+216">🇹🇳 +216</option>
+                                <option value="+249">🇸🇩 +249</option>
+                                <option value="+218">🇱🇾 +218</option>
+                                <option value="+222">🇲🇷 +222</option>
+                                <option value="+252">🇸🇴 +252</option>
+                                <option value="+253">🇩🇯 +253</option>
+                                <option value="+253">AE +971</option>
+                            </optgroup>
+                            <optgroup label="دول عالمية أخرى">
+                                <option value="+1">🇺🇸/🇨🇦 +1</option>
+                                <option value="+44">🇬🇧 +44</option>
+                                <option value="+90">🇹🇷 +90</option>
+                                <option value="+91">🇮🇳 +91</option>
+                                <option value="+92">🇵🇰 +92</option>
+                                <option value="+33">🇫🇷 +33</option>
+                                <option value="+49">🇩🇪 +49</option>
+                                <option value="+39">🇮🇹 +39</option>
+                                <option value="+34">🇪🇸 +34</option>
+                                <option value="+61">🇦🇺 +61</option>
+                                <option value="+86">🇨🇳 +86</option>
+                                <option value="+81">🇯🇵 +81</option>
+                                <option value="+60">🇲🇾 +60</option>
+                                <option value="+62">🇮🇩 +62</option>
+                                <option value="+7">🇷🇺 +7</option>
+                                <option value="+55">🇧🇷 +55</option>
+                                <option value="+27">🇿🇦 +27</option>
+                            </optgroup>
+                        </select>
+                        <input type="tel" id="traineeMobile" class="form-control" placeholder="5xxxxxxxx" style="margin-bottom: 0; text-align: left; flex-grow: 1;" required>
+                    </div>
                     
-                    <label class="form-label">رقم المتدرب (أرقام فقط)</label>
+                    <label class="form-label">كود المتدرب (أرقام فقط)</label>
                     <input type="number" id="bootcampId" class="form-control" placeholder="مثال: 125" style="text-align: left;" dir="ltr" required>
 
                     <label class="form-label">الساعات المتاحة للدورة أسبوعياً</label>
@@ -468,7 +517,6 @@
     
     setPersistence(auth, browserLocalPersistence);
 
-    // ================= بنك الأسئلة =================
     const exactQuestionsBank = [
         { id: "ق1", section: "القيادة", q: "آخر مرة اشتغلت في فريق (شغل أو دراسة أو تطوّع) — إيه أقرب حاجة لدورك؟", options: ["أنا اللي قسّمت الشغل وحددت المواعيد وتابعت التنفيذ لحد التسليم", "كنت بحدد الهدف وأخلي الناس تتفق على الخطوات", "أخدت جزء محدد ونفّذته وسلّمته في ميعاده", "كنت بساعد لما حد يطلب مني", "ما اشتغلتش في فريق قبل كده"], scores: [5, 4, 3, 2, 1] },
         { id: "ق2", section: "القيادة", q: "لما الفريق يختلف على قرار، بتعمل إيه عادة؟", options: ["بجمع الآراء وأقترح قرارًا وأتحمّل مسؤوليته", "بحاول أقرّب وجهات النظر لحد ما نتفق", "بقول رأيي وبسيب القرار للأغلبية", "بستنى حد يقرر وأنفّذ", "ببعد عن الخلافات"], scores: [5, 4, 3, 2, 1] },
@@ -604,36 +652,53 @@
         document.getElementById('fullLoginForm').style.display = 'block';
     };
 
-    // تسجيل الدخول والتحقق من التكرار والبيانات
+    // تسجيل الدخول مع طبقات حماية جديدة للبريد والجوال والاسم
     window.login = async function() {
         const name = document.getElementById('traineeName').value.trim();
         const email = document.getElementById('traineeEmail').value.trim();
-        const mobile = document.getElementById('traineeMobile').value.trim();
+        const mobileNumber = document.getElementById('traineeMobile').value.trim();
+        const countryCode = document.getElementById('countryCode').value;
         const traineeNum = document.getElementById('bootcampId').value.trim();
         const hours = document.getElementById('traineeHours').value;
         const shift = document.getElementById('traineeShift').value;
 
-        if(!name || !email || !mobile || !traineeNum) { alert("الرجاء تعبئة كافة البيانات الأساسية."); return; }
+        if(!name || !email || !mobileNumber || !traineeNum) { alert("الرجاء تعبئة كافة البيانات الأساسية."); return; }
 
-        // التحقق من صيغة البريد
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            alert("صيغة البريد الإلكتروني غير صحيحة. يرجى التأكد (مثال: name@example.com).");
+        // التحقق من الاسم الثنائي على الأقل
+        const nameParts = name.split(/\s+/);
+        if(nameParts.length < 2) {
+            alert("يرجى إدخال اسمك الثنائي أو الثلاثي لضمان الدقة في التقرير والشهادة.");
             return;
         }
 
-        // التحقق من الجوال (دولي يبدأ بـ +)
-        const mobileRegex = /^\+\d{8,15}$/;
-        if (!mobileRegex.test(mobile)) {
-            alert("رقم الجوال غير صحيح. يرجى استخدام مفتاح الدولة مبتدئاً بـ + (مثال: +966500000000).");
+        // التحقق القوي من البريد الإلكتروني
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(email)) {
+            alert("صيغة البريد الإلكتروني غير صحيحة. يرجى التأكد من كتابته بشكل سليم (مثال: name@domain.com).");
+            return;
+        }
+
+        // حظر النطاقات الوهمية
+        const blockedDomains = ['nomail.com', 'test.com', 'example.com', 'dummy.com'];
+        const domain = email.split('@')[1].toLowerCase();
+        if (blockedDomains.includes(domain)) {
+            alert("الرجاء استخدام بريد إلكتروني حقيقي للتسجيل.");
+            return;
+        }
+
+        // التحقق من أرقام الجوال المدخلة (أرقام فقط بدون +)
+        const mobileRegex = /^\d{8,12}$/;
+        if (!mobileRegex.test(mobileNumber)) {
+            alert("رقم الجوال غير صحيح. يرجى إدخال الأرقام فقط (من 8 إلى 12 رقماً) في الحقل المخصص، بعد اختيار الدولة.");
             return;
         }
         
+        const fullMobile = countryCode + mobileNumber;
         const bootcamp = "BAC9-" + traineeNum;
         const traineeRef = doc(db, "trainees", bootcamp);
         
         try {
-            // التحقق المزدوج: منع تكرار التسجيل لنفس البريد أو الجوال بكود مختلف
+            // التحقق المزدوج: منع التسجيل المكرر
             const emailQ = query(collection(db, "trainees"), where("email", "==", email));
             const emailSnap = await getDocs(emailQ);
             
@@ -641,7 +706,7 @@
             if (!emailSnap.empty) {
                 existingDocId = emailSnap.docs[0].id;
             } else {
-                const mobileQ = query(collection(db, "trainees"), where("mobile", "==", mobile));
+                const mobileQ = query(collection(db, "trainees"), where("mobile", "==", fullMobile));
                 const mobileSnap = await getDocs(mobileQ);
                 if (!mobileSnap.empty) existingDocId = mobileSnap.docs[0].id;
             }
@@ -654,8 +719,7 @@
             const docSnap = await getDoc(traineeRef);
             if(docSnap.exists()) {
                 const data = docSnap.data();
-                // منع سرقة أكواد المتدربين (يجب أن يتطابق البريد أو الجوال إذا الكود محجوز)
-                if (data.email !== email && data.mobile !== mobile) {
+                if (data.email !== email && data.mobile !== fullMobile) {
                     alert("بيانات الدخول غير متطابقة مع هذا المعرّف المحجوز. تأكد من بريدك ورقم الجوال.");
                     return;
                 }
@@ -667,12 +731,12 @@
                 if(data.preAnswers) localStorage.setItem('ba_answers_pre', JSON.stringify(data.preAnswers));
                 if(data.postAnswers) localStorage.setItem('ba_answers_post', JSON.stringify(data.postAnswers));
             } else {
-                await setDoc(traineeRef, { name, email, mobile, bootcamp, hours, shift, createdAt: new Date().toISOString() }, { merge: true });
+                await setDoc(traineeRef, { name, email, mobile: fullMobile, bootcamp, hours, shift, createdAt: new Date().toISOString() }, { merge: true });
             }
             
             localStorage.setItem('ba_trainee_name', name);
             localStorage.setItem('ba_trainee_email', email);
-            localStorage.setItem('ba_trainee_mobile', mobile);
+            localStorage.setItem('ba_trainee_mobile', fullMobile);
             localStorage.setItem('ba_trainee_bootcamp', bootcamp);
             localStorage.setItem('ba_trainee_shift', shift);
             window.showView('dashboardView');
@@ -911,7 +975,7 @@
         radarChartInstance = new Chart(ctx, {
             type: 'radar',
             data: { labels: preObj.labels, datasets: datasets },
-            options: { responsive: true, maintainAspectRatio: false, scales: { r: { suggestedMin: 0, suggestedMax: 100, ticks: { stepSize: 20, font:{family:'Tajawal'} }, pointLabels: { font: { family: 'Tajawal', size: 11, weight: 'bold' } } } }, plugins: { legend: { position: 'bottom', labels:{font:{family:'Tajawal', size:12}} } } }
+            options: { responsive: true, maintainAspectRatio: false, scales: { r: { suggestedMin: 0, suggestedMax: 100, ticks: { stepSize: 20, font:{family:'Tajawal'} }, pointLabels: { font: { family: 'Tajawal', size: 11, weight: 'bold' } } } }, plugins: { legend: { position: 'bottom', labels:{font:{family:'Tajawal'}} } } }
         });
     }
 
@@ -985,7 +1049,6 @@
                 `;
             });
 
-            // سحب التوزيع السحابي إذا كان محفوظاً من قبل
             const teamsDoc = await getDoc(doc(db, "settings", "teams_allocation"));
             if (teamsDoc.exists() && teamsDoc.data().teams) {
                 const savedTeams = teamsDoc.data().teams;
@@ -1201,7 +1264,6 @@
         }
     }
 
-    // تصدير دقيق لـ Excel يدعم العربية بفضل تقنية Blob 
     window.exportTeamsToCSV = function() {
         let csvRows = [];
         csvRows.push(["الفريق", "اسم المتدرب", "المعرّف", "الجوال", "البريد الإلكتروني", "الكفاءة الأبرز", "التوافر (الوقت)", "التقييم القبلي", "التقييم البعدي"].join(","));
