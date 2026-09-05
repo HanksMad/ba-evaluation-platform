@@ -10,6 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
+        /* هوية بصرية مؤسسية ورصينة */
         :root {
             --primary: #0F172A; 
             --primary-light: #2563EB; 
@@ -289,16 +290,15 @@
             <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 20px; background: var(--bg-body); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color);">
                 <div>
                     <h3 style="margin: 0 0 5px 0; color: var(--primary); font-size: 1.1em; font-weight: 800;">إدارة وتشكيل فرق مشاريع التخرج</h3>
-                    <p style="margin: 0; font-size: 0.9em; color: var(--text-secondary); font-weight: 500;">التوزيع الذكي وحفظ الفرق المُشكلة في قاعدة البيانات السحابية.</p>
+                    <p style="margin: 0; font-size: 0.9em; color: var(--text-secondary); font-weight: 500;">تكوين الفرق آلياً بجمع المتدربين في نفس (وقت العمل) لتحقيق التوافق.</p>
                 </div>
                 <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
                     <label style="font-size: 0.85em; font-weight: 800; color: var(--primary);">حجم الفريق:</label>
-                    <input type="number" id="teamSizeInput" class="form-control" value="5" min="2" max="100" style="width: 70px; padding: 8px; margin: 0; text-align: center;">
+                    <input type="number" id="teamSizeInput" class="form-control" value="5" min="2" max="100" style="width: 70px; padding: 8px; margin: 0; text-align: center;" onchange="saveTeamSize(this.value)">
                     <div class="btn-action-group">
                         <button class="btn-secondary" style="width: auto; margin-top:0;" onclick="addNewEmptyTeam()"><i class="fa-solid fa-plus"></i> إضافة فريق</button>
-                        <button class="btn-primary" style="width: auto; background: var(--primary-light);" onclick="autoGenerateBalancedTeams()"><i class="fa-solid fa-wand-magic-sparkles"></i> تشكيل ذكي</button>
-                        <!-- زر حفظ الفرق للسحابة -->
-                        <button class="btn-primary" style="width: auto; background: var(--primary);" onclick="saveTeamsToCloud()"><i class="fa-solid fa-cloud-arrow-up"></i> حفظ التوزيع للسحابة</button>
+                        <button class="btn-primary" style="width: auto; background: var(--primary-light);" onclick="autoGenerateBalancedTeams()"><i class="fa-solid fa-wand-magic-sparkles"></i> تشكيل زمني متوازن</button>
+                        <button class="btn-primary" style="width: auto; background: var(--primary);" onclick="saveTeamsToCloud()"><i class="fa-solid fa-cloud-arrow-up"></i> حفظ التوزيع</button>
                         <button class="btn-accent" style="width: auto; background:#16A34A;" onclick="exportTeamsToCSV()"><i class="fa-solid fa-file-csv"></i> تصدير لـ Excel</button>
                         <button class="btn-secondary" style="width: auto; margin-top:0; color:#475569; border-color:#94A3B8;" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة</button>
                     </div>
@@ -439,7 +439,7 @@
     </div>
 </div>
 
-<!-- ================= الكود السحابي والمصادقة (Firebase + App Logic) ================= -->
+<!-- ================= الكود السحابي والمصادقة ================= -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, doc, setDoc, getDoc, collection, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -461,7 +461,7 @@
     
     setPersistence(auth, browserLocalPersistence);
 
-    // ================= بنك الأسئلة الدقيق (بأوزان النضج) =================
+    // ================= بنك الأسئلة =================
     const exactQuestionsBank = [
         { id: "ق1", section: "القيادة", q: "آخر مرة اشتغلت في فريق (شغل أو دراسة أو تطوّع) — إيه أقرب حاجة لدورك؟", options: ["أنا اللي قسّمت الشغل وحددت المواعيد وتابعت التنفيذ لحد التسليم", "كنت بحدد الهدف وأخلي الناس تتفق على الخطوات", "أخدت جزء محدد ونفّذته وسلّمته في ميعاده", "كنت بساعد لما حد يطلب مني", "ما اشتغلتش في فريق قبل كده"], scores: [5, 4, 3, 2, 1] },
         { id: "ق2", section: "القيادة", q: "لما الفريق يختلف على قرار، بتعمل إيه عادة؟", options: ["بجمع الآراء وأقترح قرارًا وأتحمّل مسؤوليته", "بحاول أقرّب وجهات النظر لحد ما نتفق", "بقول رأيي وبسيب القرار للأغلبية", "بستنى حد يقرر وأنفّذ", "ببعد عن الخلافات"], scores: [5, 4, 3, 2, 1] },
@@ -496,7 +496,6 @@
     let teams = []; let unassignedTrainees = [];
     let postUnlockDate = null;
 
-    // دالة خلط المصفوفات (Randomizer)
     function shuffleArray(array) {
         let newArray = [...array];
         for (let i = newArray.length - 1; i > 0; i--) {
@@ -509,18 +508,31 @@
     async function fetchGlobalSettings() {
         try {
             const docSnap = await getDoc(doc(db, "settings", "config"));
-            if (docSnap.exists() && docSnap.data().postUnlockDate) {
-                postUnlockDate = new Date(docSnap.data().postUnlockDate);
-                const adminInput = document.getElementById('adminUnlockDate');
-                if(adminInput) {
-                    const tzoffset = (new Date()).getTimezoneOffset() * 60000;
-                    const localISOTime = (new Date(postUnlockDate - tzoffset)).toISOString().slice(0, 16);
-                    adminInput.value = localISOTime;
+            if (docSnap.exists()) {
+                let data = docSnap.data();
+                if (data.postUnlockDate) {
+                    postUnlockDate = new Date(data.postUnlockDate);
+                    const adminInput = document.getElementById('adminUnlockDate');
+                    if(adminInput) {
+                        const tzoffset = (new Date()).getTimezoneOffset() * 60000;
+                        const localISOTime = (new Date(postUnlockDate - tzoffset)).toISOString().slice(0, 16);
+                        adminInput.value = localISOTime;
+                    }
+                }
+                if (data.defaultTeamSize) {
+                    const sizeInput = document.getElementById('teamSizeInput');
+                    if(sizeInput) sizeInput.value = data.defaultTeamSize;
                 }
             }
         } catch(e) { console.log("إعدادات النظام غير مكتملة بعد."); }
         if(document.getElementById('dashboardView').classList.contains('active')) { updateDashboard(); }
     }
+
+    window.saveTeamSize = async function(size) {
+        try {
+            await setDoc(doc(db, "settings", "config"), { defaultTeamSize: parseInt(size) }, { merge: true });
+        } catch(e) { console.log(e); }
+    };
 
     window.onload = function() {
         fetchGlobalSettings();
@@ -731,13 +743,8 @@
                 container.innerHTML += `<div class="section-title"><span>${currentSection}</span> ${badgeHTML}</div>`;
             }
 
-            // خلط الخيارات مع الاحتفاظ بمعرّفها الأصلي لتسجيل النتيجة الصحيحة
             let mappedOptions = item.options.map((opt, originalIndex) => ({ text: opt, originalIndex: originalIndex }));
-            
-            // لا تخلط الخيارات إذا كان المتدرب يراجع إجاباته (ليشاهد نفس الترتيب)
-            if (!isReadOnly) {
-                mappedOptions = shuffleArray(mappedOptions);
-            }
+            if (!isReadOnly) mappedOptions = shuffleArray(mappedOptions);
 
             let optionsHTML = '';
             mappedOptions.forEach(mappedOpt => {
@@ -749,7 +756,6 @@
                 
                 optionsHTML += `
                     <label class="option-item ${resultClass}" style="${isReadOnly ? 'pointer-events: none;' : ''}">
-                        <!-- تم ربط القيمة الأصلية للتقييم -->
                         <input type="radio" name="q${index}" value="${optIndex}" ${isChecked} ${isDisabled}>
                         <span class="option-text">${mappedOpt.text}</span>
                     </label>
@@ -876,7 +882,6 @@
         });
     };
 
-    // ================= لوحة المشرف وتشكيل الفرق =================
     window.switchAdminTab = function(tab) {
         document.getElementById('tabTraineesBtn').classList.toggle('active', tab === 'trainees');
         document.getElementById('tabTeamsBtn').classList.toggle('active', tab === 'teams');
@@ -961,16 +966,10 @@
     window.saveTeamsToCloud = async function() {
         if (teams.length === 0) { alert("لا توجد فرق لحفظها!"); return; }
         try {
-            const teamsData = teams.map(t => ({
-                id: t.id,
-                name: t.name,
-                members: t.members.map(m => m.id)
-            }));
+            const teamsData = teams.map(t => ({ id: t.id, name: t.name, members: t.members.map(m => m.id) }));
             await setDoc(doc(db, "settings", "teams_allocation"), { teams: teamsData });
             alert("تم حفظ تشكيل الفرق وقائمة الانتظار في السحابة بنجاح!");
-        } catch(e) {
-            alert("حدث خطأ أثناء الحفظ بالسحابة.");
-        }
+        } catch(e) { alert("حدث خطأ أثناء الحفظ بالسحابة."); }
     };
 
     window.autoGenerateBalancedTeams = function() {
@@ -978,26 +977,58 @@
         let teamSize = sizeInput && sizeInput.value ? parseInt(sizeInput.value) : 5;
         if(teamSize < 2) teamSize = 5;
 
+        // حفظ حجم الفريق تلقائياً في السحابة
+        setDoc(doc(db, "settings", "config"), { defaultTeamSize: teamSize }, { merge: true }).catch(e=>console.log(e));
+
         let allTested = traineesList.filter(t => t.preScore !== '-'); 
         if (allTested.length === 0) { alert("عفواً، لا يوجد متدربون أكملوا التقييم القبلي حتى الآن لكي يتم تشكيل الفرق!"); return; }
 
-        allTested.sort(() => Math.random() - 0.5); 
         teams = [];
-        let fullTeamsCount = Math.floor(allTested.length / teamSize);
-
-        if (fullTeamsCount === 0 && allTested.length > 0) {
-            fullTeamsCount = 1;
-            teamSize = allTested.length; 
-        }
-
-        for (let i = 0; i < fullTeamsCount; i++) {
-            teams.push({ id: i + 1, name: `فريق المشروع #${i + 1}`, members: allTested.slice(i * teamSize, (i + 1) * teamSize) });
-        }
-        
+        let teamCounter = 1;
         let assignedIds = [];
-        teams.forEach(t => { t.members.forEach(m => { assignedIds.push(m.id); }); });
+
+        // 1. تجميع المتدربين بناءً على "التطابق الزمني" (Shift Clustering)
+        let shiftGroups = {};
+        allTested.forEach(t => {
+            let s = t.shift || 'غير محدد';
+            if(!shiftGroups[s]) shiftGroups[s] = [];
+            shiftGroups[s].push(t);
+        });
+
+        // 2. بناء الفرق حصرياً للمتدربين من نفس أوقات التوفر
+        for (let shift in shiftGroups) {
+            let group = shiftGroups[shift];
+            
+            // خلط مبدئي لضمان العشوائية
+            group.sort(() => Math.random() - 0.5);
+            // ترتيب جزئي (Round-Robin Sorting) لضمان توزيع المهارات وعدم تكدس القادة
+            group.sort((a, b) => a.topSkill.localeCompare(b.topSkill));
+
+            let fullTeamsCount = Math.floor(group.length / teamSize);
+            if (fullTeamsCount === 0) continue; 
+            
+            let shiftTeams = Array.from({length: fullTeamsCount}, () => []);
+            let traineesToAssign = group.slice(0, fullTeamsCount * teamSize);
+            
+            traineesToAssign.forEach((trainee, idx) => {
+                let teamIndex = idx % fullTeamsCount;
+                shiftTeams[teamIndex].push(trainee);
+            });
+            
+            shiftTeams.forEach(membersArray => {
+                teams.push({
+                    id: teamCounter,
+                    name: `فريق المشروع #${teamCounter} (${shift.split(' ')[0]})`,
+                    members: membersArray
+                });
+                teamCounter++;
+                membersArray.forEach(m => assignedIds.push(m.id));
+            });
+        }
+
         unassignedTrainees = traineesList.filter(t => !assignedIds.includes(t.id));
         renderTeamsAndPool();
+        alert("تم تشكيل الفرق بنجاح بناءً على التطابق الزمني والتوازن المهاري!");
     };
 
     window.addNewEmptyTeam = function() {
@@ -1046,9 +1077,7 @@
         }
 
         teams.forEach(team => {
-            let membersHTML = '';
-            let powerScore = 0;
-            let powerColor = '#E2E8F0';
+            let membersHTML = ''; let powerScore = 0; let powerColor = '#E2E8F0';
 
             if(team.members.length > 0) {
                 let totalScores = 0; let uniqueSkills = new Set(); let testedMembers = 0;
@@ -1133,10 +1162,9 @@
         }
     }
 
-    // ================= إصلاح مشكلة التصدير للإكسيل عبر Blob =================
+    // ================= إصلاح التصدير إلى Google Sheets عبر تقنية Blob =================
     window.exportTeamsToCSV = function() {
         let csvRows = [];
-        // إضافة العناوين
         csvRows.push(["الفريق", "اسم المتدرب", "المعرّف", "الجوال", "البريد الإلكتروني", "الكفاءة الأبرز", "التوافر (الوقت)", "التقييم القبلي", "التقييم البعدي"].join(","));
         
         teams.forEach(team => {
@@ -1151,7 +1179,6 @@
             csvRows.push(row.join(","));
         });
 
-        // دمج الصفوف مع ترميز UTF-8 لدعم العربية
         let csvString = "\uFEFF" + csvRows.join("\n");
         let blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
         let url = URL.createObjectURL(blob);
