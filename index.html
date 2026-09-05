@@ -10,7 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
-        /* هوية بصرية مؤسسية ورصينة */
         :root {
             --primary: #0F172A; 
             --primary-light: #2563EB; 
@@ -27,7 +26,6 @@
         body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 25px 15px; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; box-sizing: border-box; }
         .container { width: 100%; max-width: 960px; margin: 0 auto; padding-top: 20px; }
 
-        /* البطاقات الأساسية */
         .auth-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); overflow: hidden; max-width: 480px; margin: 0 auto; transition: 0.3s; width: 100%; }
         .auth-header { background: var(--primary); color: white; padding: 35px 25px; text-align: center; border-bottom: 4px solid var(--primary-light); }
         .auth-icon-wrapper { font-size: 2.2em; color: var(--primary-light); background: var(--bg-surface); width: 75px; height: 75px; border-radius: 12px; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
@@ -45,7 +43,6 @@
         .form-control { width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit; font-size: 15px; box-sizing: border-box; margin-bottom: 20px; transition: 0.2s; background-color: var(--bg-body); color: var(--text-main); }
         .form-control:focus { border-color: var(--primary-light); background-color: var(--bg-surface); outline: none; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
 
-        /* الأزرار */
         .btn-primary { background: var(--primary-light); color: white; border: none; padding: 12px 18px; border-radius: 6px; font-size: 1em; font-weight: 700; cursor: pointer; transition: 0.2s; display: inline-flex; justify-content: center; align-items: center; gap: 8px; font-family: inherit; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         .btn-primary:hover { background: #1D4ED8; }
         
@@ -66,7 +63,6 @@
         .hero-logout { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-weight: 700; font-size: 0.85em; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; }
         .hero-logout:hover { background: rgba(255,255,255,0.1); border-color: white; }
 
-        /* كروت التقييم */
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .assessment-card { border: 1px solid var(--border-color); border-radius: 10px; padding: 25px; text-align: right; cursor: pointer; transition: 0.2s; background: var(--bg-surface); display: flex; flex-direction: column; justify-content: space-between; position: relative; box-sizing: border-box; }
         .assessment-card:hover:not(.locked) { border-color: var(--primary-light); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); transform: translateY(-2px); }
@@ -105,7 +101,6 @@
         .btn-small { background: var(--bg-body); color: var(--primary); border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-weight: 700; font-size: 0.85em; transition: 0.2s;}
         .btn-small:hover { background: var(--border-color); }
 
-        /* الأسئلة والمقاييس */
         .section-title { background: #F8FAFC; color: var(--primary); padding: 15px 20px; border-right: 4px solid var(--accent); font-weight: 800; font-size: 1.1em; margin: 40px 0 20px 0; border-radius: 6px 0 0 6px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px;}
         .section-badge { background: var(--primary); color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.75em; }
         .question-block { margin-bottom: 30px; background: var(--bg-surface); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); }
@@ -129,28 +124,18 @@
 
         .chart-container { width: 100%; max-width: 500px; margin: 0 auto; padding: 10px; background: white; }
 
-        /* ================= إعدادات الطباعة الذكية للمشرف ================= */
         @media print {
             body { background: white; padding: 0; align-items: flex-start; }
             .container { max-width: 100%; margin: 0; padding: 0; }
-            
-            /* إخفاء كل شيء ما عدا قسم الفرق */
             body * { visibility: hidden; }
             #adminTeamsSection, #adminTeamsSection * { visibility: visible; }
-            
             #adminTeamsSection { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0; border: none; background: transparent; }
-            
-            /* إخفاء أزرار التحكم وحقول الإدخال وقائمة الانتظار في الطباعة */
             .btn-primary, .btn-secondary, .btn-accent, .remove-member-btn, .member-reassign-select, #teamSizeInput, label { display: none !important; }
-            #adminTeamsSection > div:first-child { display: none !important; } /* ترويسة أزرار التحكم */
+            #adminTeamsSection > div:first-child { display: none !important; } 
             .unassigned-pool { display: none !important; }
-            
-            /* ضبط شكل بطاقة الفريق في الطباعة وتمدد القوائم الطويلة */
             .team-card { box-shadow: none !important; border: 2px solid #000 !important; page-break-inside: avoid; break-inside: avoid; margin-bottom: 30px !important; border-radius: 0 !important; }
             .team-card-header { background: #f0f0f0 !important; border-bottom: 2px solid #000 !important; }
             .team-card-body { max-height: none !important; overflow: visible !important; padding: 15px !important; }
-            
-            /* ضبط شريط قوة التجانس للطباعة */
             .team-power-container { border: 1px solid #000 !important; }
             .team-power-text { color: #000 !important; text-shadow: none !important; }
         }
@@ -301,19 +286,20 @@
         </div>
 
         <div id="adminTeamsSection" style="display: none;">
-            <!-- أدوات التحكم وتصدير البيانات -->
             <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 20px; background: var(--bg-body); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color);">
                 <div>
                     <h3 style="margin: 0 0 5px 0; color: var(--primary); font-size: 1.1em; font-weight: 800;">إدارة وتشكيل فرق مشاريع التخرج</h3>
-                    <p style="margin: 0; font-size: 0.9em; color: var(--text-secondary); font-weight: 500;">حدد حجم الفريق لتطبيق الخوارزمية، ثم قم بتصدير أو طباعة النتائج النهائية.</p>
+                    <p style="margin: 0; font-size: 0.9em; color: var(--text-secondary); font-weight: 500;">التوزيع الذكي وحفظ الفرق المُشكلة في قاعدة البيانات السحابية.</p>
                 </div>
                 <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
                     <label style="font-size: 0.85em; font-weight: 800; color: var(--primary);">حجم الفريق:</label>
                     <input type="number" id="teamSizeInput" class="form-control" value="5" min="2" max="100" style="width: 70px; padding: 8px; margin: 0; text-align: center;">
                     <div class="btn-action-group">
                         <button class="btn-secondary" style="width: auto; margin-top:0;" onclick="addNewEmptyTeam()"><i class="fa-solid fa-plus"></i> إضافة فريق</button>
-                        <button class="btn-primary" style="width: auto;" onclick="autoGenerateBalancedTeams()"><i class="fa-solid fa-wand-magic-sparkles"></i> تشكيل ذكي</button>
-                        <button class="btn-accent" style="width: auto; background:#16A34A;" onclick="exportTeamsToCSV()"><i class="fa-solid fa-file-csv"></i> تصدير (Google Sheets)</button>
+                        <button class="btn-primary" style="width: auto; background: var(--primary-light);" onclick="autoGenerateBalancedTeams()"><i class="fa-solid fa-wand-magic-sparkles"></i> تشكيل ذكي</button>
+                        <!-- زر حفظ الفرق للسحابة -->
+                        <button class="btn-primary" style="width: auto; background: var(--primary);" onclick="saveTeamsToCloud()"><i class="fa-solid fa-cloud-arrow-up"></i> حفظ التوزيع للسحابة</button>
+                        <button class="btn-accent" style="width: auto; background:#16A34A;" onclick="exportTeamsToCSV()"><i class="fa-solid fa-file-csv"></i> تصدير لـ Excel</button>
                         <button class="btn-secondary" style="width: auto; margin-top:0; color:#475569; border-color:#94A3B8;" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة</button>
                     </div>
                 </div>
@@ -321,7 +307,6 @@
             
             <div class="teams-grid" id="teamsCardsContainer"></div>
             
-            <!-- قائمة الانتظار -->
             <div class="unassigned-pool" style="margin-top: 25px; background: var(--bg-surface); border: 2px dashed var(--border-color); border-radius: 12px; padding: 20px;">
                 <h4 style="margin:0 0 15px 0; color:var(--primary-light); font-size: 1.1em;"><i class="fa-solid fa-user-clock"></i> قائمة الانتظار (غير المسكنين في فرق): <span id="unassignedCount">0</span></h4>
                 <div class="unassigned-grid" id="unassignedListContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px;"></div>
@@ -396,7 +381,7 @@
                 <div id="postScoreBadge" class="score-badge" style="display:none;"></div>
             </div>
         </div>
-        <button id="traineeFullReportBtn" class="btn-primary" style="display:none; margin-top: 30px; padding: 15px;" onclick="showView('resultView')"><i class="fa-solid fa-chart-radar fa-lg"></i> استعراض تقرير الأداء الشامل (صورة)</button>
+        <button id="traineeFullReportBtn" class="btn-primary" style="display:none; margin-top: 30px; padding: 15px;" onclick="showView('resultView')"><i class="fa-solid fa-chart-radar fa-lg"></i> استعراض تقرير الأداء الشامل (صورة PDF)</button>
     </div>
 
     <!-- شاشة الاختبار -->
@@ -474,7 +459,6 @@
     const db = getFirestore(app);
     const auth = getAuth(app);
     
-    // تأمين بقاء الجلسة للمشرف
     setPersistence(auth, browserLocalPersistence);
 
     // ================= بنك الأسئلة الدقيق (بأوزان النضج) =================
@@ -512,6 +496,16 @@
     let teams = []; let unassignedTrainees = [];
     let postUnlockDate = null;
 
+    // دالة خلط المصفوفات (Randomizer)
+    function shuffleArray(array) {
+        let newArray = [...array];
+        for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
+    }
+
     async function fetchGlobalSettings() {
         try {
             const docSnap = await getDoc(doc(db, "settings", "config"));
@@ -524,18 +518,12 @@
                     adminInput.value = localISOTime;
                 }
             }
-        } catch(e) {
-            console.log("إعدادات النظام غير مكتملة بعد.");
-        }
-        if(document.getElementById('dashboardView').classList.contains('active')) {
-            updateDashboard();
-        }
+        } catch(e) { console.log("إعدادات النظام غير مكتملة بعد."); }
+        if(document.getElementById('dashboardView').classList.contains('active')) { updateDashboard(); }
     }
 
-    // ================= الموجّه الذكي للتحكم بالجلسات (Auth Router) =================
     window.onload = function() {
         fetchGlobalSettings();
-
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 initAdminModule();
@@ -563,9 +551,7 @@
             await setDoc(doc(db, "settings", "config"), { postUnlockDate: new Date(dateVal).toISOString() }, { merge: true });
             alert("تم حفظ وتحديث موعد إتاحة التقييم البعدي بنجاح!");
             postUnlockDate = new Date(dateVal);
-        } catch(e) {
-            alert("حدث خطأ أثناء الحفظ.");
-        }
+        } catch(e) { alert("حدث خطأ أثناء الحفظ."); }
     };
 
     window.showView = function(viewId) {
@@ -577,10 +563,8 @@
             document.getElementById('snapBootcampVal').innerText = localStorage.getItem('ba_trainee_bootcamp') || '-';
             document.getElementById('snapEmailVal').innerText = localStorage.getItem('ba_trainee_email') || '-';
             document.getElementById('snapMobileVal').innerText = localStorage.getItem('ba_trainee_mobile') || '-';
-            
             document.getElementById('snapPreScoreVal').innerText = (localStorage.getItem('ba_score_pre') || '0') + '%';
             document.getElementById('snapPostScoreVal').innerText = (localStorage.getItem('ba_score_post') || '0') + '%';
-            
             let pre = parseInt(localStorage.getItem('ba_score_pre') || 0);
             let post = parseInt(localStorage.getItem('ba_score_post') || 0);
             let diff = post - pre;
@@ -589,9 +573,7 @@
         }
     };
 
-    window.quickLogin = function() {
-        window.showView('dashboardView');
-    };
+    window.quickLogin = function() { window.showView('dashboardView'); };
 
     window.clearQuickLogin = function() {
         localStorage.removeItem('ba_trainee_name');
@@ -635,17 +617,11 @@
             localStorage.setItem('ba_trainee_mobile', mobile);
             localStorage.setItem('ba_trainee_bootcamp', bootcamp);
             localStorage.setItem('ba_trainee_shift', shift);
-            
             window.showView('dashboardView');
-        } catch(e) {
-            alert("حدث خطأ أثناء الاتصال بقاعدة البيانات.");
-        }
+        } catch(e) { alert("حدث خطأ أثناء الاتصال بقاعدة البيانات."); }
     };
 
-    window.logout = function() { 
-        localStorage.clear(); 
-        window.location.reload(); 
-    };
+    window.logout = function() { localStorage.clear(); window.location.reload(); };
 
     window.adminLogin = async function() {
         const email = document.getElementById('adminEmail').value;
@@ -661,9 +637,7 @@
         }
     };
 
-    window.adminLogout = function() {
-        signOut(auth).then(() => { window.location.reload(); });
-    };
+    window.adminLogout = function() { signOut(auth).then(() => { window.location.reload(); }); };
 
     function updateDashboard() {
         const savedName = localStorage.getItem('ba_trainee_name');
@@ -729,17 +703,11 @@
     window.handlePreTestClick = function() { window.startQuiz('pre', localStorage.getItem('ba_score_pre') !== null); };
     window.handlePostTestClick = function() {
         if(localStorage.getItem('ba_score_pre') === null) { alert("يجب إتمام التقييم القبلي أولاً."); return; }
-        
         const postScore = localStorage.getItem('ba_score_post');
         if (postScore === null) {
             let now = new Date();
-            if (!postUnlockDate) {
-                alert("التقييم البعدي قيد التجهيز. لم يتم تحديد موعد الإطلاق من قِبل الإدارة بعد.");
-                return;
-            } else if (now < postUnlockDate) {
-                alert("التقييم البعدي غير متاح بعد. الرجاء الانتظار حتى الموعد المحدد.");
-                return;
-            }
+            if (!postUnlockDate) { alert("التقييم البعدي قيد التجهيز. لم يتم تحديد موعد الإطلاق."); return; } 
+            else if (now < postUnlockDate) { alert("التقييم البعدي غير متاح بعد. الرجاء الانتظار."); return; }
         }
         window.startQuiz('post', postScore !== null);
     };
@@ -763,18 +731,27 @@
                 container.innerHTML += `<div class="section-title"><span>${currentSection}</span> ${badgeHTML}</div>`;
             }
 
+            // خلط الخيارات مع الاحتفاظ بمعرّفها الأصلي لتسجيل النتيجة الصحيحة
+            let mappedOptions = item.options.map((opt, originalIndex) => ({ text: opt, originalIndex: originalIndex }));
+            
+            // لا تخلط الخيارات إذا كان المتدرب يراجع إجاباته (ليشاهد نفس الترتيب)
+            if (!isReadOnly) {
+                mappedOptions = shuffleArray(mappedOptions);
+            }
+
             let optionsHTML = '';
-            item.options.forEach((opt, optIndex) => {
+            mappedOptions.forEach(mappedOpt => {
+                let optIndex = mappedOpt.originalIndex;
                 let isChecked = (isReadOnly && savedAnswers[index] === optIndex) ? 'checked' : '';
                 let isDisabled = isReadOnly ? 'disabled' : '';
-                
                 let isSelected = (isReadOnly && savedAnswers[index] === optIndex);
                 let resultClass = isSelected ? 'ans-selected' : '';
                 
                 optionsHTML += `
                     <label class="option-item ${resultClass}" style="${isReadOnly ? 'pointer-events: none;' : ''}">
+                        <!-- تم ربط القيمة الأصلية للتقييم -->
                         <input type="radio" name="q${index}" value="${optIndex}" ${isChecked} ${isDisabled}>
-                        <span class="option-text">${opt}</span>
+                        <span class="option-text">${mappedOpt.text}</span>
                     </label>
                 `;
             });
@@ -847,9 +824,7 @@
             });
             window.showView('resultView');
             window.scrollTo(0,0);
-        } catch(e) {
-            alert("حدث خطأ أثناء حفظ النتيجة بالسحابة.");
-        }
+        } catch(e) { alert("حدث خطأ أثناء حفظ النتيجة بالسحابة."); }
     };
 
     function drawRadarChart() {
@@ -884,19 +859,7 @@
         radarChartInstance = new Chart(ctx, {
             type: 'radar',
             data: { labels: preObj.labels, datasets: datasets },
-            options: { 
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: { 
-                    r: { 
-                        suggestedMin: 0, 
-                        suggestedMax: 100, 
-                        ticks: { stepSize: 20, font:{family:'Tajawal'} }, 
-                        pointLabels: { font: { family: 'Tajawal', size: 11, weight: 'bold' } } 
-                    } 
-                }, 
-                plugins: { legend: { position: 'bottom', labels:{font:{family:'Tajawal', size:12}} } } 
-            }
+            options: { responsive: true, maintainAspectRatio: false, scales: { r: { suggestedMin: 0, suggestedMax: 100, ticks: { stepSize: 20, font:{family:'Tajawal'} }, pointLabels: { font: { family: 'Tajawal', size: 11, weight: 'bold' } } } }, plugins: { legend: { position: 'bottom', labels:{font:{family:'Tajawal', size:12}} } } }
         });
     }
 
@@ -904,27 +867,12 @@
         const element = document.getElementById('snapshotReportContent');
         const originalWidth = element.style.width;
         const originalMaxWidth = element.style.maxWidth;
-        
-        element.style.width = '800px';
-        element.style.maxWidth = '800px';
-        
+        element.style.width = '800px'; element.style.maxWidth = '800px';
         const scrollY = window.scrollY;
 
-        html2canvas(element, { 
-            scale: 2, 
-            useCORS: true, 
-            logging: false,
-            scrollY: -window.scrollY,
-            windowWidth: 800
-        }).then(canvas => {
-            element.style.width = originalWidth;
-            element.style.maxWidth = originalMaxWidth;
-            window.scrollTo(0, scrollY);
-            
-            const link = document.createElement('a');
-            link.download = `BA_Competency_Report_${localStorage.getItem('ba_trainee_bootcamp')}.png`;
-            link.href = canvas.toDataURL('image/png');
-            link.click();
+        html2canvas(element, { scale: 2, useCORS: true, logging: false, scrollY: -window.scrollY, windowWidth: 800 }).then(canvas => {
+            element.style.width = originalWidth; element.style.maxWidth = originalMaxWidth; window.scrollTo(0, scrollY);
+            const link = document.createElement('a'); link.download = `BA_Competency_Report_${localStorage.getItem('ba_trainee_bootcamp')}.png`; link.href = canvas.toDataURL('image/png'); link.click();
         });
     };
 
@@ -986,13 +934,44 @@
                 `;
             });
 
-            unassignedTrainees = [...traineesList];
-            teams = [];
+            // سحب التوزيع السحابي إذا كان محفوظاً من قبل
+            const teamsDoc = await getDoc(doc(db, "settings", "teams_allocation"));
+            if (teamsDoc.exists() && teamsDoc.data().teams) {
+                const savedTeams = teamsDoc.data().teams;
+                teams = [];
+                let assignedIds = new Set();
+                savedTeams.forEach(st => {
+                    let teamMembers = [];
+                    st.members.forEach(memberId => {
+                        let trainee = traineesList.find(t => t.id === memberId);
+                        if(trainee) { teamMembers.push(trainee); assignedIds.add(memberId); }
+                    });
+                    teams.push({ id: st.id, name: st.name, members: teamMembers });
+                });
+                unassignedTrainees = traineesList.filter(t => !assignedIds.has(t.id));
+            } else {
+                unassignedTrainees = [...traineesList];
+                teams = [];
+            }
             renderTeamsAndPool();
-        } catch(e) {
-            console.error("Fetch Data Error:", e);
-        }
+        } catch(e) { console.error("Fetch Data Error:", e); }
     }
+
+    // حفظ التوزيع النهائي للفرق في السحابة
+    window.saveTeamsToCloud = async function() {
+        if (teams.length === 0) { alert("لا توجد فرق لحفظها!"); return; }
+        try {
+            const teamsData = teams.map(t => ({
+                id: t.id,
+                name: t.name,
+                members: t.members.map(m => m.id)
+            }));
+            await setDoc(doc(db, "settings", "teams_allocation"), { teams: teamsData });
+            alert("تم حفظ تشكيل الفرق وقائمة الانتظار في السحابة بنجاح!");
+        } catch(e) {
+            alert("حدث خطأ أثناء الحفظ بالسحابة.");
+        }
+    };
 
     window.autoGenerateBalancedTeams = function() {
         let sizeInput = document.getElementById('teamSizeInput');
@@ -1000,14 +979,9 @@
         if(teamSize < 2) teamSize = 5;
 
         let allTested = traineesList.filter(t => t.preScore !== '-'); 
-        
-        if (allTested.length === 0) {
-            alert("عفواً، لا يوجد متدربون أكملوا التقييم القبلي حتى الآن لكي يتم تشكيل الفرق!");
-            return;
-        }
+        if (allTested.length === 0) { alert("عفواً، لا يوجد متدربون أكملوا التقييم القبلي حتى الآن لكي يتم تشكيل الفرق!"); return; }
 
         allTested.sort(() => Math.random() - 0.5); 
-
         teams = [];
         let fullTeamsCount = Math.floor(allTested.length / teamSize);
 
@@ -1017,22 +991,12 @@
         }
 
         for (let i = 0; i < fullTeamsCount; i++) {
-            teams.push({
-                id: i + 1,
-                name: `فريق المشروع #${i + 1}`,
-                members: allTested.slice(i * teamSize, (i + 1) * teamSize)
-            });
+            teams.push({ id: i + 1, name: `فريق المشروع #${i + 1}`, members: allTested.slice(i * teamSize, (i + 1) * teamSize) });
         }
         
         let assignedIds = [];
-        teams.forEach(t => {
-            t.members.forEach(m => {
-                assignedIds.push(m.id);
-            });
-        });
-
+        teams.forEach(t => { t.members.forEach(m => { assignedIds.push(m.id); }); });
         unassignedTrainees = traineesList.filter(t => !assignedIds.includes(t.id));
-        
         renderTeamsAndPool();
     };
 
@@ -1062,7 +1026,6 @@
                 if (idx !== -1) trainee = sourceTeam.members.splice(idx, 1)[0];
             }
         }
-
         if (!trainee) return;
 
         if (targetTeamId === 'unassigned') {
@@ -1088,32 +1051,22 @@
             let powerColor = '#E2E8F0';
 
             if(team.members.length > 0) {
-                let totalScores = 0;
-                let uniqueSkills = new Set();
-                let testedMembers = 0;
-
+                let totalScores = 0; let uniqueSkills = new Set(); let testedMembers = 0;
                 team.members.forEach(m => {
-                    if(m.preScore !== '-') {
-                        totalScores += parseInt(m.preScore);
-                        testedMembers++;
-                    }
+                    if(m.preScore !== '-') { totalScores += parseInt(m.preScore); testedMembers++; }
                     uniqueSkills.add(m.topSkill);
                 });
-
                 if(testedMembers > 0) {
                     let avgScore = totalScores / testedMembers;
                     let diversityRatio = uniqueSkills.size / team.members.length; 
                     powerScore = Math.round((avgScore * 0.7) + (diversityRatio * 30));
                     if(powerScore > 100) powerScore = 100;
                 }
-                
                 powerColor = powerScore >= 85 ? 'var(--success)' : (powerScore >= 70 ? 'var(--primary-light)' : 'var(--danger)');
 
                 team.members.forEach(m => {
                     let moveOptions = `<option value="">نقل إلى...</option>`;
-                    teams.forEach(otherTeam => {
-                        if(otherTeam.id !== team.id) moveOptions += `<option value="${otherTeam.id}">${otherTeam.name}</option>`;
-                    });
+                    teams.forEach(otherTeam => { if(otherTeam.id !== team.id) moveOptions += `<option value="${otherTeam.id}">${otherTeam.name}</option>`; });
                     moveOptions += `<option value="unassigned">← للانتظار</option>`;
 
                     membersHTML += `
@@ -1131,9 +1084,7 @@
                         </div>
                     `;
                 });
-            } else {
-                membersHTML = `<p style="color:gray; font-size:0.85em; text-align:center; margin:15px 0;">لا يوجد أعضاء</p>`;
-            }
+            } else { membersHTML = `<p style="color:gray; font-size:0.85em; text-align:center; margin:15px 0;">لا يوجد أعضاء</p>`; }
 
             let powerBarHTML = team.members.length > 0 ? `
                 <div class="team-power-container" style="background: var(--border-color); border-radius: 6px; margin: 15px 0; overflow: hidden; position: relative; height: 26px;">
@@ -1182,25 +1133,30 @@
         }
     }
 
-    // ================= وظيفة تصدير البيانات إلى Excel/Google Sheets =================
+    // ================= إصلاح مشكلة التصدير للإكسيل عبر Blob =================
     window.exportTeamsToCSV = function() {
-        // إضافة BOM لدعم اللغة العربية في Excel
-        let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; 
-        csvContent += "الفريق,اسم المتدرب,المعرّف,الجوال,البريد الإلكتروني,الكفاءة الأبرز,التوافر (الوقت),التقييم القبلي,التقييم البعدي\n";
+        let csvRows = [];
+        // إضافة العناوين
+        csvRows.push(["الفريق", "اسم المتدرب", "المعرّف", "الجوال", "البريد الإلكتروني", "الكفاءة الأبرز", "التوافر (الوقت)", "التقييم القبلي", "التقييم البعدي"].join(","));
         
         teams.forEach(team => {
             team.members.forEach(m => {
-                csvContent += `${team.name},${m.name},${m.bootcamp},${m.mobile},${m.email},${m.topSkill},${m.shift},${m.preScore}%,${m.postScore !== '-' ? m.postScore+'%' : '-'}\n`;
+                let row = [`"${team.name}"`, `"${m.name}"`, `"${m.bootcamp}"`, `"${m.mobile}"`, `"${m.email}"`, `"${m.topSkill}"`, `"${m.shift}"`, `"${m.preScore}%"`, `"${m.postScore !== '-' ? m.postScore+'%' : '-'}"`];
+                csvRows.push(row.join(","));
             });
         });
         
         unassignedTrainees.forEach(m => {
-            csvContent += `قائمة الانتظار,${m.name},${m.bootcamp},${m.mobile},${m.email},${m.topSkill},${m.shift},${m.preScore}%,${m.postScore !== '-' ? m.postScore+'%' : '-'}\n`;
+            let row = [`"قائمة الانتظار"`, `"${m.name}"`, `"${m.bootcamp}"`, `"${m.mobile}"`, `"${m.email}"`, `"${m.topSkill}"`, `"${m.shift}"`, `"${m.preScore}%"`, `"${m.postScore !== '-' ? m.postScore+'%' : '-'}"`];
+            csvRows.push(row.join(","));
         });
 
-        const encodedUri = encodeURI(csvContent);
-        const link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
+        // دمج الصفوف مع ترميز UTF-8 لدعم العربية
+        let csvString = "\uFEFF" + csvRows.join("\n");
+        let blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+        let url = URL.createObjectURL(blob);
+        let link = document.createElement("a");
+        link.setAttribute("href", url);
         link.setAttribute("download", `BA_Teams_Export_${new Date().toISOString().slice(0,10)}.csv`);
         document.body.appendChild(link);
         link.click();
@@ -1261,9 +1217,7 @@
                 let icon = isSelected ? '<i class="fa-solid fa-check-circle" style="color: var(--primary-light);"></i> ' : '<i class="fa-regular fa-circle" style="color: #CBD5E1;"></i> ';
                 let scoreWeight = q.scores[optIndex];
                 let maxScore = Math.max(...q.scores);
-                
                 let weightBadge = isSelected ? `<span class="weight-badge">الوزن: ${scoreWeight}/${maxScore}</span>` : '';
-                
                 html += `<div class="${optClass}">${icon}${opt} ${weightBadge}</div>`;
             });
             html += `</div>`;
