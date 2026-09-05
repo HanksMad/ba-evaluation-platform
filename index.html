@@ -113,11 +113,6 @@
         .option-item:has(input[type="radio"]:checked) { border-color: var(--primary-light); background: #EFF6FF; }
         .option-item:has(input[type="radio"]:checked) .option-text { color: var(--primary-light); font-weight: 800; }
 
-        .correct-option { background-color: #F0FDF4 !important; border-color: #16A34A !important; }
-        .correct-option .option-text { color: #15803D !important; font-weight: 800; }
-        .wrong-option { background-color: #FEF2F2 !important; border-color: #DC2626 !important; }
-        .wrong-option .option-text { color: #B91C1C !important; font-weight: 800; }
-
         .ans-selected { background: #EEF2FF !important; border-color: var(--primary-light) !important; font-weight: 800; border-width: 2px !important; }
         .ans-normal { background: #FFF; border-color: var(--border-color); opacity: 0.7; }
         .weight-badge { float: left; font-weight: bold; color: var(--primary); background: white; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
@@ -136,6 +131,12 @@
         .snapshot-box span { font-size: 1.8em; font-weight: 800; color: var(--primary-light); }
 
         .chart-container { width: 100%; max-width: 500px; margin: 0 auto; padding: 10px; background: white; }
+
+        /* نافذة التعديل المنبثقة (Modal) */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); z-index: 1000; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px); }
+        .modal-content { background: var(--bg-surface); padding: 30px; border-radius: 12px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); position: relative; }
+        .modal-close-btn { position: absolute; left: 20px; top: 20px; background: none; border: none; font-size: 1.2em; color: var(--text-secondary); cursor: pointer; transition: 0.2s; }
+        .modal-close-btn:hover { color: var(--danger); }
 
         @media print {
             body { background: white; padding: 0; align-items: flex-start; }
@@ -166,6 +167,8 @@
             .question-text { font-size: 1em; }
             .option-item { padding: 10px 12px; }
             .data-table th, .data-table td { padding: 8px; font-size: 0.85em; }
+            .btn-action-group { flex-direction: column; width: 100%; }
+            .btn-action-group button { width: 100% !important; }
         }
     </style>
 </head>
@@ -242,7 +245,6 @@
                                 <option value="+27">🇿🇦 +27</option>
                                 <option value="+381">RS +381</option>
                                 <option value="+82">KR +82</option>
-                                
                             </optgroup>
                         </select>
                         <input type="tel" id="traineeMobile" class="form-control" placeholder="5xxxxxxxx" style="margin-bottom: 0; text-align: left; flex-grow: 1;" required>
@@ -334,7 +336,14 @@
         <!-- قسم المتدربين مع فلاتر البحث -->
         <div id="adminTraineesSection">
             <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; background: var(--bg-surface); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); align-items: center;">
-                <strong style="color: var(--primary); font-size: 0.9em;"><i class="fa-solid fa-filter"></i> تصفية المتدربين:</strong>
+                <strong style="color: var(--primary); font-size: 0.9em;"><i class="fa-solid fa-filter"></i> بحث وتصفية:</strong>
+                
+                <!-- شريط البحث الذكي (Live Search) -->
+                <div style="position: relative; flex-grow: 1; min-width: 200px;">
+                    <i class="fa-solid fa-search" style="position: absolute; right: 12px; top: 10px; color: var(--text-secondary);"></i>
+                    <input type="text" id="searchTraineeInput" class="form-control" placeholder="ابحث بالاسم، المعرّف، البريد، أو الجوال..." style="margin-bottom: 0; padding: 8px 35px 8px 12px; font-size: 0.85em; width: 100%; box-sizing: border-box;" onkeyup="renderTraineesTable()">
+                </div>
+
                 <select id="filterSkill" class="form-control" style="width: auto; margin-bottom: 0; padding: 6px 12px; font-size: 0.85em;" onchange="renderTraineesTable()">
                     <option value="">كل الكفاءات</option>
                     <option value="القيادة">القيادة</option>
@@ -524,10 +533,49 @@
     </div>
 </div>
 
+<!-- نافذة التعديل المنبثقة للمشرف (Edit Modal) -->
+<div id="editModalOverlay" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close-btn" onclick="closeEditModal()"><i class="fa-solid fa-xmark"></i></button>
+        <h3 style="margin: 0 0 20px 0; color: var(--primary); border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">تعديل بيانات المتدرب</h3>
+        
+        <label class="form-label">الاسم الكامل</label>
+        <input type="text" id="editTraineeName" class="form-control" required>
+        
+        <label class="form-label">البريد الإلكتروني</label>
+        <input type="email" id="editTraineeEmail" class="form-control" dir="ltr" style="text-align: left;" required>
+        
+        <label class="form-label">رقم الجوال (بالصيغة الدولية +)</label>
+        <input type="tel" id="editTraineeMobile" class="form-control" dir="ltr" style="text-align: left;" required>
+        
+        <label class="form-label">رقم المتدرب (أرقام فقط)</label>
+        <input type="number" id="editBootcampId" class="form-control" dir="ltr" style="text-align: left;" required>
+        
+        <label class="form-label">الساعات المتاحة</label>
+        <select id="editTraineeHours" class="form-control">
+            <option value="أقل من 3 ساعات">أقل من 3 ساعات</option>
+            <option value="من 3 لـ 6">من 3 لـ 6 ساعات</option>
+            <option value="من 6 لـ 10">من 6 لـ 10 ساعات</option>
+            <option value="أكتر من 10">أكتر من 10 ساعات</option>
+        </select>
+
+        <label class="form-label">أفضل وقت للعمل</label>
+        <select id="editTraineeShift" class="form-control">
+            <option value="صباحًا قبل 12">صباحًا قبل 12</option>
+            <option value="بعد الظهر 12–5">بعد الظهر 12–5</option>
+            <option value="مساءً 5–9">مساءً 5–9</option>
+            <option value="متأخر بعد 9">متأخر بعد 9</option>
+            <option value="في الإجازات بس">في الإجازات فقط</option>
+        </select>
+        
+        <button class="btn-primary" onclick="saveTraineeEdit()">حفظ التعديلات <i class="fa-solid fa-floppy-disk"></i></button>
+    </div>
+</div>
+
 <!-- ================= الكود السحابي والمصادقة ================= -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, doc, setDoc, getDoc, collection, getDocs, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, doc, setDoc, getDoc, collection, getDocs, updateDoc, query, where, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
@@ -579,6 +627,7 @@
     let traineesList = []; let currentAdminTrainee = null;
     let teams = []; let unassignedTrainees = [];
     let postUnlockDate = null;
+    let editingTraineeId = null;
 
     function shuffleArray(array) {
         let newArray = [...array];
@@ -717,7 +766,6 @@
             return;
         }
         
-        // التحقق من رقم المتدرب: من 1 إلى 9999 ولا يبدأ بصفر
         const idRegex = /^[1-9]\d{0,3}$/;
         if (!idRegex.test(traineeNum)) {
             alert("رقم المتدرب يجب أن يتكون من رقم واحد إلى 4 أرقام كحد أقصى، ولا يمكن أن يبدأ بصفر (مثال: من 1 إلى 9999).");
@@ -1036,34 +1084,130 @@
         
         const filterSkill = document.getElementById('filterSkill').value;
         const filterShift = document.getElementById('filterShift').value;
+        const searchQuery = document.getElementById('searchTraineeInput').value.toLowerCase().trim();
 
         let filteredList = traineesList.filter(t => {
-            let matchSkill = true;
-            if (filterSkill) matchSkill = (t.topSkill === filterSkill);
+            let matchSkill = filterSkill ? (t.topSkill === filterSkill) : true;
+            let matchShift = filterShift ? (t.shift === filterShift) : true;
             
-            let matchShift = true;
-            if (filterShift) matchShift = (t.shift === filterShift);
+            let matchSearch = true;
+            if (searchQuery) {
+                matchSearch = (
+                    t.name.toLowerCase().includes(searchQuery) ||
+                    t.bootcamp.toLowerCase().includes(searchQuery) ||
+                    t.email.toLowerCase().includes(searchQuery) ||
+                    t.mobile.toLowerCase().includes(searchQuery)
+                );
+            }
             
-            return matchSkill && matchShift;
+            return matchSkill && matchShift && matchSearch;
         });
 
         if (filteredList.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:20px; color:var(--text-secondary);">لا يوجد متدربون يطابقون خيارات التصفية الحالية.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:20px; color:var(--text-secondary);">لا يوجد متدربون يطابقون خيارات البحث أو التصفية الحالية.</td></tr>`;
             return;
         }
 
         filteredList.forEach(t => {
             tbody.innerHTML += `
                 <tr>
-                    <td><strong>${t.name}</strong><br><span style="font-size:0.75em; color:gray;">${t.mobile}</span></td>
+                    <td><strong>${t.name}</strong><br><span style="font-size:0.75em; color:gray;" dir="ltr">${t.mobile}</span></td>
                     <td>${t.bootcamp}<br><span style="font-size:0.75em; color:var(--primary-light);"><i class="fa-solid fa-clock"></i> ${t.shift}</span></td>
                     <td><strong style="color:var(--primary);">${t.preScore !== '-' ? t.preScore+'%' : '-'}</strong></td>
                     <td><strong style="color:var(--success);">${t.postScore !== '-' ? t.postScore+'%' : '-'}</strong></td>
                     <td><span style="font-size:0.8em; background:#F1F5F9; padding:4px 8px; border-radius:6px; font-weight:bold;">${t.topSkill}</span></td>
-                    <td><button class="btn-small" onclick="viewTraineeReport('${t.id}')">مراجعة التقييم</button></td>
+                    <td>
+                        <div style="display:flex; gap:5px; justify-content:flex-end;">
+                            <button class="btn-small" style="background:#F1F5F9; color:var(--primary-light); border-color:#CBD5E1;" onclick="viewTraineeReport('${t.id}')" title="مراجعة التقييم"><i class="fa-solid fa-eye"></i></button>
+                            <button class="btn-small" style="background:#FFFBEB; color:#D97706; border-color:#FDE68A;" onclick="openEditModal('${t.id}')" title="تعديل البيانات"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn-small" style="background:#FEF2F2; color:var(--danger); border-color:#FECDD3;" onclick="deleteTrainee('${t.id}')" title="حذف المتدرب"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </td>
                 </tr>
             `;
         });
+    };
+
+    window.deleteTrainee = async function(traineeId) {
+        if(!confirm("هل أنت متأكد من حذف هذا المتدرب نهائياً؟ سيتم مسح كافة درجاته من النظام ولن يمكن التراجع عن هذا الإجراء.")) return;
+        try {
+            await deleteDoc(doc(db, "trainees", traineeId));
+            
+            traineesList = traineesList.filter(t => t.id !== traineeId);
+            unassignedTrainees = unassignedTrainees.filter(t => t.id !== traineeId);
+            teams.forEach(team => { team.members = team.members.filter(m => m.id !== traineeId); });
+            
+            renderTraineesTable();
+            renderTeamsAndPool();
+            
+            document.getElementById('totalTraineesCount').innerText = traineesList.length;
+            alert("تم حذف المتدرب بنجاح.");
+        } catch(e) { alert("حدث خطأ أثناء محاولة الحذف."); }
+    };
+
+    window.openEditModal = function(traineeId) {
+        const trainee = traineesList.find(t => t.id === traineeId);
+        if(!trainee) return;
+        editingTraineeId = traineeId;
+        
+        document.getElementById('editTraineeName').value = trainee.name;
+        document.getElementById('editTraineeEmail').value = trainee.email;
+        document.getElementById('editTraineeMobile').value = trainee.mobile;
+        
+        const numPart = trainee.bootcamp.replace('BAC9-', '');
+        document.getElementById('editBootcampId').value = numPart;
+        
+        document.getElementById('editTraineeHours').value = trainee.hours || 'أقل من 3 ساعات';
+        document.getElementById('editTraineeShift').value = trainee.shift || 'صباحًا قبل 12';
+        
+        document.getElementById('editModalOverlay').style.display = 'flex';
+    };
+
+    window.closeEditModal = function() {
+        document.getElementById('editModalOverlay').style.display = 'none';
+        editingTraineeId = null;
+    };
+
+    window.saveTraineeEdit = async function() {
+        const name = document.getElementById('editTraineeName').value.trim();
+        const email = document.getElementById('editTraineeEmail').value.trim();
+        const fullMobile = document.getElementById('editTraineeMobile').value.trim();
+        const traineeNum = document.getElementById('editBootcampId').value.trim();
+        const hours = document.getElementById('editTraineeHours').value;
+        const shift = document.getElementById('editTraineeShift').value;
+
+        if(!name || !email || !fullMobile || !traineeNum) { alert("الرجاء تعبئة كافة البيانات."); return; }
+
+        const newBootcampId = "BAC9-" + traineeNum;
+        
+        try {
+            const oldTrainee = traineesList.find(t => t.id === editingTraineeId);
+            let dataToSave = { name, email, mobile: fullMobile, bootcamp: newBootcampId, hours, shift };
+
+            if (oldTrainee.preScore !== '-') dataToSave.preScore = oldTrainee.preScore;
+            if (oldTrainee.postScore !== '-') dataToSave.postScore = oldTrainee.postScore;
+            if (oldTrainee.topSkill !== 'قيد الانتظار') dataToSave.topSkill = oldTrainee.topSkill;
+            if (oldTrainee.preChart) dataToSave.preChart = oldTrainee.preChart;
+            if (oldTrainee.postChart) dataToSave.postChart = oldTrainee.postChart;
+            if (oldTrainee.preAnswers) dataToSave.preAnswers = oldTrainee.preAnswers;
+            if (oldTrainee.postAnswers) dataToSave.postAnswers = oldTrainee.postAnswers;
+
+            if (newBootcampId !== editingTraineeId) {
+                const checkSnap = await getDoc(doc(db, "trainees", newBootcampId));
+                if(checkSnap.exists()) {
+                    alert("رقم المتدرب الجديد موجود مسبقاً لمتدرب آخر، يرجى اختيار رقم مختلف.");
+                    return;
+                }
+                await setDoc(doc(db, "trainees", newBootcampId), dataToSave, { merge: true });
+                await deleteDoc(doc(db, "trainees", editingTraineeId));
+            } else {
+                await updateDoc(doc(db, "trainees", editingTraineeId), dataToSave);
+            }
+
+            alert("تم حفظ التعديلات بنجاح!");
+            closeEditModal();
+            await initAdminModule(); 
+        } catch(e) { alert("حدث خطأ أثناء حفظ التعديلات."); }
     };
 
     async function initAdminModule() {
@@ -1086,6 +1230,7 @@
                     email: data.email || '',
                     mobile: data.mobile || '',
                     bootcamp: data.bootcamp || docSnap.id,
+                    hours: data.hours || 'أقل من 3 ساعات',
                     shift: data.shift || 'غير محدد',
                     preScore: pre,
                     postScore: post,
@@ -1101,7 +1246,6 @@
             document.getElementById('avgPreScore').innerText = countPre ? Math.round(sumPre/countPre) + '%' : '0%';
             document.getElementById('avgPostScore').innerText = countPost ? Math.round(sumPost/countPost) + '%' : '0%';
 
-            // تشغيل دالة العرض والفلاتر بدلاً من إدراج البيانات يدوياً
             window.renderTraineesTable();
 
             const teamsDoc = await getDoc(doc(db, "settings", "teams_allocation"));
@@ -1293,7 +1437,6 @@
             `;
         });
 
-        // تنظيم قائمة الانتظار بناءً على أوقات العمل
         const unassignedContainer = document.getElementById('unassignedListContainer');
         document.getElementById('unassignedCount').innerText = unassignedTrainees.length;
         
@@ -1335,33 +1478,6 @@
         }
         unassignedContainer.innerHTML = unassignedHTML;
     }
-
-    window.exportTeamsToCSV = function() {
-        let csvRows = [];
-        csvRows.push(["الفريق", "اسم المتدرب", "المعرّف", "الجوال", "البريد الإلكتروني", "الكفاءة الأبرز", "التوافر (الوقت)", "التقييم القبلي", "التقييم البعدي"].join(","));
-        
-        teams.forEach(team => {
-            team.members.forEach(m => {
-                let row = [`"${team.name}"`, `"${m.name}"`, `"${m.bootcamp}"`, `"${m.mobile}"`, `"${m.email}"`, `"${m.topSkill}"`, `"${m.shift}"`, `"${m.preScore}%"`, `"${m.postScore !== '-' ? m.postScore+'%' : '-'}"`];
-                csvRows.push(row.join(","));
-            });
-        });
-        
-        unassignedTrainees.forEach(m => {
-            let row = [`"قائمة الانتظار"`, `"${m.name}"`, `"${m.bootcamp}"`, `"${m.mobile}"`, `"${m.email}"`, `"${m.topSkill}"`, `"${m.shift}"`, `"${m.preScore}%"`, `"${m.postScore !== '-' ? m.postScore+'%' : '-'}"`];
-            csvRows.push(row.join(","));
-        });
-
-        let csvString = "\uFEFF" + csvRows.join("\n");
-        let blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
-        let url = URL.createObjectURL(blob);
-        let link = document.createElement("a");
-        link.setAttribute("href", url);
-        link.setAttribute("download", `BA_Teams_Export_${new Date().toISOString().slice(0,10)}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
 
     window.viewTraineeReport = function(traineeId) {
         currentAdminTrainee = traineesList.find(t => t.id === traineeId);
