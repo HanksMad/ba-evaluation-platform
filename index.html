@@ -10,7 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
-        /* هوية بصرية مؤسسية ورصينة */
         :root {
             --primary: #0F172A; 
             --primary-light: #2563EB; 
@@ -114,14 +113,22 @@
         .option-item:has(input[type="radio"]:checked) { border-color: var(--primary-light); background: #EFF6FF; }
         .option-item:has(input[type="radio"]:checked) .option-text { color: var(--primary-light); font-weight: 800; }
 
-        .correct-option { background-color: #F0FDF4 !important; border-color: #16A34A !important; }
-        .correct-option .option-text { color: #15803D !important; font-weight: 800; }
-        .wrong-option { background-color: #FEF2F2 !important; border-color: #DC2626 !important; }
-        .wrong-option .option-text { color: #B91C1C !important; font-weight: 800; }
-
         .ans-selected { background: #EEF2FF !important; border-color: var(--primary-light) !important; font-weight: 800; border-width: 2px !important; }
         .ans-normal { background: #FFF; border-color: var(--border-color); opacity: 0.7; }
         .weight-badge { float: left; font-weight: bold; color: var(--primary); background: white; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+
+        .snapshot-container { background: #ffffff; padding: 40px; border-radius: 12px; text-align: right; direction: rtl; border: 1px solid var(--border-color); max-width: 800px; margin: 0 auto; box-sizing: border-box; position: relative; }
+        .snapshot-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 20px; margin-bottom: 25px; }
+        .snapshot-header h2 { margin: 0; color: var(--primary); font-size: 1.4em; font-weight: 800; }
+        .snapshot-header span { font-size: 0.85em; color: var(--primary); background: var(--bg-body); padding: 6px 14px; border-radius: 6px; font-weight: 800; border: 1px solid var(--border-color); }
+        
+        .snapshot-meta { background: var(--bg-body); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-bottom: 25px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; font-size: 0.95em; }
+        .snapshot-meta-item strong { color: var(--text-secondary); margin-left: 6px; font-weight: 700; }
+
+        .snapshot-summary { display: flex; flex-wrap: wrap; justify-content: space-around; background: white; border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-bottom: 30px; text-align: center; gap: 15px; }
+        .snapshot-box { flex: 1; min-width: 120px; }
+        .snapshot-box h4 { margin: 0 0 8px 0; color: var(--text-secondary); font-size: 0.85em; font-weight: 700; text-transform: uppercase; }
+        .snapshot-box span { font-size: 1.8em; font-weight: 800; color: var(--primary-light); }
 
         .chart-container { width: 100%; max-width: 500px; margin: 0 auto; padding: 10px; background: white; }
 
@@ -180,13 +187,13 @@
                     <input type="text" id="traineeName" class="form-control" placeholder="أدخل اسمك الكامل" required>
                     
                     <label class="form-label">البريد الإلكتروني</label>
-                    <input type="email" id="traineeEmail" class="form-control" placeholder="name@example.com" required>
+                    <input type="email" id="traineeEmail" class="form-control" placeholder="name@example.com" style="text-align: left;" dir="ltr" required>
                     
-                    <label class="form-label">رقم الجوال</label>
-                    <input type="tel" id="traineeMobile" class="form-control" placeholder="05xxxxxxxx" required>
+                    <label class="form-label">رقم الجوال (شاملاً مفتاح الدولة)</label>
+                    <input type="tel" id="traineeMobile" class="form-control" placeholder="+9665xxxxxxxx" style="text-align: left;" dir="ltr" required>
                     
                     <label class="form-label">رقم المتدرب (أرقام فقط)</label>
-                    <input type="number" id="bootcampId" class="form-control" placeholder="مثال: 125" required>
+                    <input type="number" id="bootcampId" class="form-control" placeholder="مثال: 125" style="text-align: left;" dir="ltr" required>
 
                     <label class="form-label">الساعات المتاحة للدورة أسبوعياً</label>
                     <select id="traineeHours" class="form-control" required>
@@ -225,10 +232,10 @@
             </div>
             <div class="auth-body">
                 <label class="form-label">البريد الإلكتروني للمشرف</label>
-                <input type="email" id="adminEmail" class="form-control" placeholder="admin@ba-academy.com">
+                <input type="email" id="adminEmail" class="form-control" placeholder="admin@ba-academy.com" style="text-align: left;" dir="ltr">
                 
                 <label class="form-label">كلمة المرور المشفرة</label>
-                <input type="password" id="adminPass" class="form-control" placeholder="••••••••">
+                <input type="password" id="adminPass" class="form-control" placeholder="••••••••" style="text-align: left;" dir="ltr">
                 
                 <button class="btn-primary" style="width:100%;" id="adminLoginBtn" onclick="adminLogin()">دخول آمن للمشرفين <i class="fa-solid fa-lock"></i></button>
                 <button class="btn-secondary" style="width:100%;" onclick="showView('loginView')">العودة لصفحة المتدربين</button>
@@ -442,7 +449,7 @@
 <!-- ================= الكود السحابي والمصادقة ================= -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, doc, setDoc, getDoc, collection, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, doc, setDoc, getDoc, collection, getDocs, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
@@ -597,23 +604,62 @@
         document.getElementById('fullLoginForm').style.display = 'block';
     };
 
+    // تسجيل الدخول والتحقق من التكرار والبيانات
     window.login = async function() {
-        const name = document.getElementById('traineeName').value;
-        const email = document.getElementById('traineeEmail').value;
-        const mobile = document.getElementById('traineeMobile').value;
-        const traineeNum = document.getElementById('bootcampId').value;
+        const name = document.getElementById('traineeName').value.trim();
+        const email = document.getElementById('traineeEmail').value.trim();
+        const mobile = document.getElementById('traineeMobile').value.trim();
+        const traineeNum = document.getElementById('bootcampId').value.trim();
         const hours = document.getElementById('traineeHours').value;
         const shift = document.getElementById('traineeShift').value;
 
         if(!name || !email || !mobile || !traineeNum) { alert("الرجاء تعبئة كافة البيانات الأساسية."); return; }
+
+        // التحقق من صيغة البريد
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert("صيغة البريد الإلكتروني غير صحيحة. يرجى التأكد (مثال: name@example.com).");
+            return;
+        }
+
+        // التحقق من الجوال (دولي يبدأ بـ +)
+        const mobileRegex = /^\+\d{8,15}$/;
+        if (!mobileRegex.test(mobile)) {
+            alert("رقم الجوال غير صحيح. يرجى استخدام مفتاح الدولة مبتدئاً بـ + (مثال: +966500000000).");
+            return;
+        }
         
         const bootcamp = "BAC9-" + traineeNum;
         const traineeRef = doc(db, "trainees", bootcamp);
         
         try {
+            // التحقق المزدوج: منع تكرار التسجيل لنفس البريد أو الجوال بكود مختلف
+            const emailQ = query(collection(db, "trainees"), where("email", "==", email));
+            const emailSnap = await getDocs(emailQ);
+            
+            let existingDocId = null;
+            if (!emailSnap.empty) {
+                existingDocId = emailSnap.docs[0].id;
+            } else {
+                const mobileQ = query(collection(db, "trainees"), where("mobile", "==", mobile));
+                const mobileSnap = await getDocs(mobileQ);
+                if (!mobileSnap.empty) existingDocId = mobileSnap.docs[0].id;
+            }
+
+            if (existingDocId && existingDocId !== bootcamp) {
+                alert("هذا البريد الإلكتروني أو رقم الجوال مسجل مسبقاً بكود متدرب مختلف. لا يمكنك إنشاء حسابين.");
+                return;
+            }
+
             const docSnap = await getDoc(traineeRef);
             if(docSnap.exists()) {
                 const data = docSnap.data();
+                // منع سرقة أكواد المتدربين (يجب أن يتطابق البريد أو الجوال إذا الكود محجوز)
+                if (data.email !== email && data.mobile !== mobile) {
+                    alert("بيانات الدخول غير متطابقة مع هذا المعرّف المحجوز. تأكد من بريدك ورقم الجوال.");
+                    return;
+                }
+                
                 if(data.preScore !== undefined) localStorage.setItem('ba_score_pre', data.preScore);
                 if(data.postScore !== undefined) localStorage.setItem('ba_score_post', data.postScore);
                 if(data.preChart) localStorage.setItem('ba_chart_pre', JSON.stringify(data.preChart));
@@ -962,7 +1008,6 @@
         } catch(e) { console.error("Fetch Data Error:", e); }
     }
 
-    // حفظ التوزيع النهائي للفرق في السحابة
     window.saveTeamsToCloud = async function() {
         if (teams.length === 0) { alert("لا توجد فرق لحفظها!"); return; }
         try {
@@ -977,7 +1022,6 @@
         let teamSize = sizeInput && sizeInput.value ? parseInt(sizeInput.value) : 5;
         if(teamSize < 2) teamSize = 5;
 
-        // حفظ حجم الفريق تلقائياً في السحابة
         setDoc(doc(db, "settings", "config"), { defaultTeamSize: teamSize }, { merge: true }).catch(e=>console.log(e));
 
         let allTested = traineesList.filter(t => t.preScore !== '-'); 
@@ -987,7 +1031,6 @@
         let teamCounter = 1;
         let assignedIds = [];
 
-        // 1. تجميع المتدربين بناءً على "التطابق الزمني" (Shift Clustering)
         let shiftGroups = {};
         allTested.forEach(t => {
             let s = t.shift || 'غير محدد';
@@ -995,13 +1038,9 @@
             shiftGroups[s].push(t);
         });
 
-        // 2. بناء الفرق حصرياً للمتدربين من نفس أوقات التوفر
         for (let shift in shiftGroups) {
             let group = shiftGroups[shift];
-            
-            // خلط مبدئي لضمان العشوائية
             group.sort(() => Math.random() - 0.5);
-            // ترتيب جزئي (Round-Robin Sorting) لضمان توزيع المهارات وعدم تكدس القادة
             group.sort((a, b) => a.topSkill.localeCompare(b.topSkill));
 
             let fullTeamsCount = Math.floor(group.length / teamSize);
@@ -1162,7 +1201,7 @@
         }
     }
 
-    // ================= إصلاح التصدير إلى Google Sheets عبر تقنية Blob =================
+    // تصدير دقيق لـ Excel يدعم العربية بفضل تقنية Blob 
     window.exportTeamsToCSV = function() {
         let csvRows = [];
         csvRows.push(["الفريق", "اسم المتدرب", "المعرّف", "الجوال", "البريد الإلكتروني", "الكفاءة الأبرز", "التوافر (الوقت)", "التقييم القبلي", "التقييم البعدي"].join(","));
