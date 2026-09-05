@@ -95,7 +95,7 @@
         .admin-tab { padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 700; color: var(--text-secondary); font-size: 0.95em; transition: 0.2s; }
         .admin-tab.active { background: var(--primary-light); color: white; }
 
-        .data-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9em; }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
         .data-table th, .data-table td { border: 1px solid var(--border-color); padding: 12px; text-align: right; }
         .data-table th { background-color: var(--bg-body); color: var(--primary); font-weight: 800; }
         .btn-small { background: var(--bg-body); color: var(--primary); border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-weight: 700; font-size: 0.85em; transition: 0.2s;}
@@ -112,6 +112,11 @@
         .option-item .option-text { font-weight: 600; color: var(--text-main); font-size: 0.95em; }
         .option-item:has(input[type="radio"]:checked) { border-color: var(--primary-light); background: #EFF6FF; }
         .option-item:has(input[type="radio"]:checked) .option-text { color: var(--primary-light); font-weight: 800; }
+
+        .correct-option { background-color: #F0FDF4 !important; border-color: #16A34A !important; }
+        .correct-option .option-text { color: #15803D !important; font-weight: 800; }
+        .wrong-option { background-color: #FEF2F2 !important; border-color: #DC2626 !important; }
+        .wrong-option .option-text { color: #B91C1C !important; font-weight: 800; }
 
         .ans-selected { background: #EEF2FF !important; border-color: var(--primary-light) !important; font-weight: 800; border-width: 2px !important; }
         .ans-normal { background: #FFF; border-color: var(--border-color); opacity: 0.7; }
@@ -216,7 +221,6 @@
                                 <option value="+222">🇲🇷 +222</option>
                                 <option value="+252">🇸🇴 +252</option>
                                 <option value="+253">🇩🇯 +253</option>
-                                <option value="+253">AE +971</option>
                             </optgroup>
                             <optgroup label="دول عالمية أخرى">
                                 <option value="+1">🇺🇸/🇨🇦 +1</option>
@@ -241,8 +245,8 @@
                         <input type="tel" id="traineeMobile" class="form-control" placeholder="5xxxxxxxx" style="margin-bottom: 0; text-align: left; flex-grow: 1;" required>
                     </div>
                     
-                    <label class="form-label">كود المتدرب (أرقام فقط)</label>
-                    <input type="number" id="bootcampId" class="form-control" placeholder="مثال: 125" style="text-align: left;" dir="ltr" required>
+                    <label class="form-label">كود المتدرب (أرقام فقط، من 1 إلى 9999)</label>
+                    <input type="number" id="bootcampId" class="form-control" placeholder="مثال: 125" min="1" max="9999" style="text-align: left;" dir="ltr" required>
 
                     <label class="form-label">الساعات المتاحة للدورة أسبوعياً</label>
                     <select id="traineeHours" class="form-control" required>
@@ -324,7 +328,28 @@
             <div class="admin-tab" id="tabTeamsBtn" onclick="switchAdminTab('teams')"><i class="fa-solid fa-people-group"></i> محرك تشكيل الفرق الذكي</div>
         </div>
 
+        <!-- قسم المتدربين مع فلاتر البحث -->
         <div id="adminTraineesSection">
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; background: var(--bg-surface); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); align-items: center;">
+                <strong style="color: var(--primary); font-size: 0.9em;"><i class="fa-solid fa-filter"></i> تصفية المتدربين:</strong>
+                <select id="filterSkill" class="form-control" style="width: auto; margin-bottom: 0; padding: 6px 12px; font-size: 0.85em;" onchange="renderTraineesTable()">
+                    <option value="">كل الكفاءات</option>
+                    <option value="القيادة">القيادة</option>
+                    <option value="المتابعة والتواصل والتنسيق">التنسيق والمتابعة</option>
+                    <option value="التوثيق وترتيب الملفات">التوثيق</option>
+                    <option value="تصميم العروض والواجهات">تصميم الواجهات</option>
+                    <option value="أدوات الذكاء الاصطناعي التوليدي">الذكاء الاصطناعي</option>
+                    <option value="قيد الانتظار">قيد الانتظار (لم يختبر)</option>
+                </select>
+                <select id="filterShift" class="form-control" style="width: auto; margin-bottom: 0; padding: 6px 12px; font-size: 0.85em;" onchange="renderTraineesTable()">
+                    <option value="">كل الأوقات</option>
+                    <option value="صباحًا قبل 12">صباحًا قبل 12</option>
+                    <option value="بعد الظهر 12–5">بعد الظهر 12–5</option>
+                    <option value="مساءً 5–9">مساءً 5–9</option>
+                    <option value="متأخر بعد 9">متأخر بعد 9</option>
+                    <option value="في الإجازات بس">في الإجازات فقط</option>
+                </select>
+            </div>
             <div style="overflow-x: auto; border-radius: 8px; border: 1px solid var(--border-color);">
                 <table class="data-table">
                     <thead>
@@ -363,9 +388,10 @@
             
             <div class="teams-grid" id="teamsCardsContainer"></div>
             
+            <!-- قائمة الانتظار المنظمة حسب أوقات التوافر -->
             <div class="unassigned-pool" style="margin-top: 25px; background: var(--bg-surface); border: 2px dashed var(--border-color); border-radius: 12px; padding: 20px;">
                 <h4 style="margin:0 0 15px 0; color:var(--primary-light); font-size: 1.1em;"><i class="fa-solid fa-user-clock"></i> قائمة الانتظار (غير المسكنين في فرق): <span id="unassignedCount">0</span></h4>
-                <div class="unassigned-grid" id="unassignedListContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px;"></div>
+                <div id="unassignedListContainer"></div>
             </div>
         </div>
     </div>
@@ -652,7 +678,6 @@
         document.getElementById('fullLoginForm').style.display = 'block';
     };
 
-    // تسجيل الدخول مع طبقات حماية جديدة للبريد والجوال والاسم
     window.login = async function() {
         const name = document.getElementById('traineeName').value.trim();
         const email = document.getElementById('traineeEmail').value.trim();
@@ -664,21 +689,18 @@
 
         if(!name || !email || !mobileNumber || !traineeNum) { alert("الرجاء تعبئة كافة البيانات الأساسية."); return; }
 
-        // التحقق من الاسم الثنائي على الأقل
         const nameParts = name.split(/\s+/);
         if(nameParts.length < 2) {
             alert("يرجى إدخال اسمك الثنائي أو الثلاثي لضمان الدقة في التقرير والشهادة.");
             return;
         }
 
-        // التحقق القوي من البريد الإلكتروني
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!emailRegex.test(email)) {
             alert("صيغة البريد الإلكتروني غير صحيحة. يرجى التأكد من كتابته بشكل سليم (مثال: name@domain.com).");
             return;
         }
 
-        // حظر النطاقات الوهمية
         const blockedDomains = ['nomail.com', 'test.com', 'example.com', 'dummy.com'];
         const domain = email.split('@')[1].toLowerCase();
         if (blockedDomains.includes(domain)) {
@@ -686,10 +708,16 @@
             return;
         }
 
-        // التحقق من أرقام الجوال المدخلة (أرقام فقط بدون +)
         const mobileRegex = /^\d{8,12}$/;
         if (!mobileRegex.test(mobileNumber)) {
             alert("رقم الجوال غير صحيح. يرجى إدخال الأرقام فقط (من 8 إلى 12 رقماً) في الحقل المخصص، بعد اختيار الدولة.");
+            return;
+        }
+        
+        // التحقق من رقم المتدرب: من 1 إلى 9999 ولا يبدأ بصفر
+        const idRegex = /^[1-9]\d{0,3}$/;
+        if (!idRegex.test(traineeNum)) {
+            alert("رقم المتدرب يجب أن يتكون من رقم واحد إلى 4 أرقام كحد أقصى، ولا يمكن أن يبدأ بصفر (مثال: من 1 إلى 9999).");
             return;
         }
         
@@ -698,7 +726,6 @@
         const traineeRef = doc(db, "trainees", bootcamp);
         
         try {
-            // التحقق المزدوج: منع التسجيل المكرر
             const emailQ = query(collection(db, "trainees"), where("email", "==", email));
             const emailSnap = await getDocs(emailQ);
             
@@ -999,6 +1026,43 @@
         document.getElementById('adminTeamsSection').style.display = tab === 'teams' ? 'block' : 'none';
     };
 
+    // ================= فلاتر البحث وإدارة عرض المتدربين للمشرف =================
+    window.renderTraineesTable = function() {
+        const tbody = document.getElementById('traineesTableBody');
+        tbody.innerHTML = '';
+        
+        const filterSkill = document.getElementById('filterSkill').value;
+        const filterShift = document.getElementById('filterShift').value;
+
+        let filteredList = traineesList.filter(t => {
+            let matchSkill = true;
+            if (filterSkill) matchSkill = (t.topSkill === filterSkill);
+            
+            let matchShift = true;
+            if (filterShift) matchShift = (t.shift === filterShift);
+            
+            return matchSkill && matchShift;
+        });
+
+        if (filteredList.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:20px; color:var(--text-secondary);">لا يوجد متدربون يطابقون خيارات التصفية الحالية.</td></tr>`;
+            return;
+        }
+
+        filteredList.forEach(t => {
+            tbody.innerHTML += `
+                <tr>
+                    <td><strong>${t.name}</strong><br><span style="font-size:0.75em; color:gray;">${t.mobile}</span></td>
+                    <td>${t.bootcamp}<br><span style="font-size:0.75em; color:var(--primary-light);"><i class="fa-solid fa-clock"></i> ${t.shift}</span></td>
+                    <td><strong style="color:var(--primary);">${t.preScore !== '-' ? t.preScore+'%' : '-'}</strong></td>
+                    <td><strong style="color:var(--success);">${t.postScore !== '-' ? t.postScore+'%' : '-'}</strong></td>
+                    <td><span style="font-size:0.8em; background:#F1F5F9; padding:4px 8px; border-radius:6px; font-weight:bold;">${t.topSkill}</span></td>
+                    <td><button class="btn-small" onclick="viewTraineeReport('${t.id}')">مراجعة التقييم</button></td>
+                </tr>
+            `;
+        });
+    };
+
     async function initAdminModule() {
         try {
             const querySnapshot = await getDocs(collection(db, "trainees"));
@@ -1034,20 +1098,8 @@
             document.getElementById('avgPreScore').innerText = countPre ? Math.round(sumPre/countPre) + '%' : '0%';
             document.getElementById('avgPostScore').innerText = countPost ? Math.round(sumPost/countPost) + '%' : '0%';
 
-            const tbody = document.getElementById('traineesTableBody');
-            tbody.innerHTML = '';
-            traineesList.forEach(t => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>${t.name}</strong><br><span style="font-size:0.75em; color:gray;">${t.mobile}</span></td>
-                        <td>${t.bootcamp}<br><span style="font-size:0.75em; color:var(--primary-light);"><i class="fa-solid fa-clock"></i> ${t.shift}</span></td>
-                        <td><strong style="color:var(--primary);">${t.preScore !== '-' ? t.preScore+'%' : '-'}</strong></td>
-                        <td><strong style="color:var(--success);">${t.postScore !== '-' ? t.postScore+'%' : '-'}</strong></td>
-                        <td><span style="font-size:0.8em; background:#F1F5F9; padding:4px 8px; border-radius:6px; font-weight:bold;">${t.topSkill}</span></td>
-                        <td><button class="btn-small" onclick="viewTraineeReport('${t.id}')">مراجعة التقييم</button></td>
-                    </tr>
-                `;
-            });
+            // تشغيل دالة العرض والفلاتر بدلاً من إدراج البيانات يدوياً
+            window.renderTraineesTable();
 
             const teamsDoc = await getDoc(doc(db, "settings", "teams_allocation"));
             if (teamsDoc.exists() && teamsDoc.data().teams) {
@@ -1238,30 +1290,47 @@
             `;
         });
 
+        // تنظيم قائمة الانتظار بناءً على أوقات العمل
         const unassignedContainer = document.getElementById('unassignedListContainer');
         document.getElementById('unassignedCount').innerText = unassignedTrainees.length;
-        unassignedContainer.innerHTML = '';
+        
+        let unassignedHTML = '';
 
         if(unassignedTrainees.length === 0) {
-            unassignedContainer.innerHTML = `<p style="color:var(--success); font-size:0.9em; margin:0; grid-column:1/-1; font-weight:700;"><i class="fa-solid fa-check-double"></i> جميع المتدربين مسكنين في الفرق بنجاح</p>`;
+            unassignedHTML = `<p style="color:var(--success); font-size:0.9em; margin:0; grid-column:1/-1; font-weight:700;"><i class="fa-solid fa-check-double"></i> جميع المتدربين مسكنين في الفرق بنجاح</p>`;
         } else {
+            let groups = {};
             unassignedTrainees.forEach(m => {
-                let assignOptions = `<option value="">تسكين في...</option>`;
-                teams.forEach(t => { assignOptions += `<option value="${t.id}">${t.name}</option>`; });
-
-                unassignedContainer.innerHTML += `
-                    <div style="background: white; border: 1px solid var(--border-color); padding: 10px 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
-                        <div style="font-size:0.9em;">
-                            <strong style="color:var(--text-main);">${m.name}</strong><br>
-                            <span style="font-size:0.8em; color:var(--text-secondary);">${m.topSkill} | ${String(m.shift).split(' ')[0]}</span>
-                        </div>
-                        <select class="member-reassign-select" style="padding: 4px 8px; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit; font-size: 0.85em; background: #F8FAFC; cursor: pointer;" onchange="if(this.value) window.reassignTrainee('${m.id}', 'unassigned', this.value)">
-                            ${assignOptions}
-                        </select>
-                    </div>
-                `;
+                let s = m.shift || 'غير محدد';
+                if(!groups[s]) groups[s] = [];
+                groups[s].push(m);
             });
+
+            for(let shift in groups) {
+                unassignedHTML += `<div style="margin-bottom: 20px; background: #f8fafc; border-radius: 8px; padding: 15px; border: 1px solid #e2e8f0;">`;
+                unassignedHTML += `<h5 style="color:var(--primary-light); margin:0 0 15px 0; border-bottom:2px solid #e2e8f0; padding-bottom:8px;"><i class="fa-solid fa-clock"></i> فترة التوافر: ${shift} <span style="background:var(--primary); color:white; padding:2px 6px; border-radius:4px; font-size:0.8em; margin-right:5px;">${groups[shift].length}</span></h5>`;
+                unassignedHTML += `<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px;">`;
+                
+                groups[shift].forEach(m => {
+                    let assignOptions = `<option value="">تسكين في...</option>`;
+                    teams.forEach(t => { assignOptions += `<option value="${t.id}">${t.name}</option>`; });
+
+                    unassignedHTML += `
+                        <div style="background: white; border: 1px solid var(--border-color); padding: 10px 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; gap: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                            <div style="font-size:0.9em;">
+                                <strong style="color:var(--text-main);">${m.name}</strong><br>
+                                <span style="font-size:0.8em; color:var(--text-secondary); background: #e0e7ff; padding: 2px 6px; border-radius: 4px;">${m.topSkill}</span>
+                            </div>
+                            <select class="member-reassign-select" style="padding: 4px 8px; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit; font-size: 0.85em; background: #F8FAFC; cursor: pointer;" onchange="if(this.value) window.reassignTrainee('${m.id}', 'unassigned', this.value)">
+                                ${assignOptions}
+                            </select>
+                        </div>
+                    `;
+                });
+                unassignedHTML += `</div></div>`;
+            }
         }
+        unassignedContainer.innerHTML = unassignedHTML;
     }
 
     window.exportTeamsToCSV = function() {
